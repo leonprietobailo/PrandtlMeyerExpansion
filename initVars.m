@@ -1,21 +1,21 @@
-function [dEtadX, dXi, dEta, h] = initVars(j, xi, E, H, theta, ve, ho, M, Courant)
-        if xi <= E
-            ys = 0;
-            h = H;
-        else
-            h = H + (xi - E) * tan(theta);
-            ys = -(xi - E) * tan(theta);
-        end
-        dy = h / j;
-        y = dy * (ve-1);
-        eta = (y - ys) / h;
-        dEta = 1 / j;
-
-        if xi < E
-            dEtadX = 0;
-        else
-            dEtadX = (1 - eta) * tan(theta) / h;
-        end
-        mu = asin(1/M(ve, ho));
-        dXi = Courant * dy / max([tan(theta - mu) tan(theta + mu)]); % Hard to check
+function [dEtadX, dEta, h, dy] = initVars(j, xi, E, H, theta)
+for i = 1:j
+    if xi < E
+        ys = 0;
+        h = H;
+    else
+        h = H + (xi - E) * tan(theta);
+        ys = -(xi - E) * tan(theta);
+    end
+    dy = h / (j - 1);
+    y(i) = dy * (j-1);
+    eta(i) = (y(i) - ys) / h;
+    dEta = 1 / (j - 1);
+    
+    if xi < E
+        dEtadX(i) = 0;
+    else
+        dEtadX(i) = (1 - eta(i)) * tan(theta) / h;
+    end
+end
 end

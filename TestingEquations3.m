@@ -76,18 +76,25 @@ xi = 0;
 ho = 1;
 
 while(xi < xMax)
+    %% PREDICTOR STEP
     for ve=1:j
         % Init Vars
         [dEtadX, dXi, dEta, h] = initVars(j, xi, E, H, theta, ve, ho, M, Courant);
         
-        if(ve ~= j)
+        if(ve ~= 1 && ve ~= j)
             % Fowrard differences.
             dF1de(ve, ho) = dEtadX * (F1(ve, ho) - F1(ve+1,ho)/ dEta) + 1 / h * ((G1(ve, ho) - G1(ve+1,ho))/dEta);
             dF2de(ve, ho) = dEtadX * (F2(ve, ho) - F2(ve+1,ho)/ dEta) + 1 / h * ((G2(ve, ho) - G2(ve+1,ho))/dEta);
             dF3de(ve, ho) = dEtadX * (F3(ve, ho) - F3(ve+1,ho)/ dEta) + 1 / h * ((G3(ve, ho) - G3(ve+1,ho))/dEta);
             dF4de(ve, ho) = dEtadX * (F4(ve, ho) - F4(ve+1,ho)/ dEta) + 1 / h * ((G4(ve, ho) - G4(ve+1,ho))/dEta);
+        elseif ve == 1
+            dF1de(ve, ho) = dEtadX * (F1(ve, ho) - F1(ve+1,ho)/ dEta) + 1 / h * ((G1(ve, ho) - G1(ve+1,ho))/dEta);
+            dF2de(ve, ho) = dEtadX * (F2(ve, ho) - F2(ve+1,ho)/ dEta) + 1 / h * ((G2(ve, ho) - G2(ve+1,ho))/dEta);
+            dF3de(ve, ho) = dEtadX * (F3(ve, ho) - F3(ve+1,ho)/ dEta) + 1 / h * ((G3(ve, ho) - G3(ve+1,ho))/dEta);
+            dF4de(ve, ho) = dEtadX * (F4(ve, ho) - F4(ve+1,ho)/ dEta) + 1 / h * ((G4(ve, ho) - G4(ve+1,ho))/dEta);
+        
         else
-            % Fowrard differences.
+            % Rearwards differences.
             dF1de(ve, ho) = dEtadX * (F1(ve - 1, ho) - F1(ve,ho)/ dEta) + 1 / h * ((G1(ve - 1,ho) - G1(ve,ho))/dEta);
             dF2de(ve, ho) = dEtadX * (F2(ve - 1, ho) - F2(ve,ho)/ dEta) + 1 / h * ((G2(ve - 1,ho) - G2(ve,ho))/dEta);
             dF3de(ve, ho) = dEtadX * (F3(ve - 1, ho) - F3(ve,ho)/ dEta) + 1 / h * ((G3(ve - 1,ho) - G3(ve,ho))/dEta);
@@ -166,20 +173,20 @@ while(xi < xMax)
             SF2(ve,ho) = Cy * abs(p(ve + 1, ho) - 2 * p(ve, ho) + p(ve - 1,ho)) / (p(ve + 1, ho) + 2 * p(ve, ho) + p(ve - 1,ho)) * (F2(ve - 1,ho) - 2 * F2(ve,ho) + F2(ve + 1, ho));
             SF3(ve,ho) = Cy * abs(p(ve + 1, ho) - 2 * p(ve, ho) + p(ve - 1,ho)) / (p(ve + 1, ho) + 2 * p(ve, ho) + p(ve - 1,ho)) * (F3(ve - 1,ho) - 2 * F3(ve,ho) + F3(ve + 1, ho));
             SF4(ve,ho) = Cy * abs(p(ve + 1, ho) - 2 * p(ve, ho) + p(ve - 1,ho)) / (p(ve + 1, ho) + 2 * p(ve, ho) + p(ve - 1,ho)) * (F4(ve - 1,ho) - 2 * F4(ve,ho) + F4(ve + 1, ho));
-        elseif (ve == 1)
-            % Viscosity
-            SF1(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F1(ve + 1, ho) - F1(ve,ho));
-            SF2(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F2(ve + 1, ho) - F2(ve,ho));
-            SF3(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F3(ve + 1, ho) - F3(ve,ho));
-            SF4(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F4(ve + 1, ho) - F4(ve,ho));
-            
-        elseif (ve == j)
-            % Viscosity
-            SF1(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F1(ve, ho) - F1(ve - 1,ho));
-            SF2(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F2(ve, ho) - F2(ve - 1,ho));
-            SF3(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F3(ve, ho) - F3(ve - 1,ho));
-            SF4(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F4(ve, ho) - F4(ve - 1,ho));
-        end
+%         elseif (ve == 1)
+%             % Viscosity
+%             SF1(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F1(ve + 1, ho) - F1(ve,ho));
+%             SF2(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F2(ve + 1, ho) - F2(ve,ho));
+%             SF3(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F3(ve + 1, ho) - F3(ve,ho));
+%             SF4(ve,ho) = Cy * abs(p(ve + 1, ho) - p(ve, ho)) / (p(ve + 1, ho) + p(ve, ho)) * (F4(ve + 1, ho) - F4(ve,ho));
+%             
+%         elseif (ve == j)
+%             % Viscosity
+%             SF1(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F1(ve, ho) - F1(ve - 1,ho));
+%             SF2(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F2(ve, ho) - F2(ve - 1,ho));
+%             SF3(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F3(ve, ho) - F3(ve - 1,ho));
+%             SF4(ve,ho) = Cy * abs(p(ve - 1, ho) - p(ve, ho)) / (p(ve - 1, ho) + p(ve, ho)) * (F4(ve, ho) - F4(ve - 1,ho));
+%         end
         % Prdicted F
         F1pre(ve,ho+1) = F1(ve, ho) + dF1de(ve, ho) * dXi + SF1(ve, ho);
         F2pre(ve,ho+1) = F2(ve, ho) + dF2de(ve, ho) * dXi + SF2(ve, ho);
@@ -192,6 +199,7 @@ while(xi < xMax)
         roPre(ve, ho + 1) = (-B + sqrt(B^2 - 4 * A * C)) / 2 / A;
         
         pPre(ve,ho+1) = F2pre(ve,ho+1) - F1pre(ve,ho+1)^2 / roPre(ve, ho + 1);
+        end
     end
     
     for ve =1:j
@@ -204,20 +212,20 @@ while(xi < xMax)
             SF2pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - 2 * pPre(ve, ho) + pPre(ve - 1,ho)) / (pPre(ve + 1, ho) + 2 * pPre(ve, ho) + pPre(ve - 1,ho)) * (F2pre(ve - 1,ho) - 2 * F2pre(ve,ho) + F2pre(ve + 1, ho));
             SF3pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - 2 * pPre(ve, ho) + pPre(ve - 1,ho)) / (pPre(ve + 1, ho) + 2 * pPre(ve, ho) + pPre(ve - 1,ho)) * (F3pre(ve - 1,ho) - 2 * F3pre(ve,ho) + F3pre(ve + 1, ho));
             SF4pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - 2 * pPre(ve, ho) + pPre(ve - 1,ho)) / (pPre(ve + 1, ho) + 2 * pPre(ve, ho) + pPre(ve - 1,ho)) * (F4pre(ve - 1,ho) - 2 * F4pre(ve,ho) + F4pre(ve + 1, ho));
-        elseif (ve == 1)
-            % Viscosity
-            SF1pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F1pre(ve + 1, ho) - F1pre(ve,ho));
-            SF2pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F2pre(ve + 1, ho) - F2pre(ve,ho));
-            SF3pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F3pre(ve + 1, ho) - F3pre(ve,ho));
-            SF4pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F4pre(ve + 1, ho) - F4pre(ve,ho));
-            
-        elseif (ve == j)
-            % Viscosity
-            SF1pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F1pre(ve, ho) - F1pre(ve - 1,ho));
-            SF2pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F2pre(ve, ho) - F2pre(ve - 1,ho));
-            SF3pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F3pre(ve, ho) - F3pre(ve - 1,ho));
-            SF4pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F4pre(ve, ho) - F4pre(ve - 1,ho));
-        end
+%         elseif (ve == 1)
+%             % Viscosity
+%             SF1pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F1pre(ve + 1, ho) - F1pre(ve,ho));
+%             SF2pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F2pre(ve + 1, ho) - F2pre(ve,ho));
+%             SF3pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F3pre(ve + 1, ho) - F3pre(ve,ho));
+%             SF4pre(ve,ho+1) = Cy * abs(pPre(ve + 1, ho) - pPre(ve, ho)) / (pPre(ve + 1, ho) + pPre(ve, ho)) * (F4pre(ve + 1, ho) - F4pre(ve,ho));
+%             
+%         elseif (ve == j)
+%             % Viscosity
+%             SF1pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F1pre(ve, ho) - F1pre(ve - 1,ho));
+%             SF2pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F2pre(ve, ho) - F2pre(ve - 1,ho));
+%             SF3pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F3pre(ve, ho) - F3pre(ve - 1,ho));
+%             SF4pre(ve,ho+1) = Cy * abs(pPre(ve - 1, ho) - pPre(ve, ho)) / (pPre(ve - 1, ho) + pPre(ve, ho)) * (F4pre(ve, ho) - F4pre(ve - 1,ho));
+%         end
         
         % New F
         F1(ve,ho+1) = F1(ve, ho) + dF1deAvg * dXi + SF1pre(ve,ho+1);
@@ -237,7 +245,7 @@ while(xi < xMax)
         T(ve,ho+1) = p(ve,ho+1) / ro(ve,ho+1) / R;
         M(ve,ho+1) = sqrt(v(ve,ho+1)^2 + u(ve,ho+1)^2) / sqrt(gamma * p(ve,ho+1) / ro(ve,ho+1));
         
-        
+        end
         
         % MACH NUMBER BOUNDARY.
         if ve == 1
@@ -287,4 +295,4 @@ end
 x = 1:length(M);
 y = 1:j;
 [X, Y] = meshgrid(x, y);
-pcolor(X, Y, v);
+pcolor(X, Y, F4);
