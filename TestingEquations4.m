@@ -2,14 +2,14 @@ clear;
 
 j = 41;
 gamma = 1.4;
-xMax = 65;
+xMax = 50;
 E = 10;
 H = 40;
 theta = 5.352*pi/180;
 R = 287;
 Cy = 0.6;
 Courant = 0.4;
-close all;
+% close all;
 
 base(:,1) = ones(j,1);
 
@@ -84,9 +84,11 @@ xi = 0;
 %for ho=1:i-1
 ho = 1;
 
+yP = (0:H/(j-1):H)';
+
 while(xi < xMax)
     %% Marching Step
-        [dEtadX, dEta, h, dy] = initVars(j, xi, E, H, theta);
+        [dEtadX, dEta, h, dy, yP(:, ho + 1)] = initVars(j, xi, E, H, theta);
         [dXi] = computeStep(M, theta, ho, Courant, dy);
     %% PREDICTOR STEP
     for ve=1:j
@@ -285,5 +287,15 @@ end
 x = 1:size(u,2);
 y = 1:j;
 [X, Y] = meshgrid(x, y);
-p = pcolor(X, Y, u);
-p.EdgeAlpha = 0;
+% p = pcolor(X, Y, M);
+% p.EdgeAlpha = 0;
+
+
+figure
+S = mesh(yP,p); % Mesh function plots in 3D, but this has no sense in this simulation. Move the axes to view it in 2d.
+S.FaceColor = 'Flat';
+xlabel('Downstream position (i)');
+zlabel('y (m)');
+title('Mach Number');
+colorbar;
+view([0 0])
