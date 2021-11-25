@@ -24,5 +24,37 @@ namespace PradntlMeyerExpansion
         {
             InitializeComponent();
         }
+
+        private void lntro_Click(object sender, RoutedEventArgs e)
+        {
+            Introduction.Visibility = Visibility.Visible;
+            Simulation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Hidden;
+        }
+
+        private void Simualtion_Click(object sender, RoutedEventArgs e)
+        {
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Visible;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Hidden;
+        }
+
+        private void vTutorial_Click(object sender, RoutedEventArgs e)
+        {
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Visible;
+            AboutUs.Visibility = Visibility.Hidden;
+        }
+
+        private void aboutUs_Click(object sender, RoutedEventArgs e)
+        {
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Visible;
+        }
     }
 }

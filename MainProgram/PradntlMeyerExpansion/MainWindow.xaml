@@ -5,49 +5,88 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PradntlMeyerExpansion"
         mc:Ignorable="d"
-        Title="MainWindow" Height="765" Width="800" Background="#FF232323">
+        Title="Prandtl Meyer Expansion Simulator" Height="765" Width="800" Background="#FF232323">
     <Grid Margin="0,0,0,-6">
         <Label HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Prandtl Meyer&#x0a;Expansion Simulator" x:Name="label1" Margin="25,27,0,0" FontSize="15" FontFamily="Consolas" Foreground="White" BorderBrush="#FF262626" FontWeight="Bold"  Width="174" Height="46" VerticalAlignment="Top" Background="#00000000"/>
-        <Button Content="Introduction" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="230,36,0,0" x:Name="topic" VerticalAlignment="Top" Width="126" Click="loadSimualtion_Click" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
-        <Button Content="Simulation" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="367,36,0,0" x:Name="loadSimualtion" VerticalAlignment="Top" Width="126" Click="loadSimualtion_Click" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
-        <Button Content="About us" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="642,36,0,0" x:Name="aboutUs" VerticalAlignment="Top" Width="126" Click="loadSimualtion_Click" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
-        <Button Content="Video Tutorial" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="504,36,0,0" x:Name="vTutorial" VerticalAlignment="Top" Width="126" Click="loadSimualtion_Click" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
+        <Button Content="Introduction" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="230,36,0,0" x:Name="topic" VerticalAlignment="Top" Width="126" Click="lntro_Click" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
+        <Button Content="Simulation" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="367,36,0,0" x:Name="Simualtion" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Simualtion_Click" />
+        <Button Content="About us" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="642,36,0,0" x:Name="aboutUs" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="aboutUs_Click" />
+        <Button Content="Video Tutorial" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="504,36,0,0" x:Name="vTutorial" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="vTutorial_Click" />
         <Grid x:Name="Introduction" Margin="76,95,76,44" Visibility="Hidden">
             <TextBlock FontSize="12" TextAlignment="Justify" TextWrapping="Wrap" Text="The Prandtl-Meyer expansion is the process that occurs when a supersonic flow turns around a convex corner, forming a divergent fan consisting of an infinite number of Mach waves." x:Name="text1" Margin="0,23,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="411" Height="47" VerticalAlignment="Top" Background="#00000000"/>
-            <Image HorizontalAlignment="Center" Height="182" Margin="0,90,0,0" VerticalAlignment="Top" Width="376" Source="/Screenshot 2021-11-25 205154.png"/>
         </Grid>
-        <Grid x:Name="Simulation" Margin="76,95,76,183">
-            <TabControl TabStripPlacement="Top" Name="TabControl" HorizontalAlignment="Left" Height="216" Margin="0,0,0,0" VerticalAlignment="Top" Width="136">
+        <Grid x:Name="Simulation" Margin="76,95,76,183" Visibility="Visible">
+            <Button Content="Calculate" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="30,293,0,0" x:Name="Calculate" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
+            <Button Content="Save" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="30,365,0,0" x:Name="Save" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
+            <Button Content="Load" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="30,397,0,0" x:Name="Load" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
+            <Label Name="Parameters" Content="Parameters" HorizontalAlignment="Left" Margin="55,51,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"/>
+            <TabControl TabStripPlacement="Top" Name="TabControl" HorizontalAlignment="Left" Height="179" Margin="25,80,0,0" VerticalAlignment="Top" Width="136">
                 <TabItem Header="Default" Margin="-2,-2,-13,0" RenderTransformOrigin="0.5,0.5">
-                    <Grid Background="Transparent" Margin="0,0,0,0" Height="125" >
-                        <Label Content="P&#x0a;&#x0a;ρ&#x0a;&#x0a;T&#x0a;&#x0a;M&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Center" Height="113" Width="22" FontFamily="Consolas"/>
-                        <Label Content="R&#x0a;&#x0a;γ&#x0a;&#x0a;E&#x0a;&#x0a;θ&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Center" Height="111" FontFamily="Consolas" Margin="64,0,0,0"/>
-                        <TextBox Name="e1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="b1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="d1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="m1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="dx1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="dy1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="dt1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
-                        <TextBox x:Name="dt3_Copy1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
+                    <Grid Background="Transparent" Height="162" >
+                        <Label Content="p&#x0a;&#x0a;ρ&#x0a;&#x0a;T&#x0a;&#x0a;M&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="113" Width="22" FontFamily="Consolas" Margin="0,6,0,0"/>
+                        <Label Content="R&#x0a;&#x0a;γ&#x0a;&#x0a;E&#x0a;&#x0a;θ&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="111" FontFamily="Consolas" Margin="62,6,0,0"/>
+                        <TextBox Text="101000" Name="p1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="1,23" Name="rho1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="286,1" Name="T1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="2" Name="M1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="287" Name="R1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="1,4" Name="gamma1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="10" Name="E1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
+                        <TextBox Text="5,352" x:Name="theta1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
+                        <Button Content="Load" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Width="53" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="Black" Foreground="Black" FontWeight="Bold"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Custom" Margin="13,-2,-31,0" >
-                    <Grid Background="Transparent" Margin="0,0,-1,0" Height="125" >
-                        <Label Content="P&#x0a;&#x0a;ρ&#x0a;&#x0a;T&#x0a;&#x0a;M&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Center" Height="113" Width="22" FontFamily="Consolas"/>
-                        <Label Content="R&#x0a;&#x0a;γ&#x0a;&#x0a;E&#x0a;&#x0a;θ&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Center" Height="111" FontFamily="Consolas" Margin="64,0,0,0"/>
-                        <TextBox Name="e3" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="b3" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="d3" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="m3" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="dx3" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="dy3" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="dt3" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
-                        <TextBox x:Name="dt3_Copy" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
+                    <Grid Background="Transparent" Height="162" >
+                        <Label Content="P&#x0a;&#x0a;ρ&#x0a;&#x0a;T&#x0a;&#x0a;M&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="113" Width="22" FontFamily="Consolas" Margin="0,6,0,0"/>
+                        <Label Content="R&#x0a;&#x0a;γ&#x0a;&#x0a;E&#x0a;&#x0a;θ&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="111" FontFamily="Consolas" Margin="62,6,0,0"/>
+                        <TextBox Name="p2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Name="rho2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Name="T2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Name="M2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Name="R2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Name="gamma2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Name="E2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
+                        <TextBox x:Name="theta2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
+                        <Button Content="Load" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Width="53" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="Black" Foreground="Black" FontWeight="Bold"/>
                     </Grid>
                 </TabItem>
             </TabControl>
-            <Button Name="Load" Content="Load" HorizontalAlignment="Left" Margin="157,108,0,0" VerticalAlignment="Top" Width="54" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="LoadParameters" RenderTransformOrigin="0.019,1.446"/>
+            <Grid Margin="301,14,121,434" Visibility="Visible">
+                <RadioButton Content="u" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" IsChecked="True" Visibility="Visible"/>
+                <RadioButton Content="v" HorizontalAlignment="Left" Margin="46,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
+                <RadioButton Content="ρ" HorizontalAlignment="Left" Margin="82,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
+                <RadioButton Content="p" HorizontalAlignment="Left" Margin="118,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
+                <RadioButton Content="T" HorizontalAlignment="Left" Margin="154,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
+                <RadioButton Content="M" HorizontalAlignment="Left" Margin="190,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
+            </Grid>
+            <Grid x:Name="Grid" Margin="218,68,38,207"/>
+            <Grid x:Name="Graphs" Margin="301,334,121,10"/>
+            <Grid x:Name="Actual" Margin="206,293,26,150" Visibility="Visible">
+                <Label Name="u" Content="u:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="-3,0,0,0"/>
+                <Label Name="uData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="11,14,0,0" Width="36"/>
+                <Label Name="v" Content="v:" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Name="vData" HorizontalAlignment="Left" Margin="61,14,0,0" VerticalAlignment="Top" Foreground="White" Width="36"/>
+                <Label Name="rholabel" Content="ρ:" HorizontalAlignment="Left" Margin="98,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Name="rhoData" HorizontalAlignment="Left" Margin="107,14,0,0" VerticalAlignment="Top" Foreground="White" Width="36"/>
+                <Label Name="p" Content="p:" HorizontalAlignment="Left" Margin="144,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Name="pData" HorizontalAlignment="Left" Margin="159,14,0,0" VerticalAlignment="Top" Foreground="White" Width="36"/>
+                <Label Name="Tlabel" Content="T:" HorizontalAlignment="Left" Margin="192,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Name="TData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="36" Margin="212,14,0,0"/>
+                <Label Name="M" Content="M:" HorizontalAlignment="Left" Margin="249,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Name="MData" HorizontalAlignment="Left" Margin="272,14,0,0" VerticalAlignment="Top" Foreground="White" Width="36"/>
+                <Label Name="x" Content="x:" HorizontalAlignment="Left" Margin="308,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                <Label Name="xData" HorizontalAlignment="Left" Margin="327,14,0,0" VerticalAlignment="Top" Foreground="White" Width="36"/>
+                <Label Name="y" Content="y:" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="362,0,0,0"/>
+                <Label Name="yData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="379,14,0,0" Width="36"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="VideoTutorial" Margin="76,95,76,183" Visibility="Hidden">
+            <TextBlock FontSize="12" TextAlignment="Justify" TextWrapping="Wrap" Text="In this video you will see..." x:Name="videoText" Margin="0,36,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="200" Height="28" VerticalAlignment="Top" Background="#00000000"/>
+            <MediaElement HorizontalAlignment="Left" Height="286" Margin="162,88,0,0" VerticalAlignment="Top" Width="314"/>
+        </Grid>
+        <Grid x:Name="AboutUs" Margin="76,95,76,183" Visibility="Hidden">
+            <TextBlock FontSize="20" TextAlignment="Justify" TextWrapping="Wrap" Text="We work in AIRBUS and you don't" x:Name="AboutUsText" Margin="0,76,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="344" Height="28" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
     </Grid>
 </Window>
