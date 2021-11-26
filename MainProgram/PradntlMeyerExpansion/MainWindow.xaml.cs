@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace PradntlMeyerExpansion
 {
@@ -20,9 +22,11 @@ namespace PradntlMeyerExpansion
     /// </summary>
     public partial class MainWindow : Window
     {
+        public SeriesCollection SeriesCollection;
         public MainWindow()
         {
             InitializeComponent();
+            Introduction.Visibility = Visibility.Visible;
         }
 
         private void lntro_Click(object sender, RoutedEventArgs e)
