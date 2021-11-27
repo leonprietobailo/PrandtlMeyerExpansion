@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Airfoil.png" />
+    <None Remove="Videoo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <Resource Include="Airfoil.png" />
+    <Resource Include="Videoo.png" />
   </ItemGroup>
 
 </Project>
