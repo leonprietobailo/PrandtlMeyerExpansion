@@ -8,7 +8,6 @@ for i = 1:j
         ys = -(xi - E) * tan(theta);
     end
     
-    
     dy = h / (j - 1);
     y(i) = ys + dy * (i-1);
     eta(i) = (y(i) - ys) / h;

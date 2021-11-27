@@ -5,7 +5,6 @@ namespace PradntlMeyerExpansion
     public class Cell
     {
         double u, v, ro, p, T, M; // Magnitudes
-        double Cy;
         int chara, ho, ve; // 0 -> Bottom, 1 -> Inflow, 2 -> Top
         double F1, F2, F3, F4, G1, G2, G3, G4;
         double F1pre, F2pre, F3pre, F4pre, G1pre, G2pre, G3pre, G4pre;
@@ -15,15 +14,38 @@ namespace PradntlMeyerExpansion
 
 
         // Init cell.
-        public Cell(Rules r)
+        public Cell(Rules r, int ve, int ho)
         {
-            u = r.getU();
-            v = r.getV();
-            ro = r.getRO();
-            p = r.getP();
-            T = r.getT();
-            M = r.getM();
-            Cy = r.getCy();
+            if (ho == 0)
+            {
+                u = r.getU();
+                v = r.getV();
+                ro = r.getRO();
+                p = r.getP();
+                T = r.getT();
+                M = r.getM();
+            }
+            else
+            {
+                u = 0;
+                v = 0;
+                ro = 0;
+                p = 0;
+                T = 0;
+                M = 0;
+            }
+            if (ve == 0)
+            {
+                chara = 0;
+            }
+            else if (ve == r.getJ())
+            {
+                chara = 2;
+            }
+            else
+            {
+                chara = 1;
+            }
         }
 
         public void PredictorStep(double dEtadX, double dEta, double h, double dXi, Grid g)
@@ -35,10 +57,10 @@ namespace PradntlMeyerExpansion
                 double dF3de = dEtadX * ((g.GetCell(ve, ho - 1).getF(3) - g.GetCell(ve + 1, ho - 1).getF(3)) / dEta) + 1.0 / h * ((g.GetCell(ve, ho - 1).getG(3) - g.GetCell(ve + 1, ho - 1).getG(3)) / dEta);
                 double dF4de = dEtadX * ((g.GetCell(ve, ho - 1).getF(4) - g.GetCell(ve + 1, ho - 1).getF(4)) / dEta) + 1.0 / h * ((g.GetCell(ve, ho - 1).getG(4) - g.GetCell(ve + 1, ho - 1).getG(4)) / dEta);
 
-                double SF1 = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(1) - 2 * g.GetCell(ve, ho - 1).getF(1) + g.GetCell(ve + 1, ho - 1).getF(1));
-                double SF2 = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(2) - 2 * g.GetCell(ve, ho - 1).getF(2) + g.GetCell(ve + 1, ho - 1).getF(2));
-                double SF3 = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(3) - 2 * g.GetCell(ve, ho - 1).getF(3) + g.GetCell(ve + 1, ho - 1).getF(3));
-                double SF4 = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(4) - 2 * g.GetCell(ve, ho - 1).getF(4) + g.GetCell(ve + 1, ho - 1).getF(4));
+                double SF1 = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(1) - 2 * g.GetCell(ve, ho - 1).getF(1) + g.GetCell(ve + 1, ho - 1).getF(1));
+                double SF2 = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(2) - 2 * g.GetCell(ve, ho - 1).getF(2) + g.GetCell(ve + 1, ho - 1).getF(2));
+                double SF3 = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(3) - 2 * g.GetCell(ve, ho - 1).getF(3) + g.GetCell(ve + 1, ho - 1).getF(3));
+                double SF4 = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho - 1).getP() - 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) / (g.GetCell(ve + 1, ho - 1).getP() + 2 * g.GetCell(ve, ho - 1).getP() + g.GetCell(ve - 1, ho - 1).getP()) * (g.GetCell(ve - 1, ho - 1).getF(4) - 2 * g.GetCell(ve, ho - 1).getF(4) + g.GetCell(ve + 1, ho - 1).getF(4));
 
                 F1pre = F1 + dF1de * dXi + SF1;
                 F2pre = F2 + dF2de * dXi + SF2;
@@ -102,15 +124,15 @@ namespace PradntlMeyerExpansion
                 double dF3deAvg = (dF3de + dF3dePre) / 2;
                 double dF4deAvg = (dF4de + dF4dePre) / 2;
 
-                double SF1pre = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getPpre() - 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho - 1).getPpre() + 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) * (g.GetCell(ve - 1, ho - 1).getFpre(1) - 2 * g.GetCell(ve, ho - 1).getFpre(1) + g.GetCell(ve + 1, ho - 1).getFpre(1));
-                double SF2pre = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getPpre() - 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho - 1).getPpre() + 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) * (g.GetCell(ve - 1, ho - 1).getFpre(2) - 2 * g.GetCell(ve, ho - 1).getFpre(2) + g.GetCell(ve + 1, ho - 1).getFpre(2));
-                double SF3pre = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getPpre() - 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho - 1).getPpre() + 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) * (g.GetCell(ve - 1, ho - 1).getFpre(3) - 2 * g.GetCell(ve, ho - 1).getFpre(3) + g.GetCell(ve + 1, ho - 1).getFpre(3));
-                double SF4pre = Cy * Math.Abs(g.GetCell(ve + 1, ho - 1).getPpre() - 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho - 1).getPpre() + 2 * g.GetCell(ve, ho - 1).getPpre() + g.GetCell(ve - 1, ho - 1).getPpre()) * (g.GetCell(ve - 1, ho - 1).getFpre(4) - 2 * g.GetCell(ve, ho - 1).getFpre(4) + g.GetCell(ve + 1, ho - 1).getFpre(4));
+                double SF1pre = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho).getPpre() - 2 * pPre + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho).getPpre() + 2 * pPre + g.GetCell(ve - 1, ho).getPpre()) * (g.GetCell(ve - 1, ho).getFpre(1) - 2 * F1pre + g.GetCell(ve + 1, ho).getFpre(1));
+                double SF2pre = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho).getPpre() - 2 * pPre + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho).getPpre() + 2 * pPre + g.GetCell(ve - 1, ho).getPpre()) * (g.GetCell(ve - 1, ho).getFpre(2) - 2 * F2pre + g.GetCell(ve + 1, ho).getFpre(2));
+                double SF3pre = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho).getPpre() - 2 * pPre + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho).getPpre() + 2 * pPre + g.GetCell(ve - 1, ho).getPpre()) * (g.GetCell(ve - 1, ho).getFpre(3) - 2 * F3pre + g.GetCell(ve + 1, ho).getFpre(3));
+                double SF4pre = r.getCy() * Math.Abs(g.GetCell(ve + 1, ho).getPpre() - 2 * pPre + g.GetCell(ve - 1, ho - 1).getPpre()) / (g.GetCell(ve + 1, ho).getPpre() + 2 * pPre + g.GetCell(ve - 1, ho).getPpre()) * (g.GetCell(ve - 1, ho).getFpre(4) - 2 * F4pre + g.GetCell(ve + 1, ho).getFpre(4));
 
                 F1 = g.GetCell(ve, ho - 1).getF(1) + dF1deAvg * dXi + SF1pre;
-                F2 = g.GetCell(ve, ho - 1).getF(2) + dF1deAvg * dXi + SF2pre;
-                F3 = g.GetCell(ve, ho - 1).getF(3) + dF1deAvg * dXi + SF3pre;
-                F4 = g.GetCell(ve, ho - 1).getF(4) + dF1deAvg * dXi + SF4pre;
+                F2 = g.GetCell(ve, ho - 1).getF(2) + dF2deAvg * dXi + SF2pre;
+                F3 = g.GetCell(ve, ho - 1).getF(3) + dF3deAvg * dXi + SF3pre;
+                F4 = g.GetCell(ve, ho - 1).getF(4) + dF4deAvg * dXi + SF4pre;
             }
             else if (chara == 0)
             {
@@ -128,9 +150,9 @@ namespace PradntlMeyerExpansion
                 double dF4deAvg = (dF4de + dF4dePre) / 2;
 
                 F1 = g.GetCell(ve, ho - 1).getF(1) + dF1deAvg * dXi;
-                F2 = g.GetCell(ve, ho - 1).getF(2) + dF1deAvg * dXi;
-                F3 = g.GetCell(ve, ho - 1).getF(3) + dF1deAvg * dXi;
-                F4 = g.GetCell(ve, ho - 1).getF(4) + dF1deAvg * dXi;
+                F2 = g.GetCell(ve, ho - 1).getF(2) + dF2deAvg * dXi;
+                F3 = g.GetCell(ve, ho - 1).getF(3) + dF3deAvg * dXi;
+                F4 = g.GetCell(ve, ho - 1).getF(4) + dF4deAvg * dXi;
             }
             else
             {
@@ -146,9 +168,9 @@ namespace PradntlMeyerExpansion
                 double dF4deAvg = (dF4de + dF4dePre) / 2;
 
                 F1 = g.GetCell(ve, ho - 1).getF(1) + dF1deAvg * dXi;
-                F2 = g.GetCell(ve, ho - 1).getF(2) + dF1deAvg * dXi;
-                F3 = g.GetCell(ve, ho - 1).getF(3) + dF1deAvg * dXi;
-                F4 = g.GetCell(ve, ho - 1).getF(4) + dF1deAvg * dXi;
+                F2 = g.GetCell(ve, ho - 1).getF(2) + dF2deAvg * dXi;
+                F3 = g.GetCell(ve, ho - 1).getF(3) + dF3deAvg * dXi;
+                F4 = g.GetCell(ve, ho - 1).getF(4) + dF4deAvg * dXi;
             }
 
             // Magnitudes fisicas
