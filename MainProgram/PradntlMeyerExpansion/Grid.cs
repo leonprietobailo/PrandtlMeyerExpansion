@@ -17,18 +17,26 @@ namespace PradntlMeyerExpansion
         {
             r = rIn;
             dEtadX = new double[r.getJ()];
-            ho = 0;
+            ho = 1;
             xi = 0;
+            
+            Cell[] row = new Cell[r.getJ()];
+            for (int i = 0; i < r.getJ(); i++) { row[i] = new Cell(r, i, ho); }
+            Mesh.Add(row);
         }
+        
 
         public void PrandtlMeyerExpansion()
         {
             while (xi < r.getxMax())
             {
+                Cell[] row = new Cell[r.getJ()];
+                for (int i = 0; i < r.getJ(); i++) { row[i] = new Cell(r,i,ho); }
+                Mesh.Add(row);
                 InitVars();
                 ComputeStepSize();
-                for (int i = 1; i < r.getJ(); i++) { Mesh[ho][i].PredictorStep(dEtadX[i], dEta, h, dXi, this); } //PREDICTOR STEP
-                for (int i = 1; i < r.getJ(); i++) { Mesh[ho][i].CorrectorStep(dEtadX[i], dEta, h, dXi, xi, this); } //CORRECTOR STEP
+                for (int i = 0; i < r.getJ(); i++) { Mesh[ho][i].PredictorStep(dEtadX[i], dEta, h, dXi, this); } //PREDICTOR STEP
+                for (int i = 0; i < r.getJ(); i++) { Mesh[ho][i].CorrectorStep(dEtadX[i], dEta, h, dXi, xi, this); } //CORRECTOR STEP
                 ho++;
                 xi += dXi;
             }
@@ -51,13 +59,13 @@ namespace PradntlMeyerExpansion
                     h = r.getH() + (xi - r.getE()) * Math.Tan(r.getTheta());
                 }
                 dy = h / (r.getJ() - 1);
-                y[i] = ys + dy * (i - 1);
+                y[i] = ys + dy * i;
                 double eta = (y[i] - ys) / h;
-                dEta = 1 / (r.getJ() - 1);
+                dEta = 1.0 / (r.getJ() - 1);
 
                 if (xi < r.getE())
                 {
-                    dEtadX[i] = 0;
+                    dEtadX[i] = 0.0;
                 }
                 else
                 {
@@ -74,7 +82,7 @@ namespace PradntlMeyerExpansion
             double mu;
             for(int i = 0; i < r.getJ(); i++)
             {
-                mu = Math.Asin(1 / Mesh[ho][i].getM());
+                mu = Math.Asin(1 / Mesh[ho-1][i].getM());
                 anglePlus[i] = Math.Abs(Math.Tan(r.getTheta() + mu));
                 angleMin[i] = Math.Abs(Math.Tan(r.getTheta() - mu));
             }

@@ -83,7 +83,6 @@ namespace PradntlMeyerExpansion
             }
             else if (chara == 0)
             {
-                double asd = ((g.GetCell(ve, ho - 1).getF(1) - g.GetCell(ve + 1, ho - 1).getF(1)));
                 dF1de = dEtadX * ((g.GetCell(ve, ho - 1).getF(1) - g.GetCell(ve + 1, ho - 1).getF(1)) / dEta) + 1.0 / h * ((g.GetCell(ve, ho - 1).getG(1) - g.GetCell(ve + 1, ho - 1).getG(1)) / dEta);
                 dF2de = dEtadX * ((g.GetCell(ve, ho - 1).getF(2) - g.GetCell(ve + 1, ho - 1).getF(2)) / dEta) + 1.0 / h * ((g.GetCell(ve, ho - 1).getG(2) - g.GetCell(ve + 1, ho - 1).getG(2)) / dEta);
                 dF3de = dEtadX * ((g.GetCell(ve, ho - 1).getF(3) - g.GetCell(ve + 1, ho - 1).getF(3)) / dEta) + 1.0 / h * ((g.GetCell(ve, ho - 1).getG(3) - g.GetCell(ve + 1, ho - 1).getG(3)) / dEta);

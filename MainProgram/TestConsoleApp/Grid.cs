@@ -15,6 +15,7 @@ namespace PradntlMeyerExpansion
 
         public Grid(Rules rIn)
         {
+            
             r = rIn;
             dEtadX = new double[r.getJ()];
             ho = 1;
@@ -30,10 +31,6 @@ namespace PradntlMeyerExpansion
         {
             while (xi < r.getxMax())
             {
-                if(xi > r.getE())
-                {
-                    int tv = 1;
-                }
                 Cell[] row = new Cell[r.getJ()];
                 for (int i = 0; i < r.getJ(); i++) { row[i] = new Cell(r,i,ho); }
                 Mesh.Add(row);
