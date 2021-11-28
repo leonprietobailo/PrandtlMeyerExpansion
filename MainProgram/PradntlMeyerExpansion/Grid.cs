@@ -7,6 +7,7 @@ namespace PradntlMeyerExpansion
     public class Grid
     {
         List<Cell[]> Mesh = new List<Cell[]>();
+        List<double> xP = new List<double>(0);
         Rules r;
         double dEta, h, dy, xi, dXi;
         int ho;
@@ -39,6 +40,7 @@ namespace PradntlMeyerExpansion
                 for (int i = 0; i < r.getJ(); i++) { Mesh[ho][i].CorrectorStep(dEtadX[i], dEta, h, dXi, xi, this); } //CORRECTOR STEP
                 ho++;
                 xi += dXi;
+                xP.Add(xi);
             }
         }
 
@@ -94,11 +96,11 @@ namespace PradntlMeyerExpansion
         }
 
 
-        public Cell GetCell(int ve, int ho)
-        {
-            return Mesh[ho][ve];
-        }
+        public Cell GetCell(int ve, int ho) { return Mesh[ho][ve]; }
 
+        //public int GetHorizontalPoints() { return ho; }
+        public List<double[]> GetYP() { return yP; }
+        public List<double> GetXP() { return xP; }
 
     }
 }

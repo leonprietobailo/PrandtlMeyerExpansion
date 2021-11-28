@@ -1,7 +1,7 @@
 clear;
 close all;
 
-j = 41;
+j = 5;
 gamma = 1.4;
 xMax = 65;
 E = 10;
