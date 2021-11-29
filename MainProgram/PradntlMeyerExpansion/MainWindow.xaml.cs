@@ -214,31 +214,44 @@ namespace PradntlMeyerExpansion
                         byte second = 0;
                         byte third = 0;
 
-                        if (mediaM < ((maxvalue + minvalue) / 2) | mediaM == ((maxvalue + minvalue) / 2))
+                        //if (mediaM < ((maxvalue + minvalue) / 2) | mediaM == ((maxvalue + minvalue) / 2))
+                        //{
+                        //    first = 0;
+                        //}
+                        //else if (mediaM > ((maxvalue + minvalue) / 2))
+                        //{
+                        //    first = Convert.ToByte(Math.Round((255 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                        //}
+                        //if (mediaM < ((maxvalue + minvalue) / 2))
+                        //{
+                        //    second = Convert.ToByte(Math.Round((255 * (mediaM - minvalue) / 2) / (((maxvalue + minvalue) / 2) - minvalue)));
+                        //}
+                        //else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
+                        //{
+                        //    second = 255;
+                        //}
+                        //if (mediaM < ((maxvalue + minvalue) / 2))
+                        //{
+                        //    third = Convert.ToByte(Math.Round((255 * (mediaM - ((maxvalue + minvalue) / 2)) / (minvalue - ((maxvalue + minvalue) / 2)))));
+                        //}
+                        //else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
+                        //{
+                        //    third = 0;
+                        //}
+                        if (mediaM < ((maxvalue + minvalue) / 2))
                         {
-                            first = 0;
+                            first = Convert.ToByte(Math.Round(76 + (83 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
                         }
                         else if (mediaM > ((maxvalue + minvalue) / 2))
                         {
-                            first = Convert.ToByte(Math.Round((255 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                            first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
                         }
-                        if (mediaM < ((maxvalue + minvalue) / 2))
+                        else if (mediaM == ((maxvalue + minvalue) / 2))
                         {
-                            second = Convert.ToByte(Math.Round((255 * (mediaM - minvalue) / 2) / (((maxvalue + minvalue) / 2) - minvalue)));
+                            first = Convert.ToByte(76);
                         }
-                        else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
-                        {
-                            second = 255;
-                        }
-                        if (mediaM < ((maxvalue + minvalue) / 2))
-                        {
-                            third = Convert.ToByte(Math.Round((255 * (mediaM - ((maxvalue + minvalue) / 2)) / (minvalue - ((maxvalue + minvalue) / 2)))));
-                        }
-                        else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
-                        {
-                            third = 0;
-                        }
-
+                        second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                        third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
 
 
                         SolidColorBrush mySolidColorBrush = new SolidColorBrush();
@@ -276,32 +289,45 @@ namespace PradntlMeyerExpansion
                         byte second = 0;
                         byte third = 0;
 
-                        if (mediaM < ((maxvalue + minvalue) / 2) | mediaM== ((maxvalue +minvalue) / 2))
+                        //if (mediaM < ((maxvalue + minvalue) / 2) | mediaM== ((maxvalue +minvalue) / 2))
+                        //{
+                        //    first = 0;
+                        //}
+                        //else if (mediaM > ((maxvalue + minvalue) / 2))
+                        //{
+                        //    first = Convert.ToByte(Math.Round((255*(mediaM-(maxvalue+minvalue)/2))/(maxvalue-(maxvalue+minvalue)/2)));
+                        //}
+                        //if (mediaM < ((maxvalue + minvalue) / 2))
+                        //{
+                        //    second = Convert.ToByte(Math.Round((255 * (mediaM - minvalue) / 2) / ( ((maxvalue + minvalue) / 2) - minvalue)));
+                        //}
+                        //else if (mediaM > ((maxvalue + minvalue) / 2)|| mediaM == ((maxvalue + minvalue) / 2))
+                        //{
+                        //    second = 255;
+                        //}
+                        //if (mediaM < ((maxvalue + minvalue) / 2))
+                        //{
+                        //    third = Convert.ToByte(Math.Round((255 * (mediaM - ((maxvalue + minvalue) / 2)) / (minvalue - ((maxvalue + minvalue) / 2)))));
+                        //}
+                        //else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
+                        //{
+                        //    third = 255;
+                        //}
+
+                        if (mediaM < ((maxvalue + minvalue) / 2))
                         {
-                            first = 0;
+                            first = Convert.ToByte(Math.Round(76 + (83 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue- (maxvalue + minvalue) / 2)));
                         }
                         else if (mediaM > ((maxvalue + minvalue) / 2))
                         {
-                            first = Convert.ToByte(Math.Round((255*(mediaM-(maxvalue+minvalue)/2))/(maxvalue-(maxvalue+minvalue)/2)));
+                            first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
                         }
-                        if (mediaM < ((maxvalue + minvalue) / 2))
+                        else if (mediaM == ((maxvalue + minvalue) / 2))
                         {
-                            second = Convert.ToByte(Math.Round((255 * (mediaM - minvalue) / 2) / ( ((maxvalue + minvalue) / 2) - minvalue)));
+                            first= Convert.ToByte(76);
                         }
-                        else if (mediaM > ((maxvalue + minvalue) / 2)|| mediaM == ((maxvalue + minvalue) / 2))
-                        {
-                            second = 255;
-                        }
-                        if (mediaM < ((maxvalue + minvalue) / 2))
-                        {
-                            third = Convert.ToByte(Math.Round((255 * (mediaM - ((maxvalue + minvalue) / 2)) / (minvalue - ((maxvalue + minvalue) / 2)))));
-                        }
-                        else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
-                        {
-                            third = 255;
-                        }
-
-
+                        second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue) ) / (maxvalue - minvalue)));
+                        third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
 
                         SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                         mySolidColorBrush.Color = Color.FromRgb(first,second,third);
