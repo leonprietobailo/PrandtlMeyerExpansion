@@ -210,12 +210,41 @@ namespace PradntlMeyerExpansion
 
 
                         double mediaM = (mesh.GetCell(j, i).getM()+ mesh.GetCell(j, i+1).getM()+ mesh.GetCell(j+1, i + 1).getM()+ mesh.GetCell(j+1, i).getM())/4.0;
-                        SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                        //mySolidColorBrush.Color = Color.FromRgb(Convert.ToByte(137), Convert.ToByte(255), Convert.ToByte(255));
+                        byte first = 0;
+                        byte second = 0;
+                        byte third = 0;
 
-                        mySolidColorBrush.Color = Color.FromRgb(255, Convert.ToByte(Math.Round((mediaM - minvalue) * 255.0 / 0.4)), 0);
+                        if (mediaM < ((maxvalue + minvalue) / 2) | mediaM == ((maxvalue + minvalue) / 2))
+                        {
+                            first = 0;
+                        }
+                        else if (mediaM > ((maxvalue + minvalue) / 2))
+                        {
+                            first = Convert.ToByte(Math.Round((255 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                        }
+                        if (mediaM < ((maxvalue + minvalue) / 2))
+                        {
+                            second = Convert.ToByte(Math.Round((255 * (mediaM - minvalue) / 2) / (((maxvalue + minvalue) / 2) - minvalue)));
+                        }
+                        else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
+                        {
+                            second = 255;
+                        }
+                        if (mediaM < ((maxvalue + minvalue) / 2))
+                        {
+                            third = Convert.ToByte(Math.Round((255 * (mediaM - ((maxvalue + minvalue) / 2)) / (minvalue - ((maxvalue + minvalue) / 2)))));
+                        }
+                        else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
+                        {
+                            third = 0;
+                        }
+
+
+
+                        SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                        mySolidColorBrush.Color = Color.FromRgb(first, second, third);
                         polygon.Fill = mySolidColorBrush;
-                        
+
                         plano.Margin = planoPM;
                         plano.Children.Add(polygon);
                     }
@@ -243,14 +272,39 @@ namespace PradntlMeyerExpansion
 
                         double mediaM = (mesh.GetCell(j, i).getM() + mesh.GetCell(j, i + 1).getM() + mesh.GetCell(j + 1, i + 1).getM() + mesh.GetCell(j + 1, i).getM()) / 4.0;
 
-                        byte first;
-                        byte second;
-                        byte third;
-                       
-                        SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                        //mySolidColorBrush.Color = Color.FromRgb(Convert.ToByte(137), Convert.ToByte(255), Convert.ToByte(255));
+                        byte first = 0 ;
+                        byte second = 0;
+                        byte third = 0;
 
-                        mySolidColorBrush.Color = Color.FromRgb(255, Convert.ToByte(Math.Round((mediaM - minvalue) * 255.0 / 0.4)), 0);
+                        if (mediaM < ((maxvalue + minvalue) / 2) | mediaM== ((maxvalue +minvalue) / 2))
+                        {
+                            first = 0;
+                        }
+                        else if (mediaM > ((maxvalue + minvalue) / 2))
+                        {
+                            first = Convert.ToByte(Math.Round((255*(mediaM-(maxvalue+minvalue)/2))/(maxvalue-(maxvalue+minvalue)/2)));
+                        }
+                        if (mediaM < ((maxvalue + minvalue) / 2))
+                        {
+                            second = Convert.ToByte(Math.Round((255 * (mediaM - minvalue) / 2) / ( ((maxvalue + minvalue) / 2) - minvalue)));
+                        }
+                        else if (mediaM > ((maxvalue + minvalue) / 2)|| mediaM == ((maxvalue + minvalue) / 2))
+                        {
+                            second = 255;
+                        }
+                        if (mediaM < ((maxvalue + minvalue) / 2))
+                        {
+                            third = Convert.ToByte(Math.Round((255 * (mediaM - ((maxvalue + minvalue) / 2)) / (minvalue - ((maxvalue + minvalue) / 2)))));
+                        }
+                        else if (mediaM > ((maxvalue + minvalue) / 2) || mediaM == ((maxvalue + minvalue) / 2))
+                        {
+                            third = 255;
+                        }
+
+
+
+                        SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                        mySolidColorBrush.Color = Color.FromRgb(first,second,third);
                         polygon.Fill = mySolidColorBrush;
 
                         plano.Margin = planoPM;
