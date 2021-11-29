@@ -240,7 +240,7 @@ namespace PradntlMeyerExpansion
                         //}
                         if (mediaM < ((maxvalue + minvalue) / 2))
                         {
-                            first = Convert.ToByte(Math.Round(76 + (83 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
+                            first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
                         }
                         else if (mediaM > ((maxvalue + minvalue) / 2))
                         {
@@ -316,7 +316,7 @@ namespace PradntlMeyerExpansion
 
                         if (mediaM < ((maxvalue + minvalue) / 2))
                         {
-                            first = Convert.ToByte(Math.Round(76 + (83 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue- (maxvalue + minvalue) / 2)));
+                            first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue- (maxvalue + minvalue) / 2)));
                         }
                         else if (mediaM > ((maxvalue + minvalue) / 2))
                         {
