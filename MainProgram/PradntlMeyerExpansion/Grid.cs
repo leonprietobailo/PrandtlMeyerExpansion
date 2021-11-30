@@ -20,10 +20,13 @@ namespace PradntlMeyerExpansion
             dEtadX = new double[r.getJ()];
             ho = 1;
             xi = 0;
-            
             Cell[] row = new Cell[r.getJ()];
+            double[] rowY = new double[r.getJ()];
             for (int i = 0; i < r.getJ(); i++) { row[i] = new Cell(r, i, ho); }
+            for (int i = 0; i < r.getJ(); i++) { rowY[i] = i * r.getH()/(r.getJ()-1); }
             Mesh.Add(row);
+            xP.Add(0);
+            yP.Add(rowY);
         }
         
 

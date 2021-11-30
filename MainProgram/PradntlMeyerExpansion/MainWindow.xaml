@@ -16,71 +16,39 @@
         <Grid x:Name="Introduction" Margin="49,95,49,29" Visibility="Hidden">
             <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="The Prandtl-Meyer expansion is the process that occurs when a supersonic flow turns around a convex corner, forming a divergent fan consisting of an infinite number of Mach waves. Across the expansion fan, the flow accelerates so, the Mach number increases and the static pressure, temperature and density decreases. Since the flow turns in small angles and the changes across each expansion wave are small, the whole process is isentropic. Due to the fact that the whole process is isentropic, the stagnation pressure, temperature and density remain constant across the fan.&#x0a;&#x0a;The space marching technique that will be applied for the solution of the two-dimensional supersonic flow problem is MacCormack's. It is a second order discretization scheme for the numerical solution of hyperbolic partial differential equations." x:Name="text1" Margin="0,72,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="719" Height="236" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
-        <Grid x:Name="Simulation" Margin="49,95,49,29" Visibility="Hidden">
+        <Grid x:Name="Simulation" Margin="49,95,49,29" Visibility="Visible">
+            <Button Content="Run" HorizontalAlignment="Left" Margin="291,250,0,0" VerticalAlignment="Top" Width="126" Height="29" FontFamily="Consolas" Background="#00000000" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Button_Click"/>
             <Button Content="Save" FontFamily="Consolas" Height="26" HorizontalAlignment="Left" Margin="797,574,0,0" x:Name="Save" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
-            <Button Content="Load" FontFamily="Consolas" Height="29" HorizontalAlignment="Left" Margin="111,240,0,0" x:Name="Load" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
-            <Label Name="Parameters" Content="Parameters" HorizontalAlignment="Left" Margin="320,57,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"/>
-            <Label Name="Grid" Content="Grid" HorizontalAlignment="Left" Margin="156,57,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"/>
-            <TabControl TabStripPlacement="Top" Name="TabControl1" HorizontalAlignment="Left" Height="130" Margin="90,90,0,0" VerticalAlignment="Top" Width="168">
+            <Button Content="Load file" FontFamily="Consolas" Height="29" HorizontalAlignment="Left" Margin="139,250,0,0" x:Name="Load" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
+            <Label Name="Parameters" Content="Parameters" HorizontalAlignment="Left" Margin="90,61,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"/>
+            <TabControl TabStripPlacement="Top" Name="TabControl1" HorizontalAlignment="Left" Height="150" Margin="90,90,0,0" VerticalAlignment="Top" Width="363">
                 <TabItem Header="Default" Margin="-2,-4,-33,0" RenderTransformOrigin="0.5,0.5" TabIndex="0">
-                    <Grid Background="Transparent" Height="98" Margin="2,0,0,0" >
+                    <Grid Background="Transparent" Height="115" Margin="2,0,9,0" >
                         <Label Content="E[m]&#x0a;&#x0a;x[m]&#x0a;&#x0a; Δη&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="81" Width="55" FontFamily="Consolas" Margin="1,6,0,0"/>
                         <Label Content="y[m]&#x0a;&#x0a;θ[°]&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="59" FontFamily="Consolas" Margin="78,6,0,0"/>
                         <TextBox Text="10" Name="E1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
                         <TextBox Text="65" Name="x11" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="40" Name="y11" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="113,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="5,352" Name="theta1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="113,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <Button Content="Load Grid" HorizontalAlignment="Left" Margin="78,66,0,0" VerticalAlignment="Top" Width="80" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="LoadGrid"/>
-                        <TextBox Text="0,025" x:Name="dEta1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontFamily="Consolas"/>
+                        <TextBox Text="40" Name="H1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="5,352" Name="theta1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="0,025" x:Name="dEta1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="114,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontFamily="Consolas"/>
+                        <TextBox Text="101000" Name="p1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="194,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="1,23" Name="rho1" TextAlignment="Center" HorizontalAlignment="Left" Height="16" Margin="194,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="286,1" Name="T1" TextAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="194,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="2" Name="M1" TextAlignment="Center" HorizontalAlignment="Left" Height="16" Margin="195,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="287" Name="R1" TextAlignment="Center" HorizontalAlignment="Left" Height="16" Margin="114,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="1,4" Name="gamma1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="113,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="0,5" Name="C1" TextAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="114,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <TextBox Text="678" Name="u1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="276,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontFamily="Consolas"/>
+                        <TextBox Text="0" x:Name="v1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="276,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontFamily="Consolas"/>
+                        <TextBox Text="0,5" x:Name="Cy1" TextAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="275,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                        <Button Content="Load Grid" HorizontalAlignment="Left" Margin="256,83,0,0" VerticalAlignment="Top" Width="80" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="LoadGrid"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Custom" Margin="32,-3,-63,0" TabIndex="1">
-                    <Grid Background="Transparent" Height="98" Margin="2,0,1,0" >
-                        <Label Content="E[m]&#x0a;&#x0a;x[m]&#x0a;&#x0a;Δη&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="81" Width="55" FontFamily="Consolas" Margin="1,6,0,0"/>
-                        <Label Content="y[m]&#x0a;&#x0a;θ[°]&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="59" FontFamily="Consolas" Margin="78,6,0,0"/>
-                        <TextBox Name="E2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="x22" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="y22" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="113,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Name="theta2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="113,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <Button Content="Load Grid" HorizontalAlignment="Left" Margin="78,66,0,0" VerticalAlignment="Top" Width="80" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Click="LoadGrid"/>
-                        <TextBox x:Name="dEta2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="35,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontFamily="Consolas"/>
-                    </Grid>
-                </TabItem>
-            </TabControl>
-            <TabControl TabStripPlacement="Top" Name="TabControl2" HorizontalAlignment="Left" Height="179" Margin="290,90,0,0" VerticalAlignment="Top" Width="136">
-                <TabItem Header="Default" Margin="-2,-2,-13,0">
-                    <Grid Background="Transparent" Height="162" Margin="0,0,7,0" >
-                        <Label Content="p&#x0a;&#x0a;ρ&#x0a;&#x0a;T&#x0a;&#x0a;M&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="113" Width="22" FontFamily="Consolas" Margin="0,6,0,0"/>
-                        <Label Content="R&#x0a;&#x0a;γ&#x0a;&#x0a;E&#x0a;&#x0a;θ&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="111" FontFamily="Consolas" Margin="62,6,0,0"/>
-                        <TextBox Text="101000" Name="p1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="1,23" Name="rho1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="286,1" Name="T1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="2" Name="M1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="287" Name="R1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="1,4" Name="gamma1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox Text="10" Name="E14" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
-                        <TextBox Text="5,352" x:Name="theta112" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
-                        <Button Content="Calculate" HorizontalAlignment="Left" Margin="26,122,0,0" VerticalAlignment="Top" Width="80" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="Black" Foreground="Black" FontWeight="Bold"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Custom" Margin="13,-2,-31,0" >
-                    <Grid Background="Transparent" Height="162"  Margin="0,0,7,0">
-                        <Label Content="p&#x0a;&#x0a;ρ&#x0a;&#x0a;T&#x0a;&#x0a;M&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="113" Width="22" FontFamily="Consolas" Margin="0,6,0,0"/>
-                        <Label Content="R&#x0a;&#x0a;γ&#x0a;&#x0a;E&#x0a;&#x0a;θ&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Height="111" FontFamily="Consolas" Margin="62,6,0,0"/>
-                        <TextBox x:Name="p2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox x:Name="rho2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox x:Name="T2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox x:Name="M2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="18,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox x:Name="R2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox x:Name="gamma2" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                        <TextBox x:Name="E2123" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
-                        <TextBox x:Name="theta222" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="81,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas" RenderTransformOrigin="0.459,0.941"/>
-                        <Button Content="Calculate" HorizontalAlignment="Left" Margin="26,122,0,0" VerticalAlignment="Top" Width="80" Height="27" FontFamily="Consolas" Background="#00000000" BorderBrush="Black" Foreground="Black" FontWeight="Bold"/>
-                    </Grid>
                 </TabItem>
             </TabControl>
             <RadioButton Content="u" HorizontalAlignment="Left" Margin="752,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" IsChecked="True" Visibility="Visible"/>
-            <RadioButton Content="v" HorizontalAlignment="Left" Margin="791,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
+            <RadioButton Content="v" HorizontalAlignment="Left" Margin="791,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="RadioButton_Checked"/>
             <RadioButton Content="ρ" HorizontalAlignment="Left" Margin="829,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
             <RadioButton Content="p" HorizontalAlignment="Left" Margin="866,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
             <RadioButton Content="T" HorizontalAlignment="Left" Margin="903,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible"/>
