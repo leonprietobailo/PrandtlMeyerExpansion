@@ -122,6 +122,9 @@
         <Grid x:Name="AboutUs" Margin="49,95,49,29" Visibility="Hidden">
             <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="This simulator has been developed by León Prieto and Verónica Sastre in 2021&#x0a;&#x0a;Simulation Course&#x0a;&#x0a;Aerospace Systems Engineering (EETAC)&#x0a;&#x0a;veronica.sastre@estudiantat.upc.edu&#x0a;leon.enrique.prieto@estudiantat.upc.edu" x:Name="AboutUsText" Margin="0,164,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="394" Height="168" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Validation" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="923,36,0,0" x:Name="Validation" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="aboutUs_Click" />
+        <Grid x:Name="Validation" Margin="49,95,49,29" Visibility="Hidden">
+            <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" x:Name="Validation1" Margin="0,164,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="394" Height="168" VerticalAlignment="Top" Background="#00000000"/>
+        </Grid>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Validation" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="923,36,0,0" x:Name="ValidationButton" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="ValidationButton_Click" />
     </Grid>
 </Window>
