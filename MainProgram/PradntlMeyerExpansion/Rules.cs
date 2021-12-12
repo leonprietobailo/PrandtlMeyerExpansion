@@ -71,7 +71,5 @@ namespace PradntlMeyerExpansion
         public double getCourant() { return Courant0; }
         public double getE() { return E0; }
         public double getTheta() { return theta0; }
-
-
     }
 }
