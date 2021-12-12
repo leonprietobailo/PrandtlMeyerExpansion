@@ -9,11 +9,11 @@
         Title="Prandtl Meyer Expansion Simulator" Height="770" Width="1460" Background="#FF232323" Icon="/Airfoil.png" ResizeMode="CanMinimize" >
     <Grid Margin="0,0,0,-6">
         <Label HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Prandtl Meyer&#x0a;Expansion Simulator" x:Name="label1" Margin="98,41,0,0" FontSize="25" FontFamily="Consolas" Foreground="White" BorderBrush="#FF262626" FontWeight="Bold"  Width="298" Height="94" VerticalAlignment="Top" Background="#00000000" RenderTransformOrigin="0.874,0.957"/>
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Introduction" FontFamily="Consolas" Height="26" HorizontalAlignment="Left" Margin="604,36,0,0" x:Name="topic" VerticalAlignment="Top" Width="126" Click="lntro_Click" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Background="Transparent" />
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Simulation" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="762,36,0,0" x:Name="simulation" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Simualtion_Click" />
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Introduction" FontFamily="Consolas" Height="26" HorizontalAlignment="Left" Margin="410,35,0,0" x:Name="topic" VerticalAlignment="Top" Width="126" Click="lntro_Click" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Background="Transparent" />
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Simulation" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="582,35,0,0" x:Name="simulation" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Simualtion_Click" />
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="About us" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="1265,38,0,0" x:Name="aboutUs" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="aboutUs_Click" />
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Video Tutorial" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="1091,36,0,0" x:Name="vTutorial" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="vTutorial_Click" />
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Estudio" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="378,31,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="estudio_Click" />
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Estudio" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="920,36,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="estudio_Click" />
         <Grid x:Name="Introduction" Margin="49,95,49,29" Visibility="hidden">
             <TextBlock FontSize="15" TextAlignment="Justify" TextWrapping="Wrap" Text="The Prandtl-Meyer expansion is the process that occurs when a supersonic flow turns around a convex corner, forming a divergent fan consisting of an infinite number of Mach waves. Across the expansion fan, the flow accelerates so, the Mach number increases and the static pressure, temperature and density decreases. Since the flow turns in small angles and the changes across each expansion wave are small, the whole process is isentropic. Due to the fact that the whole process is isentropic, the stagnation pressure, temperature and density remain constant across the fan.&#x0a;&#x0a;The space marching technique that will be applied for the solution of the two-dimensional supersonic flow problem is MacCormack's. It is a second order discretization scheme for the numerical solution of hyperbolic partial differential equations." x:Name="text1" Margin="163,0,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" Width="395" Height="370" VerticalAlignment="Center" Background="#00000000"/>
             <Image HorizontalAlignment="Left" Height="460" Margin="622,66,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
@@ -104,7 +104,7 @@
         <Grid x:Name="AboutUs" Margin="49,95,49,29" Visibility="Hidden">
             <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="This simulator has been developed by León Prieto and Verónica Sastre in 2021&#x0a;&#x0a;Simulation Course&#x0a;&#x0a;Aerospace Systems Engineering (EETAC)&#x0a;&#x0a;veronica.sastre@estudiantat.upc.edu&#x0a;leon.enrique.prieto@estudiantat.upc.edu" x:Name="AboutUsText" Margin="0,164,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="394" Height="168" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
-        <Grid x:Name="EstudioAvanzado" Margin="49,95,49,29" Visibility="Visible">
+        <Grid x:Name="EstudioAvanzado" Margin="49,95,49,29" Visibility="hidden">
             <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="74,41,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
             <lvc:CartesianChart Name="Chart1" Margin="134,74,890,283" FontFamily="Consolas" LegendLocation="Right">
                 <lvc:CartesianChart.AxisX>
@@ -123,14 +123,14 @@
                 </lvc:CartesianChart.Series>-->
             </lvc:CartesianChart>
         </Grid>
-        <Grid x:Name="Validation" Margin="49,95,49,29" Visibility="Hidden">
-            <RadioButton Content="u" HorizontalAlignment="Left" Margin="412,62,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="u_Checked"/>
-            <RadioButton Content="v" HorizontalAlignment="Left" Margin="450,62,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="v_Checked"/>
-            <RadioButton Content="ρ" HorizontalAlignment="Left" Margin="488,62,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rho_Checked"/>
-            <RadioButton Content="p" HorizontalAlignment="Left" Margin="526,62,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="p_Checked"/>
-            <RadioButton Content="T" HorizontalAlignment="Left" Margin="562,62,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="T_Checked"/>
-            <RadioButton Content="M" HorizontalAlignment="Left" Margin="596,62,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="M_Checked"/>
-            <DataGrid HorizontalAlignment="Left" Height="512" Margin="104,94,0,0" VerticalAlignment="Top" Width="832" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
+        <Grid x:Name="Validation" Margin="49,95,49,29" Visibility="visible">
+            <RadioButton Name="Utable" Content="u" HorizontalAlignment="Left" Margin="447,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
+            <RadioButton Content="v" HorizontalAlignment="Left" Margin="485,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
+            <RadioButton Content="ρ" HorizontalAlignment="Left" Margin="523,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rhoTable_Checked"/>
+            <RadioButton Content="p" HorizontalAlignment="Left" Margin="561,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
+            <RadioButton Content="T" HorizontalAlignment="Left" Margin="597,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
+            <RadioButton Content="M" HorizontalAlignment="Left" Margin="631,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
+            <DataGrid HorizontalAlignment="Left" Height="484" Margin="82,94,0,0" VerticalAlignment="Top" Width="761" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
                         <Border Background="#FF262626"/>
@@ -222,16 +222,16 @@
                             </Trigger>
                         </Style.Triggers>
                     </Style>
-                    <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <!--<LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="#FF6B8E95" Offset="0"/>
                         <GradientStop Color="#FF14A7C1" Offset="1"/>
                         <GradientStop Color="#FF1E424E" Offset="0.509"/>
                         <GradientStop Color="#FF1D4855" Offset="0.542"/>
                         <GradientStop Color="#FF1D4855" Offset="0.542"/>
                         <GradientStop Color="#FF193A44" Offset="0.526"/>
-                    </LinearGradientBrush>
+                    </LinearGradientBrush>-->
                     <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
+                        <!--<Setter Property="Background" Value="{StaticResource HeaderBrush}" />-->
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="BorderBrush" Value="White"/>
@@ -258,7 +258,136 @@
                     </Style>
                 </DataGrid.CellStyle>
             </DataGrid>
+
+            <DataGrid HorizontalAlignment="Left" Height="484" Margin="928,94,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
+                <DataGrid.Resources>
+                    <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
+                        <Border Background="#FF262626"/>
+                    </ControlTemplate>
+                    <Style x:Key="scroll_thumb_style" TargetType="{x:Type Thumb}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="OverridesDefaultStyle" Value="true"/>
+                        <Setter Property="IsTabStop" Value="false"/>
+                        <Setter Property="Focusable" Value="false"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Rectangle Width="10" Fill="#7D7D7D" RadiusX="5" RadiusY="5"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="scroll_thumb_stylecrosswise" TargetType="{x:Type Thumb}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="OverridesDefaultStyle" Value="true"/>
+                        <Setter Property="IsTabStop" Value="false"/>
+                        <Setter Property="Focusable" Value="false"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Rectangle  Fill="#7D7D7D" RadiusX="5" RadiusY="5"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="{x:Type ScrollBar}">
+                        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+                        <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                        <Setter Property="Width" Value="10"/>
+                        <Setter Property="MinWidth" Value="10"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                    <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="#7FBFBFBF">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.00001*"/>
+                                        </Grid.RowDefinitions>
+                                        <Track HorizontalAlignment="Center" x:Name="PART_Track" Width="{TemplateBinding Width}" Maximum="{TemplateBinding Maximum}" Minimum="{TemplateBinding Minimum}"
+                                    Value="{TemplateBinding Value}"  IsDirectionReversed="true">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineUpCommand"  />
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineDownCommand" />
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb Style="{StaticResource scroll_thumb_style}" />
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Width" Value="Auto"/>
+                                <Setter Property="MinWidth" Value="0"/>
+                                <Setter Property="Height" Value="10"/>
+                                <Setter Property="MinHeight" Value="10"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                            <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="#7FA7A7A7">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="0.00001*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Track x:Name="PART_Track" Grid.Column="1" IsEnabled="{TemplateBinding IsMouseOver}">
+                                                    <Track.DecreaseRepeatButton>
+                                                        <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineUpCommand"  />
+                                                    </Track.DecreaseRepeatButton>
+                                                    <Track.IncreaseRepeatButton>
+                                                        <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineDownCommand" />
+                                                    </Track.IncreaseRepeatButton>
+                                                    <Track.Thumb>
+                                                        <Thumb  Style="{DynamicResource scroll_thumb_stylecrosswise}" Height="8"/>
+                                                    </Track.Thumb>
+                                                </Track>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <!--<LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#FF6B8E95" Offset="0"/>
+                        <GradientStop Color="#FF14A7C1" Offset="1"/>
+                        <GradientStop Color="#FF1E424E" Offset="0.509"/>
+                        <GradientStop Color="#FF1D4855" Offset="0.542"/>
+                        <GradientStop Color="#FF1D4855" Offset="0.542"/>
+                        <GradientStop Color="#FF193A44" Offset="0.526"/>
+                    </LinearGradientBrush>-->
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <!--<Setter Property="Background" Value="{StaticResource HeaderBrush}" />-->
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="BorderBrush" Value="White"/>
+                        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type DataGridRowHeader}}" TargetType="{x:Type DataGridRowHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="BorderBrush" Value="white"/>
+                        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.CellStyle >
+                    <Style TargetType="{x:Type DataGridCell}" x:Name="cellStyle2">
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF6B8E95"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
         </Grid>
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Validation" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="923,36,0,0" x:Name="ValidationButton" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Validation_Click" />
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Validation" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="747,35,0,0" x:Name="ValidationButton" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Validation_Click" />
     </Grid>
 </Window>

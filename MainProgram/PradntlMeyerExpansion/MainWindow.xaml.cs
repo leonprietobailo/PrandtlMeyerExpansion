@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,7 +35,8 @@ namespace PradntlMeyerExpansion
 
         public SeriesCollection SeriesCollection;
 
-        DataTable InfoTable=new DataTable();
+        DataTable UTable=new DataTable();
+        DataTable AndersonTable = new DataTable();
         public MainWindow()
         {
             InitializeComponent();
@@ -144,26 +146,8 @@ namespace PradntlMeyerExpansion
             EstudioAvanzada.Foreground = Brushes.White;
             EstudioAvanzado.Visibility = Visibility.Hidden;
 
-            //for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            //{
-            //    InfoTable.Columns.Add(Convert.ToString(i));
-            //}
-            
-            //InfoTable.Columns.Add("0");
-            //for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            //{
-            //    //for (int j = 0; j < divisionesy; j++)
-            //    for (int j = (divisionesy - 1); j > -1; j--)
-            //    {
-                    
-
-            //    }
-            //}
-
-
-            //InfoTable.Rows.Add("", typeof(int));
-
-            gridData.DataContext = InfoTable.DefaultView;
+            Utable.IsChecked = true;
+           
         }
 
         private void vTutorial_Click(object sender, RoutedEventArgs e)
@@ -355,28 +339,71 @@ namespace PradntlMeyerExpansion
             uRB.IsChecked = true;
         }
 
+        private void CreateUTable()
+        {
+            UTable.Columns.Add("");
+            for (int j = 0; j < divisionesy; j++)
+            {
+                DataRow row = UTable.NewRow();
+                row[0] = j+1;
+                UTable.Rows.Add(row);
+            }
+        }
+
+        private void CreateUTableAnderson()
+        {
+            List<double> columna19 = new List<double> {678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678,678, 678, 679,683,691,701,707};
+            List<double> columna88 = new List<double> { 678, 678, 678, 679, 679, 680, 681, 683, 685, 688, 690, 693, 696, 699, 702, 705, 707, 709, 711, 713, 713, 713, 712, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 710,705 };
+            AndersonTable.Columns.Add("");
+            for (int j = 0; j < divisionesy; j++)
+            {
+                DataRow row = AndersonTable.NewRow();
+                row[0] = j+1;
+                AndersonTable.Rows.Add(row);
+            }
+            AndersonTable.Columns.Add("19");
+            AndersonTable.Columns.Add("88");
+            for (int j = 0; j < divisionesy; j++)
+            {
+                DataRow row = AndersonTable.Rows[j];
+                row["19"] = columna88[j];
+                row["88"] = columna88[j];
+            }
+        }
+
         private void u_Checked(object sender, RoutedEventArgs e)
         {
+            CreateUTable();
+            CreateUTableAnderson();
             double maxvalue = -100000000;
             double minvalue = 100000000;
 
+            List<double> test = new List<double>();
+            test = mesh.GetXP();
+
+
+            double uValue;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 for (int j = 0; j < divisionesy; j++)
                 {
-                    if (mesh.GetCell(j, i).getU() > maxvalue)
+                    uValue = mesh.GetCell(j, i).getU();
+                    if (uValue > maxvalue)
                     {
-                        maxvalue = mesh.GetCell(j, i).getU();
+                        maxvalue = uValue;
                     }
 
-                    if (mesh.GetCell(j, i).getU() < minvalue)
+                    if (uValue < minvalue)
                     {
-                        minvalue = mesh.GetCell(j, i).getU();
+                        minvalue = uValue;
                     }
                 }
             }
+            int y = 0;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
+                y = 0;
+                UTable.Columns.Add(Convert.ToString(i+1));
                 //for (int j = 0; j < divisionesy; j++)
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
@@ -404,9 +431,19 @@ namespace PradntlMeyerExpansion
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
                     Polygons[i,j].Fill = mySolidColorBrush;
+
+                    DataRow row = UTable.Rows[y];
+                    row[Convert.ToString(i+1)] = Math.Round(mesh.GetCell(j, i).getU(), 4);
+                    y++;
                 }
             }
         }
+        private void uTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.DataContext = UTable.DefaultView;
+            gridAndersonData.DataContext = AndersonTable.DefaultView;
+        }
+
 
         private void v_Checked(object sender, RoutedEventArgs e)
         {
@@ -626,8 +663,6 @@ namespace PradntlMeyerExpansion
             }
         }
 
-
-
         private void M_Checked(object sender, RoutedEventArgs e)
         {
             double maxvalue = -100000000;
@@ -680,6 +715,33 @@ namespace PradntlMeyerExpansion
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+        }
+
+
+
+        private void vTable_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rhoTable_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void pTable_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TTable_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MTable_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
         private void polygon_MouseEnter(object sender, MouseEventArgs e)
         {
