@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
+using LiveCharts.Defaults;
 
 namespace PradntlMeyerExpansion
 {
@@ -26,13 +27,21 @@ namespace PradntlMeyerExpansion
         Polygon[,] Polygons;
 
         //Gráficas
-        ChartValues<double> Values = new ChartValues<double>();
-        ChartValues<double> BoundaryValues = new ChartValues<double>();
+        //ChartValues<double> Values = new ChartValues<double>();
+        //ChartValues<double> BoundaryValues = new ChartValues<double>();
+
+        //Estudio avanzado
+        ChartValues<ObservablePoint> uEVOList = new ChartValues<ObservablePoint>();
+        ChartValues<ObservablePoint> vEVOList = new ChartValues<ObservablePoint>();
+        ChartValues<ObservablePoint> roEVOList = new ChartValues<ObservablePoint>();
+        ChartValues<ObservablePoint> pEVOList = new ChartValues<ObservablePoint>();
+        ChartValues<ObservablePoint> TEVOList = new ChartValues<ObservablePoint>();
+        ChartValues<ObservablePoint> MEVOList = new ChartValues<ObservablePoint>();
 
         //Colores
         SolidColorBrush color = new SolidColorBrush();
 
-        public SeriesCollection SeriesCollection;
+        public SeriesCollection SeriesCollection, uCollection, vCollection, roCOllection, pCollection, TCollection, MCollection;
 
         DataTable InfoTable=new DataTable();
         public MainWindow()
@@ -68,11 +77,11 @@ namespace PradntlMeyerExpansion
             Simulation.Children.Add(plano);
 
             //Establecemos los valores del gráfico //Canbiaaar
-            Values.Add(1.3);
-            Values.Add(3);
-            BoundaryValues.Add(3);
-            BoundaryValues.Add(1.3);
-            setChartNumbers();
+            //Values.Add(1.3);
+            //Values.Add(3);
+            //BoundaryValues.Add(3);
+            //BoundaryValues.Add(1.3);
+            //setChartNumbers();
             //r = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
         }
 
@@ -233,6 +242,10 @@ namespace PradntlMeyerExpansion
             aboutUs.Foreground = Brushes.White;
             EstudioAvanzada.BorderBrush = color;
             EstudioAvanzada.Foreground = color;
+
+            computeEvolutionChange();
+            setChartNumbers();
+
         }
         private void LoadGrid(object sender, RoutedEventArgs e)
         {
@@ -626,7 +639,23 @@ namespace PradntlMeyerExpansion
             }
         }
 
-
+        private void computeEvolutionChange()
+        {
+            for(double theta = 10; theta >= 0; theta -= 0.1) // De - 10 grados a 0 grados.
+            {
+                double uEVO, vEVO, roEVO, pEVO, TEVO, MEVO;
+                Rules rEVO = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, theta * Math.PI / 180, 41, 65, 40, 0.5);
+                Grid gEVO = new Grid(rEVO);
+                gEVO.PrandtlMeyerExpansion();
+                (uEVO, vEVO, roEVO, pEVO, TEVO, MEVO) = gEVO.getDownstream();
+                uEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(uEVO, 4))));
+                vEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(vEVO, 4))));
+                roEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(roEVO, 4))));
+                pEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(pEVO, 4))));
+                TEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(TEVO, 4))));
+                MEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(MEVO, 4))));
+            }
+        }
 
         private void M_Checked(object sender, RoutedEventArgs e)
         {
@@ -706,28 +735,79 @@ namespace PradntlMeyerExpansion
 
         private void setChartNumbers()
         {
-            SeriesCollection = new SeriesCollection
+            uCollection = new SeriesCollection
             {
-                //Gráfica de fase, con sus propiedades
                 new LineSeries
                 {
-                    Values = Values,
+                    Values = uEVOList,
                     ScalesYAt = 0,
                     Stroke = new SolidColorBrush(Color.FromRgb(75, 75, 255)),
                     Fill = Brushes.Transparent,
-                    Title = "Inside"
-                },
+                    
 
-                new LineSeries
-                {
-                    Values = BoundaryValues,
-                    ScalesYAt = 0,
-                    Stroke = new SolidColorBrush(Color.FromRgb(255, 75, 75)),
-                    Fill = Brushes.Transparent,
-                    Title = "Boundary"
                 }
             };
-            Chart1.Series = SeriesCollection;
+
+            vCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Values = vEVOList,
+                    ScalesYAt = 0,
+                    Stroke = new SolidColorBrush(Color.FromRgb(75, 75, 255)),
+                    Fill = Brushes.Transparent,
+                }
+            };
+
+            roCOllection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Values = roEVOList,
+                    ScalesYAt = 0,
+                    Stroke = new SolidColorBrush(Color.FromRgb(75, 75, 255)),
+                    Fill = Brushes.Transparent,
+                }
+            };
+
+            pCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Values = pEVOList,
+                    ScalesYAt = 0,
+                    Stroke = new SolidColorBrush(Color.FromRgb(75, 75, 255)),
+                    Fill = Brushes.Transparent,
+                }
+            };
+
+            TCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Values = TEVOList,
+                    ScalesYAt = 0,
+                    Stroke = new SolidColorBrush(Color.FromRgb(75, 75, 255)),
+                    Fill = Brushes.Transparent,
+                }
+            };
+
+            MCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Values = MEVOList,
+                    ScalesYAt = 0,
+                    Stroke = new SolidColorBrush(Color.FromRgb(75, 75, 255)),
+                    Fill = Brushes.Transparent,
+                }
+            };
+            uChart.Series = uCollection;
+            vChart.Series = vCollection;
+            roChart.Series = roCOllection;
+            pChart.Series = pCollection;
+            Tchart.Series = TCollection;
+            Mchart.Series = MCollection;
         }
     }
 }

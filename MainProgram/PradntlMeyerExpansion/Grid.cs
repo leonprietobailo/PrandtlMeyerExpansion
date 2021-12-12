@@ -98,6 +98,12 @@ namespace PradntlMeyerExpansion
             dXi = r.getCourant() * dy / MaximumValue;
         }
 
+        public (double u, double v, double ro, double p , double T, double M) getDownstream()
+        {
+            Cell ret = Mesh[Mesh.Count - 1][0];
+            return (ret.getU(), ret.getV(), ret.getRO(), ret.getP(), ret.getT(), ret.getM());
+        }
+
 
         public Cell GetCell(int ve, int ho) { return Mesh[ho][ve]; }
 
