@@ -94,7 +94,6 @@ namespace PradntlMeyerExpansion
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
-            EstudioAvanzado.Visibility = Visibility.Hidden;
 
             topic.BorderBrush = color;
             topic.Foreground = color;
@@ -117,7 +116,6 @@ namespace PradntlMeyerExpansion
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
-            EstudioAvanzado.Visibility = Visibility.Hidden;
 
             topic.BorderBrush = Brushes.White;
             topic.Foreground = Brushes.White;
@@ -153,7 +151,6 @@ namespace PradntlMeyerExpansion
             aboutUs.Foreground = Brushes.White;
             EstudioAvanzada.BorderBrush = Brushes.White;
             EstudioAvanzada.Foreground = Brushes.White;
-            EstudioAvanzado.Visibility = Visibility.Hidden;
 
             Utable.IsChecked = true;
            
@@ -166,7 +163,6 @@ namespace PradntlMeyerExpansion
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Visible;
             AboutUs.Visibility = Visibility.Hidden;
-            EstudioAvanzado.Visibility = Visibility.Hidden;
 
             topic.BorderBrush = Brushes.White;
             topic.Foreground = Brushes.White;
@@ -189,7 +185,6 @@ namespace PradntlMeyerExpansion
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Visible;
-            EstudioAvanzado.Visibility = Visibility.Hidden;
 
             topic.BorderBrush = Brushes.White;
             topic.Foreground = Brushes.White;
@@ -208,11 +203,13 @@ namespace PradntlMeyerExpansion
         private void estudio_Click(object sender, RoutedEventArgs e)
         {
             Introduction.Visibility = Visibility.Hidden;
-            Simulation.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Visible;
+            EstudioAvanzado.Visibility = Visibility.Visible;
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
-            EstudioAvanzado.Visibility = Visibility.Visible;
+            Grids.Visibility= Visibility.Hidden;
+            plano.Visibility = Visibility.Hidden;
 
             topic.BorderBrush = Brushes.White;
             topic.Foreground = Brushes.White;
@@ -226,13 +223,40 @@ namespace PradntlMeyerExpansion
             aboutUs.Foreground = Brushes.White;
             EstudioAvanzada.BorderBrush = color;
             EstudioAvanzada.Foreground = color;
+            Grid.BorderBrush = Brushes.White;
+            Grid.Foreground = Brushes.White;
 
             computeEvolutionChange();
             setChartNumbers();
 
         }
+
+        private void Grid_Click(object sender, RoutedEventArgs e)
+        {
+            Grid.BorderBrush = color;
+            Grid.Foreground = color;
+            EstudioAvanzada.BorderBrush = Brushes.White;
+            EstudioAvanzada.Foreground = Brushes.White;
+            Grids.Visibility = Visibility.Visible;
+            plano.Visibility = Visibility.Visible;
+            EstudioAvanzado.Visibility = Visibility.Hidden;
+
+
+        }
         private void LoadGrid(object sender, RoutedEventArgs e)
         {
+            RunSim.IsEnabled = true;
+            Grid.IsEnabled = false;
+            EstudioAvanzada.IsEnabled = false;
+            EstudioAvanzada.BorderBrush = Brushes.White;
+            EstudioAvanzada.Foreground = Brushes.White;
+            Grid.BorderBrush = Brushes.White;
+            Grid.Foreground = Brushes.White;
+            Grids.Visibility = Visibility.Hidden;
+            plano.Visibility = Visibility.Visible;
+            EstudioAvanzado.Visibility = Visibility.Hidden;
+
+
             plano.Children.Clear();
 
             double u = Convert.ToDouble(u1.Text);
@@ -302,7 +326,13 @@ namespace PradntlMeyerExpansion
             }
         }
         private void Run_Click(object sender, RoutedEventArgs e)
-        {
+        { 
+            Grid.IsEnabled = true;
+            EstudioAvanzada.IsEnabled = true;
+
+            Grid.BorderBrush = color;
+            Grid.Foreground = color;
+            Grids.Visibility = Visibility.Visible;
             plano.Children.Clear();
             mesh = new Grid(r);
             mesh.PrandtlMeyerExpansion();
@@ -675,6 +705,7 @@ namespace PradntlMeyerExpansion
                 }
             }
         }
+
 
         private void computeEvolutionChange()
         {
