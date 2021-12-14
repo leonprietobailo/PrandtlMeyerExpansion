@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace PradntlMeyerExpansion
@@ -110,6 +111,23 @@ namespace PradntlMeyerExpansion
         //public int GetHorizontalPoints() { return ho; }
         public List<double[]> GetYP() { return yP; }
         public List<double> GetXP() { return xP; }
+
+        public void data()
+        {
+            FileStream emptyFile = File.Create("test.txt");
+            emptyFile.Close();
+            for (int i=0;i<Mesh[0].Length;i++)
+            {
+                File.AppendAllText("text.txt", Convert.ToString(Mesh[18][i].getM()));
+                File.AppendAllText("text.txt", "\n");
+            }
+            File.AppendAllText("text.txt", "\n");
+            for (int i = 0; i < Mesh[0].Length; i++)
+            {
+                File.AppendAllText("text.txt", Convert.ToString(Mesh[Mesh.Count-1][i].getM()));
+                File.AppendAllText("text.txt", "\n");
+            }
+        }
 
     }
 }
