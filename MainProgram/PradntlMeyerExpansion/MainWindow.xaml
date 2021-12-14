@@ -44,16 +44,16 @@
             <Button Content="START" HorizontalAlignment="Left" Margin="313,494,0,0" VerticalAlignment="Top" FontFamily="Consolas" FontSize="40" Background="Transparent" Foreground="White" BorderBrush="White" FontWeight="Bold" BorderThickness="3,3,3,3" Height="87" Width="154" Click="Simualtion_Click"/>
             <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
         </Grid>
-        <Grid x:Name="Simulation" Margin="0,70,0,0" Visibility="Visible">
-            <Grid x:Name="EstudioAvanzado" Margin="329,0,60,10" Visibility="hidden">
+        <Grid x:Name="Simulation" Margin="0,70,0,0" Visibility="hidden">
+            <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="510*"/>
                     <ColumnDefinition Width="611*"/>
                 </Grid.ColumnDefinitions>
-                <Label HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398">
+                <Label HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398">
                     <Label Content="Horizontal Velocity Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
                 </Label>
-                <lvc:CartesianChart Name="uChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,28,0,0" FontFamily="Consolas" Width="330" Height="284">
+                <lvc:CartesianChart Name="uChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,70,0,0" FontFamily="Consolas" Width="330" Height="284">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White">
                         </lvc:Axis>
@@ -79,7 +79,7 @@
                 </lvc:CartesianChart.Series>-->
                 </lvc:CartesianChart>
 
-                <lvc:CartesianChart x:Name="vChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="404,27,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
+                <lvc:CartesianChart x:Name="vChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="404,69,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
                     </lvc:CartesianChart.AxisX>
@@ -104,7 +104,7 @@
                     <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
                 </lvc:CartesianChart.Series>-->
                 </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="pChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="44,342,0,0" FontFamily="Consolas" Height="285" Width="330">
+                <lvc:CartesianChart x:Name="pChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,388,0,0" FontFamily="Consolas" Height="285" Width="355">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
                     </lvc:CartesianChart.AxisX>
@@ -129,7 +129,7 @@
                     <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
                 </lvc:CartesianChart.Series>-->
                 </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="Tchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,338,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
+                <lvc:CartesianChart x:Name="Tchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,384,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
                     <!--<lvc:CartesianChart.Series>
                     <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
                 </lvc:CartesianChart.Series>-->
@@ -151,7 +151,7 @@
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="roChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,27,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
+                <lvc:CartesianChart x:Name="roChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,71,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
                     <lvc:CartesianChart.Series>
                         <!--<lvc:LineSeries/>-->
                         <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
@@ -176,7 +176,7 @@
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="Mchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,339,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
+                <lvc:CartesianChart x:Name="Mchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,385,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
                     <!--<lvc:CartesianChart.Series>
                     <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
                 </lvc:CartesianChart.Series>-->
@@ -199,19 +199,19 @@
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
-                <Label Content="Vertical Velocity Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="375,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
-                <Label Content="Density Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
-                <Label Content="Pressure Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="19,325,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
-                <Label Content="Temperature Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="368,323,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
-                <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="227,324,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
+                <Label Content="Vertical Velocity Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="375,30,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
+                <Label Content="Density Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="252,28,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
+                <Label Content="Pressure Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="15,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
+                <Label Content="Temperature Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="392,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
+                <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="243,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
             </Grid>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,540,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="estudio_Click" IsEnabled="false">
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,540,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="estudio_Click" IsEnabled="false">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
                     <Image Width="54"  Height="63" Margin="7,-25,0,0" Source="/Research.png"  />
                     <Label Content="Research" Margin="-100,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="67" Height="42"/>
                 </DockPanel>
             </Button>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,540,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Grid_Click" IsEnabled="false">
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,540,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Grid_Click" IsEnabled="false">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
                     <Image Width="63"  Height="73" Margin="1,-25,0,0" Source="/Grid.png"   />
                     <Label Content="Canvas" Margin="-105,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
@@ -280,7 +280,7 @@
                     <Label x:Name="xData" HorizontalAlignment="Left" Margin="21,327,0,0" VerticalAlignment="Top" Foreground="White" Width="109"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="42" FontSize="20"/>
                     <Label x:Name="yData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="21,374,0,0" Width="109"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41" FontSize="20"/>
                 </Grid>
-                <Button  x:Name="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="80" HorizontalAlignment="Left" Margin="1050,600,0,0" VerticalAlignment="Top" Width="80"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25">
+                <Button  x:Name="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="80" HorizontalAlignment="Left" Margin="1000,600,0,0" VerticalAlignment="Top" Width="80"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25">
                     <DockPanel Width="85" Height="75" Margin="0,0,0,0">
                         <Image Width="85" Margin="0,0,0,0" Source="/CSV.png"  />
                     </DockPanel>
@@ -323,13 +323,13 @@
             <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="This simulator has been developed by León Prieto and Verónica Sastre in 2021&#x0a;&#x0a;Simulation Course&#x0a;&#x0a;Aerospace Systems Engineering (EETAC)&#x0a;&#x0a;veronica.sastre@estudiantat.upc.edu&#x0a;leon.enrique.prieto@estudiantat.upc.edu" x:Name="AboutUsText" Margin="0,164,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="394" Height="168" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
 
-        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="Hidden">
-            <RadioButton Name="Utable" Content="u" HorizontalAlignment="Left" Margin="447,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
-            <RadioButton Content="v" HorizontalAlignment="Left" Margin="485,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
-            <RadioButton Content="ρ" HorizontalAlignment="Left" Margin="523,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rhoTable_Checked"/>
-            <RadioButton Content="p" HorizontalAlignment="Left" Margin="561,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
-            <RadioButton Content="T" HorizontalAlignment="Left" Margin="597,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
-            <RadioButton Content="M" HorizontalAlignment="Left" Margin="631,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
+        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="visible">
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Name="Utable" Content="u" HorizontalAlignment="Left" Margin="447,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="v" HorizontalAlignment="Left" Margin="485,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="ρ" HorizontalAlignment="Left" Margin="523,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rhoTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="p" HorizontalAlignment="Left" Margin="561,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="T" HorizontalAlignment="Left" Margin="597,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="M" HorizontalAlignment="Left" Margin="631,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
             <DataGrid HorizontalAlignment="Left" Height="484" Margin="82,94,0,0" VerticalAlignment="Top" Width="761" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
