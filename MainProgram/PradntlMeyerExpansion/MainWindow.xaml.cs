@@ -19,7 +19,8 @@ namespace PradntlMeyerExpansion
     public partial class MainWindow : Window
     {
         Grid mesh;
-        Rules r;
+        Grid meshCte;
+        Rules r,rCte;
 
         //valores iniciales
         double angulo, E,x1,y1;
@@ -81,7 +82,41 @@ namespace PradntlMeyerExpansion
             //BoundaryValues.Add(3);
             //BoundaryValues.Add(1.3);
             //setChartNumbers();
-            //r = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
+
+            //Sirve para cargar la tabla
+            rCte = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
+            meshCte = new Grid(rCte);
+            meshCte.PrandtlMeyerExpansion();
+            CreateUTable();
+            gridData.DataContext = UTable.DefaultView;
+
+        }
+        private void uTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.Visibility = Visibility.Visible;
+            gridAndersonData.DataContext = AndersonUTable.DefaultView;
+        }
+        private void CreateUTable()
+        {
+            int divisionesycte = rCte.getJ();
+
+            UTable.Columns.Add("y-x");
+            for (int i = 0; i < meshCte.GetXP().Count; i++)
+            {
+                UTable.Columns.Add(Convert.ToString(i + 1));
+            }
+            for (int j = divisionesycte-1; j >= 0; j--)
+            {
+                DataRow workRow = UTable.NewRow();
+                workRow["y-x"] = Convert.ToString(j+1);
+                UTable.Rows.Add(workRow);
+
+                for (int i = 0; i < (meshCte.GetXP().Count); i++)
+                {
+                    workRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j,i).getU(),4));
+                }
+            }
+
         }
 
         private void lntro_Click(object sender, RoutedEventArgs e)
@@ -338,29 +373,6 @@ namespace PradntlMeyerExpansion
             uRB.IsChecked = true;
         }
 
-        private void CreateUTable()
-        {
-            //DataColumn column = new DataColumn();
-            //column.ColumnName = " x / y ";
-            UTable.Columns.Add(" x / y ");
-            for (int j = 0; j < divisionesy+1; j++)
-            {
-                DataRow row = UTable.NewRow();
-                //row[' x / y '] = j+1;
-                UTable.Rows.Add(row);
-            }
-
-            //for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            //{
-            //    for (int j = 0; j < divisionesy; j++)
-            //    {
-            //        UTable.Columns.Add(Convert.ToString(i + 1));
-            //        DataRow row = UTable.Rows[j];
-            //        row[Convert.ToString(i + 1)] = Math.Round(mesh.GetCell(j, i).getU(), 4);
-            //    }
-            //}  
-        }
-
         private void CreateUTableAnderson()
         {
             List<double> columna19 = new List<double> {678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678,678, 678, 679,683,691,701,707};
@@ -445,11 +457,7 @@ namespace PradntlMeyerExpansion
                 }
             }
         }
-        private void uTable_Checked(object sender, RoutedEventArgs e)
-        {
-            gridData.DataContext = UTable.DefaultView;
-            gridAndersonData.DataContext = AndersonUTable.DefaultView;
-        }
+        
 
 
         private void v_Checked(object sender, RoutedEventArgs e)
