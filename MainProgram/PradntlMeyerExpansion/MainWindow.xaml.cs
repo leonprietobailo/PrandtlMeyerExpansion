@@ -27,6 +27,8 @@ namespace PradntlMeyerExpansion
         Canvas plano = new Canvas();
         int divisionesy;
         Polygon[,] Polygons;
+        SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+        
 
         //Gráficas
         //ChartValues<double> Values = new ChartValues<double>();
@@ -51,9 +53,12 @@ namespace PradntlMeyerExpansion
         {
             InitializeComponent();
 
+            mySolidColorBrush.Color = Color.FromRgb(75, 70, 70);
+
             color.Color = Color.FromRgb(82, 222, 197);
 
             Introduction.Visibility = Visibility.Visible;
+            Introduction.Background = mySolidColorBrush;
             Simulation.Visibility = Visibility.Hidden;
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
@@ -62,20 +67,12 @@ namespace PradntlMeyerExpansion
 
             Info.Visibility = Visibility.Hidden;
 
-            topic.BorderBrush = color;
-            topic.Foreground = color;
-            simulation.BorderBrush = Brushes.White;
-            simulation.Foreground = Brushes.White;
-            ValidationButton.BorderBrush = Brushes.White;
-            ValidationButton.Foreground = Brushes.White;
-            vTutorial.BorderBrush = Brushes.White;
-            vTutorial.Foreground = Brushes.White;
-            aboutUs.BorderBrush = Brushes.White;
-            aboutUs.Foreground = Brushes.White;
-            EstudioAvanzada.BorderBrush = Brushes.White;
-            EstudioAvanzada.Foreground = Brushes.White;
-            EstudioAvanzada.BorderBrush = Brushes.White;
-            EstudioAvanzada.Foreground = Brushes.White;
+            topic.Background = mySolidColorBrush;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+            EstudioAvanzada.Background = Brushes.Transparent;
 
             Simulation.Children.Add(plano);
 
@@ -91,45 +88,36 @@ namespace PradntlMeyerExpansion
         private void lntro_Click(object sender, RoutedEventArgs e)
         {
             Introduction.Visibility = Visibility.Visible;
+            Introduction.Background = mySolidColorBrush;
             Simulation.Visibility = Visibility.Hidden;
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
 
-            topic.BorderBrush = color;
-            topic.Foreground = color;
-            simulation.BorderBrush = Brushes.White;
-            simulation.Foreground = Brushes.White;
-            ValidationButton.BorderBrush = Brushes.White;
-            ValidationButton.Foreground = Brushes.White;
-            vTutorial.BorderBrush = Brushes.White;
-            vTutorial.Foreground = Brushes.White;
-            aboutUs.BorderBrush = Brushes.White;
-            aboutUs.Foreground = Brushes.White;
-            EstudioAvanzada.BorderBrush = Brushes.White;
-            EstudioAvanzada.Foreground = Brushes.White;
+            topic.Background = mySolidColorBrush;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+            EstudioAvanzada.Background = Brushes.Transparent;
         }
 
         private void Simualtion_Click(object sender, RoutedEventArgs e)
         {
             Introduction.Visibility = Visibility.Hidden;
             Simulation.Visibility = Visibility.Visible;
+            Simulation.Background = mySolidColorBrush;
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
+            Grids.Visibility = Visibility.Hidden;
 
-            topic.BorderBrush = Brushes.White;
-            topic.Foreground = Brushes.White;
-            simulation.BorderBrush = color;
-            simulation.Foreground = color;
-            ValidationButton.BorderBrush = Brushes.White;
-            ValidationButton.Foreground = Brushes.White;
-            vTutorial.BorderBrush = Brushes.White;
-            vTutorial.Foreground = Brushes.White;
-            aboutUs.BorderBrush = Brushes.White;
-            aboutUs.Foreground = Brushes.White;
-            EstudioAvanzada.BorderBrush = Brushes.White;
-            EstudioAvanzada.Foreground = Brushes.White;
+            topic.Background = Brushes.Transparent;
+            simulation.Background = mySolidColorBrush;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+            EstudioAvanzada.Background = Brushes.Transparent;
         }
 
         private void Validation_Click(object sender, RoutedEventArgs e)
@@ -137,24 +125,18 @@ namespace PradntlMeyerExpansion
             Introduction.Visibility = Visibility.Hidden;
             Simulation.Visibility = Visibility.Hidden;
             Validation.Visibility = Visibility.Visible;
+            Validation.Background = mySolidColorBrush;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
 
-            topic.BorderBrush = Brushes.White;
-            topic.Foreground = Brushes.White;
-            simulation.BorderBrush = Brushes.White;
-            simulation.Foreground = Brushes.White;
-            ValidationButton.BorderBrush = color;
-            ValidationButton.Foreground = color;
-            vTutorial.BorderBrush = Brushes.White;
-            vTutorial.Foreground = Brushes.White;
-            aboutUs.BorderBrush = Brushes.White;
-            aboutUs.Foreground = Brushes.White;
-            EstudioAvanzada.BorderBrush = Brushes.White;
-            EstudioAvanzada.Foreground = Brushes.White;
+            topic.Background = Brushes.Transparent;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = mySolidColorBrush;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+            EstudioAvanzada.Background = Brushes.Transparent;
 
             Utable.IsChecked = true;
-           
         }
 
         private void vTutorial_Click(object sender, RoutedEventArgs e)
@@ -163,20 +145,15 @@ namespace PradntlMeyerExpansion
             Simulation.Visibility = Visibility.Hidden;
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Visible;
+            VideoTutorial.Background = mySolidColorBrush;
             AboutUs.Visibility = Visibility.Hidden;
 
-            topic.BorderBrush = Brushes.White;
-            topic.Foreground = Brushes.White;
-            simulation.BorderBrush = Brushes.White;
-            simulation.Foreground = Brushes.White;
-            ValidationButton.BorderBrush = Brushes.White;
-            ValidationButton.Foreground = Brushes.White;
-            vTutorial.BorderBrush = color;
-            vTutorial.Foreground = color;
-            aboutUs.BorderBrush = Brushes.White;
-            aboutUs.Foreground = Brushes.White;
-            EstudioAvanzada.BorderBrush = Brushes.White;
-            EstudioAvanzada.Foreground = Brushes.White;
+            topic.Background = Brushes.Transparent;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = mySolidColorBrush;
+            aboutUs.Background = Brushes.Transparent;
+            EstudioAvanzada.Background = Brushes.Transparent;
         }
 
         private void aboutUs_Click(object sender, RoutedEventArgs e)
@@ -186,19 +163,14 @@ namespace PradntlMeyerExpansion
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Visible;
+            AboutUs.Background = mySolidColorBrush;
 
-            topic.BorderBrush = Brushes.White;
-            topic.Foreground = Brushes.White;
-            simulation.BorderBrush = Brushes.White;
-            simulation.Foreground = Brushes.White;
-            ValidationButton.BorderBrush = Brushes.White;
-            ValidationButton.Foreground = Brushes.White;
-            vTutorial.BorderBrush = Brushes.White;
-            vTutorial.Foreground = Brushes.White;
-            aboutUs.BorderBrush = color;
-            aboutUs.Foreground = color;
-            EstudioAvanzada.BorderBrush = Brushes.White;
-            EstudioAvanzada.Foreground = Brushes.White;
+            topic.Background = Brushes.Transparent;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = mySolidColorBrush;
+            EstudioAvanzada.Background = Brushes.Transparent;
         }
 
         private void estudio_Click(object sender, RoutedEventArgs e)
@@ -212,20 +184,18 @@ namespace PradntlMeyerExpansion
             Grids.Visibility= Visibility.Hidden;
             plano.Visibility = Visibility.Hidden;
 
-            topic.BorderBrush = Brushes.White;
-            topic.Foreground = Brushes.White;
-            simulation.BorderBrush = Brushes.White;
-            simulation.Foreground = Brushes.White;
-            ValidationButton.BorderBrush = Brushes.White;
-            ValidationButton.Foreground = Brushes.White;
-            vTutorial.BorderBrush = Brushes.White;
-            vTutorial.Foreground = Brushes.White;
-            aboutUs.BorderBrush = Brushes.White;
-            aboutUs.Foreground = Brushes.White;
-            EstudioAvanzada.BorderBrush = color;
-            EstudioAvanzada.Foreground = color;
-            Grid.BorderBrush = Brushes.White;
-            Grid.Foreground = Brushes.White;
+            topic.Background = Brushes.Transparent;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+            EstudioAvanzada.Background = mySolidColorBrush;
+
+            Introduction.Background = Brushes.Transparent;
+            Simulation.Background = Brushes.Transparent;
+            VideoTutorial.Background = mySolidColorBrush;
+            AboutUs.Background = Brushes.Transparent;
+            Validation.Background = Brushes.Transparent;
 
             computeEvolutionChange();
             setChartNumbers();
@@ -319,7 +289,7 @@ namespace PradntlMeyerExpansion
                 whiteBrush.Color = Colors.White;
                 polygon.Stroke = whiteBrush;
                 polygon.StrokeThickness = 0.1;
-                System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 51, 92, 292);
+                System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
                 plano.Margin = planoPM;
                 plano.Children.Add(polygon);
                 Canvas.SetTop(polygon, 0);
@@ -370,7 +340,7 @@ namespace PradntlMeyerExpansion
                     whiteBrush.Color = Colors.White;
                     polygon.Stroke = whiteBrush;
                     polygon.StrokeThickness = 0.1;
-                    System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 51, 92, 292);
+                    System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
 
                     plano.Margin = planoPM;
                     plano.Children.Add(polygon);

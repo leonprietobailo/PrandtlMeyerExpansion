@@ -6,21 +6,46 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:PradntlMeyerExpansion"
         mc:Ignorable="d"
-        Title="Prandtl Meyer Expansion Simulator" Height="770" Width="1460" Background="#FF232323" Icon="/Airfoil.png" ResizeMode="CanMinimize" >
+        Title="Prandtl Meyer Expansion Simulator" Height="803" Width="1496" Background="#FF232323" Icon="/Airfoil.png" ResizeMode="CanMinimize" >
     <Grid Margin="0,0,0,-6">
-        <Label HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Prandtl Meyer&#x0a;Expansion Simulator" x:Name="label1" Margin="53,25,0,0" FontSize="25" FontFamily="Consolas" Foreground="White" BorderBrush="#FF262626" FontWeight="Bold"  Width="298" Height="94" VerticalAlignment="Top" Background="#00000000" RenderTransformOrigin="0.874,0.957"/>
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Introduction" FontFamily="Consolas" Height="26" HorizontalAlignment="Left" Margin="508,39,0,0" x:Name="topic" VerticalAlignment="Top" Width="126" Click="lntro_Click" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Background="Transparent" />
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Simulation" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="682,39,0,0" x:Name="simulation" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Simualtion_Click" />
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="About us" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="1204,39,0,0" x:Name="aboutUs" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="aboutUs_Click" />
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Video Tutorial" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="1030,39,0,0" x:Name="vTutorial" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="vTutorial_Click" />
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Validation" FontFamily="Consolas" Height="28" HorizontalAlignment="Left" Margin="856,38,0,0" x:Name="ValidationButton" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Validation_Click" />
-        <Grid x:Name="Introduction" Margin="49,95,49,29" Visibility="hidden">
-            <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="The Prandtl-Meyer expansion is the process that occurs when a supersonic flow turns around a convex corner, forming a divergent fan consisting of an infinite number of Mach waves. Across the expansion fan, the flow accelerates so, the Mach number increases and the static pressure, temperature and density decreases. Since the flow turns in small angles and the changes across each expansion wave are small, the whole process is isentropic. Due to the fact that the whole process is isentropic, the stagnation pressure, temperature and density remain constant across the fan.&#x0a;&#x0a;This simulator calculates the different parameters evolve in the Prandtl-Meyer expansion and does the validation with the Anderson book for a concrete case used as default.&#x0a;&#x0a;Get started and have fun!" x:Name="text1" Margin="163,119,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" Width="395" Height="370" VerticalAlignment="Top" Background="#00000000"/>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Start" FontFamily="Consolas" Height="26" HorizontalAlignment="Left" Margin="298,507,0,0" x:Name="Start" VerticalAlignment="Top" Width="126" Click="Simualtion_Click" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Background="Transparent" />
-            <Image HorizontalAlignment="Left" Height="460" Margin="622,66,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
+        <Label HorizontalAlignment="Left" Content="   Prandtl Meyer&#x0a;Expansion Simulator" FontSize="20" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="231" Height="70" VerticalAlignment="Top" Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button Click="lntro_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="231,0,0,0" x:Name="topic" VerticalAlignment="Top" Width="253" Background="#00436C70" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25">
+            <DockPanel Width="195">
+                <Image Source="/Home.png" Width="62" Visibility="Visible" Name="HomePIC" Height="35" Margin="30,0,0,0"/>
+                <Label Margin="-50,0,0,0" Content="Home" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="80"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="484,0,0,0" x:Name="simulation" VerticalAlignment="Top" Width="253" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Simualtion_Click">
+            <DockPanel Width="216" Height="52">
+                <Image Width="69" Height="51" Margin="7,-3,0,0" Source="/Simulation.png"/>
+                <Label Margin="0,-3,0,0" Content="Simulation" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="151"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="737,0,0,0" x:Name="ValidationButton" VerticalAlignment="Top" Width="253"  Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Validation_Click">
+            <DockPanel Width="230" Height="64">
+                <Image Width="45" Source="/DataView.png" Height="40" Margin="25,0,2,2"/>
+                <Label Content="Validation" Margin="-25,-4,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="159" Height="48"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="990,0,0,0" x:Name="vTutorial" VerticalAlignment="Top" Width="253" Background="Transparent" BorderBrush="Transparent" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="vTutorial_Click">
+            <DockPanel Width="247" Height="65" >
+                <Image Width="58"  Height="51" Margin="10,0,2,2" Source="/VideoTutorial.png" />
+                <Label Content="Video Tutorial" Margin="-25,-3,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="166" Height="48"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="1243,0,0,0" x:Name="aboutUs" VerticalAlignment="Top" Width="253"  Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="aboutUs_Click">
+            <DockPanel Width="247" Height="65">
+                <Image Width="65"  Height="40" Margin="15,3,2,2" Source="/AboutUs.png" />
+                <Label Content="About us" Margin="-60,-3,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="138" Height="48"/>
+            </DockPanel>
+        </Button>
+        <Grid x:Name="Introduction" Margin="0,70,0,0" Visibility="hidden">
+            <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="The Prandtl-Meyer expansion is the process that occurs when a supersonic flow turns around a convex corner, forming a divergent fan consisting of an infinite number of Mach waves. Across the expansion fan, the flow accelerates so, the Mach number increases and the static pressure, temperature and density decreases. Since the flow turns in small angles and the changes across each expansion wave are small, the whole process is isentropic. Due to the fact that the whole process is isentropic, the stagnation pressure, temperature and density remain constant across the fan.&#x0a;&#x0a;This simulator calculates the different parameters evolve in the Prandtl-Meyer expansion and does the validation with the Anderson book for a concrete case used as default.&#x0a;&#x0a;Get started and have fun!" x:Name="text1" Margin="163,119,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" Width="454" Height="370" VerticalAlignment="Top" Background="#00000000"/>
+            <Button Content="START" HorizontalAlignment="Left" Margin="313,494,0,0" VerticalAlignment="Top" FontFamily="Consolas" FontSize="40" Background="Transparent" Foreground="White" BorderBrush="White" FontWeight="Bold" BorderThickness="3,3,3,3" Height="87" Width="154" Click="Simualtion_Click"/>
+            <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
         </Grid>
-        <Grid x:Name="Simulation" Margin="10,95,0,10" Visibility="visible">
-            <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="visible">
+        <Grid x:Name="Simulation" Margin="0,70,0,0" Visibility="Visible">
+            <Grid x:Name="EstudioAvanzado" Margin="329,0,60,10" Visibility="hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="510*"/>
                     <ColumnDefinition Width="611*"/>
@@ -180,11 +205,28 @@
                 <Label Content="Temperature Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="368,323,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
                 <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="227,324,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
             </Grid>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Research" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="203,511,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="estudio_Click" IsEnabled="False" />
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Canvas" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="49,511,0,0" x:Name="Grid" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Grid_Click" IsEnabled="False"/>
-            <Button Name="RunSim" Content="Run" HorizontalAlignment="Left" Margin="124,439,0,0" VerticalAlignment="Top" Width="126" Height="29" FontFamily="Consolas" Background="#00000000" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Run_Click" IsEnabled="False"/>
-            <Button Content="Load file" FontFamily="Consolas" Height="29" HorizontalAlignment="Left" Margin="181,35,0,0" x:Name="Load" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
-            <Label Name="Parameters" Content="Parameters" HorizontalAlignment="Left" Margin="74,37,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,540,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="estudio_Click" IsEnabled="false">
+                <DockPanel Width="108" Height="95" Margin="0,0,0,0">
+                    <Image Width="54"  Height="63" Margin="7,-25,0,0" Source="/Research.png"  />
+                    <Label Content="Research" Margin="-100,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="67" Height="42"/>
+                </DockPanel>
+            </Button>
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,540,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Grid_Click" IsEnabled="false">
+                <DockPanel Width="108" Height="95" Margin="0,0,0,0">
+                    <Image Width="63"  Height="73" Margin="1,-25,0,0" Source="/Grid.png"   />
+                    <Label Content="Canvas" Margin="-105,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
+                </DockPanel>
+            </Button>
+            <Button Name="RunSim" HorizontalAlignment="Left" Margin="105,440,0,0" VerticalAlignment="Top" Click="Run_Click" FontFamily="Consolas" Height="70" Width="70" Background="#00DDDDDD" BorderBrush="Transparent" Foreground="White" FontWeight="Bold" IsEnabled="False">
+                <Image Height="70" Width="70" Source="/Play.png" />
+            </Button>
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,425,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" >
+                <DockPanel Width="108" Height="95" Margin="0,0,0,0">
+                    <Image Width="82"  Height="84" Margin="-8,-25,0,0" Source="/LoadFile.png"   />
+                    <Label Content="Load&#xA;File" Margin="-115,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
+                </DockPanel>
+            </Button>
+            <Label FontSize="15" Name="Parameters" Content="Parameters" HorizontalAlignment="Left" Margin="74,37,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
             <TabControl TabStripPlacement="Top" Name="TabControl1" HorizontalAlignment="Left" Height="328" Margin="67,80,0,0" VerticalAlignment="Top" Width="240">
                 <TabItem Header="Default" Margin="-2,-4,-33,0" RenderTransformOrigin="0.5,0.5" TabIndex="0">
                     <Grid Background="Transparent" Height="309" Margin="0,5,-7,0" >
@@ -220,25 +262,29 @@
                 <TabItem Header="Custom" Margin="32,-3,-63,0" TabIndex="1">
                 </TabItem>
             </TabControl>
-            <Grid x:Name="Grids" Margin="329,0,0,0" Visibility="hidden">
-                <Button Content="Save" FontFamily="Consolas" Height="26" HorizontalAlignment="Left" Margin="507,581,0,0" x:Name="Save" VerticalAlignment="Top" Width="126" Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" />
-                <RadioButton Name="uRB" Content="u" HorizontalAlignment="Left" Margin="500,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="u_Checked"/>
-                <RadioButton Content="v" HorizontalAlignment="Left" Margin="540,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="v_Checked"/>
-                <RadioButton Content="ρ" HorizontalAlignment="Left" Margin="580,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rho_Checked"/>
-                <RadioButton Content="p" HorizontalAlignment="Left" Margin="620,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="p_Checked"/>
-                <RadioButton Content="T" HorizontalAlignment="Left" Margin="660,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="T_Checked"/>
-                <RadioButton Content="M" HorizontalAlignment="Left" Margin="700,6,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="M_Checked"/>
-                <Grid x:Name="Info" Margin="1000,136,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="265">
-                    <Label x:Name="variables" Content="u:&#x0a;&#x0a;v:&#x0a;&#x0a;ρ:&#x0a;&#x0a;p:&#x0a;&#x0a;T:&#x0a;&#x0a;M:&#x0a;&#x0a;x:&#x0a;&#x0a;y:&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="0,0,0,0" RenderTransformOrigin="-0.567,0.522" Height="254"/>
-                    <Label x:Name="uData" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,3,0,0" Width="59" Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24" />
-                    <Label x:Name="vData" HorizontalAlignment="Left" Margin="20,35,0,0" VerticalAlignment="Top" Foreground="White" Width="59"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
-                    <Label x:Name="rhoData" HorizontalAlignment="Left" Margin="20,67,0,0" VerticalAlignment="Top" Foreground="White" Width="59"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
-                    <Label x:Name="pData" HorizontalAlignment="Left" Margin="21,99,0,0" VerticalAlignment="Top" Foreground="White" Width="59"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
-                    <Label x:Name="TData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="59" Margin="21,131,0,0"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
-                    <Label x:Name="MData" HorizontalAlignment="Left" Margin="21,163,0,0" VerticalAlignment="Top" Foreground="White" Width="59"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
-                    <Label x:Name="xData" HorizontalAlignment="Left" Margin="21,195,0,0" VerticalAlignment="Top" Foreground="White" Width="59"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
-                    <Label x:Name="yData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="21,227,0,0" Width="59"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
+            <Grid x:Name="Grids" Margin="329,0,0,0" Visibility="visible">
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="uRB" Content="u" HorizontalAlignment="Left" Margin="394,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="u_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="v" HorizontalAlignment="Left" Margin="453,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="v_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="ρ" HorizontalAlignment="Left" Margin="504,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rho_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="p" HorizontalAlignment="Left" Margin="554,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="p_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="T" HorizontalAlignment="Left" Margin="602,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="T_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Content="M" HorizontalAlignment="Left" Margin="650,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="M_Checked"/>
+                <Grid x:Name="Info" Margin="960,136,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="415">
+                    <Label x:Name="variables" Content="u:&#x0a;&#x0a;v:&#x0a;&#x0a;ρ:&#x0a;&#x0a;p:&#x0a;&#x0a;T:&#x0a;&#x0a;M:&#x0a;&#x0a;x:&#x0a;&#x0a;y:&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" RenderTransformOrigin="-0.567,0.522" Height="415" FontSize="20"/>
+                    <Label x:Name="uData" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,3,0,0" Width="111" Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="47" FontSize="20"/>
+                    <Label x:Name="vData" HorizontalAlignment="Left" Margin="32,55,0,0" VerticalAlignment="Top" Foreground="White" Width="88"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" FontSize="20"/>
+                    <Label x:Name="rhoData" HorizontalAlignment="Left" Margin="22,108,0,0" VerticalAlignment="Top" Foreground="White" Width="108"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="36" FontSize="20"/>
+                    <Label x:Name="pData" HorizontalAlignment="Left" Margin="32,162,0,0" VerticalAlignment="Top" Foreground="White" Width="98"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41" FontSize="20"/>
+                    <Label x:Name="TData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="88" Margin="32,208,0,0"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="55" FontSize="20"/>
+                    <Label x:Name="MData" HorizontalAlignment="Left" Margin="32,268,0,0" VerticalAlignment="Top" Foreground="White" Width="98"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="39" FontSize="20"/>
+                    <Label x:Name="xData" HorizontalAlignment="Left" Margin="21,327,0,0" VerticalAlignment="Top" Foreground="White" Width="109"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="42" FontSize="20"/>
+                    <Label x:Name="yData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="21,374,0,0" Width="109"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41" FontSize="20"/>
                 </Grid>
+                <Button  x:Name="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="80" HorizontalAlignment="Left" Margin="1050,600,0,0" VerticalAlignment="Top" Width="80"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25">
+                    <DockPanel Width="85" Height="75" Margin="0,0,0,0">
+                        <Image Width="85" Margin="0,0,0,0" Source="/CSV.png"  />
+                    </DockPanel>
+                </Button>
             </Grid>
             <!--<Grid x:Name="Grid" Margin="261,68,49,292"/>-->
             <!--<Polygon Points="0,0 275,0 275,208 50,170 0,170" Fill="Blue"/>-->
@@ -268,16 +314,16 @@
                 <Label x:Name="yData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="379,14,0,0" Width="36"/>
             </Grid>-->
         </Grid>
-        <Grid x:Name="VideoTutorial" Margin="49,95,49,29" Visibility="Hidden">
+        <Grid x:Name="VideoTutorial" Margin="0,70,0,0" Visibility="Hidden">
             <TextBlock FontSize="15" TextAlignment="Justify" TextWrapping="Wrap" Text="In this video you will see how to use the simulator. Have fun!" x:Name="videoText" Margin="0,162,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="532" Height="31" VerticalAlignment="Top" Background="#00000000"/>
             <MediaElement HorizontalAlignment="Left" Height="286" Margin="162,88,0,0" VerticalAlignment="Top" Width="314"/>
             <Image HorizontalAlignment="Center" Height="164" VerticalAlignment="Top" Width="168" Source="/Videoo.png" Margin="0,254,0,0"/>
         </Grid>
-        <Grid x:Name="AboutUs" Margin="49,95,49,29" Visibility="Hidden">
+        <Grid x:Name="AboutUs" Margin="0,70,0,0" Visibility="hidden">
             <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="This simulator has been developed by León Prieto and Verónica Sastre in 2021&#x0a;&#x0a;Simulation Course&#x0a;&#x0a;Aerospace Systems Engineering (EETAC)&#x0a;&#x0a;veronica.sastre@estudiantat.upc.edu&#x0a;leon.enrique.prieto@estudiantat.upc.edu" x:Name="AboutUsText" Margin="0,164,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="394" Height="168" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
 
-        <Grid x:Name="Validation" Margin="49,95,49,29" Visibility="hidden">
+        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="Hidden">
             <RadioButton Name="Utable" Content="u" HorizontalAlignment="Left" Margin="447,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
             <RadioButton Content="v" HorizontalAlignment="Left" Margin="485,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
             <RadioButton Content="ρ" HorizontalAlignment="Left" Margin="523,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rhoTable_Checked"/>
