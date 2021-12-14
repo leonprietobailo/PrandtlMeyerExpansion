@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
+using System.IO;
 
 namespace PradntlMeyerExpansion
 {
@@ -336,6 +337,7 @@ namespace PradntlMeyerExpansion
             plano.Children.Clear();
             mesh = new Grid(r);
             mesh.PrandtlMeyerExpansion();
+            mesh.data();
 
             E = r.getE() * 11;
             x1 = r.getxMax() * 11;
@@ -344,7 +346,7 @@ namespace PradntlMeyerExpansion
             divisionesy = r.getJ() - 1;
 
             Polygons = new Polygon[mesh.GetXP().Count - 1, divisionesy];
-
+            
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 //for (int j = 0; j < divisionesy; j++)
@@ -377,6 +379,9 @@ namespace PradntlMeyerExpansion
                     polygon.MouseEnter += new MouseEventHandler(polygon_MouseEnter);
                     polygon.MouseLeave += new MouseEventHandler(polygon_MouseLeave);
                     Polygons[i, j] = polygon;
+
+                    
+                    
                 }
             }
             uRB.IsChecked = true;
@@ -404,12 +409,12 @@ namespace PradntlMeyerExpansion
                 row[0] = j+1;
                 AndersonTable.Rows.Add(row);
             }
-            AndersonTable.Columns.Add("19");
+            AndersonTable.Columns.Add("18");
             AndersonTable.Columns.Add("88");
             for (int j = 0; j < divisionesy; j++)
             {
                 DataRow row = AndersonTable.Rows[j];
-                row["19"] = columna88[j];
+                row["18"] = columna88[j];
                 row["88"] = columna88[j];
             }
         }
