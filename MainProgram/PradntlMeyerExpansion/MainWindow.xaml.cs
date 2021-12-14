@@ -47,8 +47,8 @@ namespace PradntlMeyerExpansion
 
         public SeriesCollection SeriesCollection, uCollection, vCollection, roCOllection, pCollection, TCollection, MCollection;
 
-        DataTable UTable=new DataTable();
-        DataTable AndersonTable = new DataTable();
+        DataTable UTable = new DataTable();
+        DataTable AndersonUTable = new DataTable();
         public MainWindow()
         {
             InitializeComponent();
@@ -193,7 +193,6 @@ namespace PradntlMeyerExpansion
 
             computeEvolutionChange();
             setChartNumbers();
-
         }
 
         private void Grid_Click(object sender, RoutedEventArgs e)
@@ -334,9 +333,6 @@ namespace PradntlMeyerExpansion
                     polygon.MouseEnter += new MouseEventHandler(polygon_MouseEnter);
                     polygon.MouseLeave += new MouseEventHandler(polygon_MouseLeave);
                     Polygons[i, j] = polygon;
-
-                    
-                    
                 }
             }
             uRB.IsChecked = true;
@@ -344,31 +340,43 @@ namespace PradntlMeyerExpansion
 
         private void CreateUTable()
         {
-            UTable.Columns.Add("");
-            for (int j = 0; j < divisionesy; j++)
+            //DataColumn column = new DataColumn();
+            //column.ColumnName = " x / y ";
+            UTable.Columns.Add(" x / y ");
+            for (int j = 0; j < divisionesy+1; j++)
             {
                 DataRow row = UTable.NewRow();
-                row[0] = j+1;
+                //row[' x / y '] = j+1;
                 UTable.Rows.Add(row);
             }
+
+            //for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            //{
+            //    for (int j = 0; j < divisionesy; j++)
+            //    {
+            //        UTable.Columns.Add(Convert.ToString(i + 1));
+            //        DataRow row = UTable.Rows[j];
+            //        row[Convert.ToString(i + 1)] = Math.Round(mesh.GetCell(j, i).getU(), 4);
+            //    }
+            //}  
         }
 
         private void CreateUTableAnderson()
         {
             List<double> columna19 = new List<double> {678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678,678, 678, 679,683,691,701,707};
             List<double> columna88 = new List<double> { 678, 678, 678, 679, 679, 680, 681, 683, 685, 688, 690, 693, 696, 699, 702, 705, 707, 709, 711, 713, 713, 713, 712, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 710,705 };
-            AndersonTable.Columns.Add("");
+            AndersonUTable.Columns.Add("");
             for (int j = 0; j < divisionesy; j++)
             {
-                DataRow row = AndersonTable.NewRow();
+                DataRow row = AndersonUTable.NewRow();
                 row[0] = j+1;
-                AndersonTable.Rows.Add(row);
+                AndersonUTable.Rows.Add(row);
             }
-            AndersonTable.Columns.Add("18");
-            AndersonTable.Columns.Add("88");
+            AndersonUTable.Columns.Add("18");
+            AndersonUTable.Columns.Add("88");
             for (int j = 0; j < divisionesy; j++)
             {
-                DataRow row = AndersonTable.Rows[j];
+                DataRow row = AndersonUTable.Rows[j];
                 row["18"] = columna88[j];
                 row["88"] = columna88[j];
             }
@@ -405,8 +413,6 @@ namespace PradntlMeyerExpansion
             int y = 0;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
-                y = 0;
-                UTable.Columns.Add(Convert.ToString(i+1));
                 //for (int j = 0; j < divisionesy; j++)
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
@@ -435,16 +441,14 @@ namespace PradntlMeyerExpansion
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
                     Polygons[i,j].Fill = mySolidColorBrush;
 
-                    DataRow row = UTable.Rows[y];
-                    row[Convert.ToString(i+1)] = Math.Round(mesh.GetCell(j, i).getU(), 4);
-                    y++;
+
                 }
             }
         }
         private void uTable_Checked(object sender, RoutedEventArgs e)
         {
             gridData.DataContext = UTable.DefaultView;
-            gridAndersonData.DataContext = AndersonTable.DefaultView;
+            gridAndersonData.DataContext = AndersonUTable.DefaultView;
         }
 
 

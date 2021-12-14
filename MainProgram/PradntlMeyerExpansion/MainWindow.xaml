@@ -324,13 +324,18 @@
         </Grid>
 
         <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="visible">
-            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Name="Utable" Content="u" HorizontalAlignment="Left" Margin="447,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
-            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="v" HorizontalAlignment="Left" Margin="485,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
-            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="ρ" HorizontalAlignment="Left" Margin="523,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rhoTable_Checked"/>
-            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="p" HorizontalAlignment="Left" Margin="561,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
-            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="T" HorizontalAlignment="Left" Margin="597,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
-            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="M" HorizontalAlignment="Left" Margin="631,49,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
-            <DataGrid HorizontalAlignment="Left" Height="484" Margin="82,94,0,0" VerticalAlignment="Top" Width="761" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
+            <Label FontSize="15" Name="SimulatorResults" Content="Simulator Results" HorizontalAlignment="Left" Margin="469,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" Name="AndersonResults" Content="Anderson Results" HorizontalAlignment="Left" Margin="1074,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" Name="ErrorS" Content="Simulator Error" HorizontalAlignment="Left" Margin="1287,181,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" Name="ErrorA" Content="Anderson Error" HorizontalAlignment="Left" Margin="1291,407,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Name="Utable" Content="u" HorizontalAlignment="Left" Margin="86,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="v" HorizontalAlignment="Left" Margin="124,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="ρ" HorizontalAlignment="Left" Margin="162,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rhoTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="p" HorizontalAlignment="Left" Margin="200,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="T" HorizontalAlignment="Left" Margin="236,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="M" HorizontalAlignment="Left" Margin="270,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
+            <DataGrid HorizontalAlignment="Left" Height="495" Margin="82,134,0,0" VerticalAlignment="Top" Width="925" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
                         <Border Background="#FF262626"/>
@@ -459,7 +464,7 @@
                 </DataGrid.CellStyle>
             </DataGrid>
 
-            <DataGrid HorizontalAlignment="Left" Height="484" Margin="928,94,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
+            <DataGrid HorizontalAlignment="Left" Height="495" Margin="1080,134,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
                         <Border Background="#FF262626"/>
