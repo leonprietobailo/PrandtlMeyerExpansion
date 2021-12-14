@@ -18,15 +18,30 @@
             <Image HorizontalAlignment="Left" Height="460" Margin="622,66,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
         </Grid>
         <Grid x:Name="Simulation" Margin="10,95,0,10" Visibility="visible">
-            <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="hidden">
-                <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
-                <lvc:CartesianChart Name="uChart" Margin="40,28,751,362" FontFamily="Consolas" Width="330">
+            <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="510*"/>
+                    <ColumnDefinition Width="611*"/>
+                </Grid.ColumnDefinitions>
+                <Label HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398">
+                    <Label Content="Horizontal Velocity Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
+                </Label>
+                <lvc:CartesianChart Name="uChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,28,0,0" FontFamily="Consolas" Width="330" Height="284">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White">
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Mach Number" FontSize="13" FontFamily="Consolas" Foreground="White">
+                        <lvc:Axis Title="Horizontal Velocity [m/s]" FontSize="13" FontFamily="Consolas" Foreground="White">
+
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Value="678" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+
                             <lvc:Axis.Separator>
                                 <lvc:Separator></lvc:Separator>
                             </lvc:Axis.Separator>
@@ -37,12 +52,22 @@
                 </lvc:CartesianChart.Series>-->
                 </lvc:CartesianChart>
 
-                <lvc:CartesianChart x:Name="vChart" Margin="404,27,387,333" FontFamily="Consolas" Height="285" Width="330">
+                <lvc:CartesianChart x:Name="vChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="404,27,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Mach Number" FontSize="13" FontFamily="Consolas" Foreground="White">
+                        <lvc:Axis Title="Vertical Velocity [m/s]" FontSize="13" FontFamily="Consolas" Foreground="White">
+
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Value="0" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+
+
                             <lvc:Axis.Separator>
                                 <lvc:Separator/>
                             </lvc:Axis.Separator>
@@ -52,52 +77,32 @@
                     <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
                 </lvc:CartesianChart.Series>-->
                 </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="pChart" Margin="44,351,747,9" FontFamily="Consolas" Height="285" Width="330">
+                <lvc:CartesianChart x:Name="pChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="44,342,0,0" FontFamily="Consolas" Height="285" Width="330">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Mach Number" FontSize="13" FontFamily="Consolas" Foreground="White">
+                        <lvc:Axis Title="Pressure [Pa]" FontSize="13" FontFamily="Consolas" Foreground="White">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Value="101000" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+
+
                             <lvc:Axis.Separator>
                                 <lvc:Separator/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
+
                     <!--<lvc:CartesianChart.Series>
                     <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
                 </lvc:CartesianChart.Series>-->
                 </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="Tchart" Margin="400,351,391,9" FontFamily="Consolas" Height="285" Width="330">
-                    <!--<lvc:CartesianChart.Series>
-                    <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
-                </lvc:CartesianChart.Series>-->
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Mach Number"   FontSize="13" FontFamily="Consolas" Foreground="White">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator/>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="roChart" Margin="771,27,20,333" FontFamily="Consolas" Height="285" Width="330">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Mach Number" FontSize="13" FontFamily="Consolas" Foreground="White">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator/>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                    <!--<lvc:CartesianChart.Series>
-                    <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
-                </lvc:CartesianChart.Series>-->
-                </lvc:CartesianChart>
-                <lvc:CartesianChart x:Name="Mchart" Margin="771,349,20,11" FontFamily="Consolas" Height="285" Width="330">
+                <lvc:CartesianChart x:Name="Tchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,338,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
                     <!--<lvc:CartesianChart.Series>
                     <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
                 </lvc:CartesianChart.Series>-->
@@ -105,13 +110,73 @@
                         <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Mach Number" FontSize="13" FontFamily="Consolas" Foreground="White">
+                        <lvc:Axis Title="Temperature [K]"   FontSize="13" FontFamily="Consolas" Foreground="White">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Value="286.1" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
                             <lvc:Axis.Separator>
                                 <lvc:Separator/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
+                <lvc:CartesianChart x:Name="roChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,27,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
+                    <lvc:CartesianChart.Series>
+                        <!--<lvc:LineSeries/>-->
+                        <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
+                    </lvc:CartesianChart.Series>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Density [kg/m^3]" FontSize="13" FontFamily="Consolas" Foreground="White">
+
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Value="1.23" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="0.25"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <lvc:CartesianChart x:Name="Mchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,339,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
+                    <!--<lvc:CartesianChart.Series>
+                    <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
+                </lvc:CartesianChart.Series>-->
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+
+                        <lvc:Axis Title="Mach Number [1]" FontSize="13" FontFamily="Consolas" Foreground="White">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Value="2" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="0.25"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <Label Content="Vertical Velocity Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="375,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
+                <Label Content="Density Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
+                <Label Content="Pressure Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="19,325,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
+                <Label Content="Temperature Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="368,323,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
+                <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="227,324,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
             </Grid>
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Research" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="203,511,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="estudio_Click" IsEnabled="False" />
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Grid" FontFamily="Consolas" Height="27" HorizontalAlignment="Left" Margin="49,511,0,0" x:Name="Grid" VerticalAlignment="Top" Width="126"  Background="#00DDDDDD" BorderBrush="White" TabIndex="3" Foreground="White" FontWeight="Bold" Click="Grid_Click" IsEnabled="False"/>
