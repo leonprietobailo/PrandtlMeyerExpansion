@@ -694,7 +694,7 @@ namespace PradntlMeyerExpansion
             for(double theta = 10; theta >= 0; theta -= 0.1) // De - 10 grados a 0 grados.
             {
                 double uEVO, vEVO, roEVO, pEVO, TEVO, MEVO;
-                Rules rEVO = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, theta * Math.PI / 180, 41, 65, 40, 0.5);
+                Rules rEVO = new Rules(r, theta);
                 Grid gEVO = new Grid(rEVO);
                 gEVO.PrandtlMeyerExpansion();
                 (uEVO, vEVO, roEVO, pEVO, TEVO, MEVO) = gEVO.getDownstream();
