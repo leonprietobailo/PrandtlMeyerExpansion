@@ -19,7 +19,8 @@ namespace PradntlMeyerExpansion
     public partial class MainWindow : Window
     {
         Grid mesh;
-        Rules r;
+        Grid meshCte;
+        Rules r,rCte;
 
         //valores iniciales
         double angulo, E,x1,y1;
@@ -48,7 +49,19 @@ namespace PradntlMeyerExpansion
         public SeriesCollection SeriesCollection, uCollection, vCollection, roCOllection, pCollection, TCollection, MCollection;
 
         DataTable UTable = new DataTable();
+        DataTable VTable = new DataTable();
+        DataTable rhoTable = new DataTable();
+        DataTable pTable = new DataTable();
+        DataTable TTable = new DataTable();
+        DataTable MTable = new DataTable();
+
         DataTable AndersonUTable = new DataTable();
+        DataTable AndersonVTable = new DataTable();
+        DataTable AndersonRhoTable = new DataTable();
+        DataTable AndersonpTable = new DataTable();
+        DataTable AndersonTTable = new DataTable();
+        DataTable AndersonMTable = new DataTable();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -81,8 +94,276 @@ namespace PradntlMeyerExpansion
             //BoundaryValues.Add(3);
             //BoundaryValues.Add(1.3);
             //setChartNumbers();
-            //r = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
+
+            //Sirve para cargar la tabla
+            rCte = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
+            meshCte = new Grid(rCte);
+            meshCte.PrandtlMeyerExpansion();
+            CreateUTable();
+            CreateVTable();
+            CreateRhoTable();
+            CreatepTable();
+            CreateTTable();
+            CreateMTable();
+
+            gridData.DataContext = UTable.DefaultView;
+
         }
+        private void CreateUTable()
+        {
+            int divisionesycte = rCte.getJ();
+
+            UTable.Columns.Add("y-x");
+            AndersonUTable.Columns.Add("y-x");
+            AndersonUTable.Columns.Add("18");
+            AndersonUTable.Columns.Add("89");
+            List<double> columna18 = new List<double> { 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 679, 683, 691, 701, 707 };
+            List<double> columna89 = new List<double> { 678, 678, 678, 679, 679, 680, 681, 683, 685, 688, 690, 693, 696, 699, 702, 705, 707, 709, 711, 713, 713, 713, 712, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 710, 705 };
+            for (int i = 0; i < meshCte.GetXP().Count; i++)
+            {
+                UTable.Columns.Add(Convert.ToString(i + 1));
+            }
+            int s = 0;
+            for (int j = divisionesycte - 1; j >= 0; j--)
+            {
+                DataRow workRow = UTable.NewRow();
+                workRow["y-x"] = Convert.ToString(j + 1);
+                UTable.Rows.Add(workRow);
+                DataRow workRow1 = AndersonUTable.NewRow();
+                workRow1["y-x"] = Convert.ToString(j + 1);
+                workRow1["18"] = Convert.ToString(columna18[s]);
+                workRow1["89"] = Convert.ToString(columna89[s]);
+                AndersonUTable.Rows.Add(workRow1);
+                s++;
+                for (int i = 0; i < (meshCte.GetXP().Count); i++)
+                {
+                    workRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getU(), 4));
+                }
+            }
+        }
+        private void CreateVTable()
+        {
+            int divisionesycte = rCte.getJ();
+
+            VTable.Columns.Add("y-x");
+            AndersonVTable.Columns.Add("y-x");
+            AndersonVTable.Columns.Add("18");
+            AndersonVTable.Columns.Add("89");
+            List<double> AVcolumna18 = new List<double> { 0, -0.636e-4, -0.107e-3, -0.342e-4, -0.128e-3, -0.848e-4, 0.401e-4, 0.161e-3, 0.160e-3, .242e-03, -.607e-04, -.193e-04, .125e-03, .354e-05, .120e-03, .118e-03, .217e-10, 0, 0, 0, 0, 0, 0, 0, 0, 0, -.325e-13, -.642e-04, -.598e-04, .180e-04, -.195e-04, -.702e-04, .472e-04, -.167e-03, .326e-05, -.148e-1, -.131e+1, -.869e+1, -.266e+02, -.494e+02, -.662e+02 };
+            List<double> AVcolumna89 = new List<double> { 0, -0.229, -0.499, -0.105e1, -0.203e1, -0.361e01, -0.591e+1, -0.901e+1, -0.129e+2, -0.175e+2, -0.227e+2, -0.283e+2, -0.343e+2, -0.405e+2, -0.468e+2, -0.531e+2, -0.591e+2, -0.647e+2, -0.693e+2, -0.726e+2, -0.740e+2, -0.732e+2, -0.708e+2, -0.683e+2, -0.672e+2, -0.678e+2, -0.690e+2, -0.696e+2, -0.694e+2, -0.688e+2, -0.686e+2, -0.688e+2, -0.690e+2, -0.690e+2, -0.689e+2, -0.688e+2, -0.689e+2, -0.688e+2, -0.690e+2, -0.682e+2, -0.661e+2 };
+
+            for (int i = 0; i < meshCte.GetXP().Count; i++)
+            {
+                VTable.Columns.Add(Convert.ToString(i + 1));
+            }
+            int s = 0;
+            for (int j = divisionesycte - 1; j >= 0; j--)
+            {
+                DataRow workRow = VTable.NewRow();
+                workRow["y-x"] = Convert.ToString(j + 1);
+                VTable.Rows.Add(workRow);
+                DataRow workRow1 = AndersonVTable.NewRow();
+                workRow1["y-x"] = Convert.ToString(j + 1);
+                workRow1["18"] = Convert.ToString(AVcolumna18[s]);
+                workRow1["89"] = Convert.ToString(AVcolumna89[s]);
+                AndersonVTable.Rows.Add(workRow1);
+                s++;
+
+                for (int i = 0; i < (meshCte.GetXP().Count); i++)
+                {
+                    workRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getV(), 4));
+
+                }
+            }
+        }
+
+        private void CreateRhoTable()
+        {
+            int divisionesycte = rCte.getJ();
+
+            rhoTable.Columns.Add("y-x");
+            AndersonRhoTable.Columns.Add("y-x");
+            AndersonRhoTable.Columns.Add("18");
+            AndersonRhoTable.Columns.Add("89");
+
+            List<double> Arhocolumna18 = new List<double> { 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.123e+1, 0.122e+1, 0.119e+1, 0.112e+1, 0.104e+1, 0.992 };
+            List<double> Arhocolumna89 = new List<double> { 0.123e1, 0.123e1, 0.123e1, 0.123e1, 0.122e1, 0.121e1, 0.121e1, 0.129e1, 0.118e1, 0.116e1, 0.114e1, 0.112e1, 0.110e1, 0.107e1, 0.105e1, 0.103e1, 0.101e1, 0.990, 0.975, 0.974, 0.960, 0.963, 0.970, 0.978, 0.982, 0.980, 0.986, 0.974, 0.975, 0.977, 0.977, 0.977, .976, .976, .976, .976, .976, .977, .979, 0.107e+1, 0.109e+1 };
+            
+            for (int i = 0; i < meshCte.GetXP().Count; i++)
+            {
+                rhoTable.Columns.Add(Convert.ToString(i + 1));
+            }
+            int s = 0;
+            for (int j = divisionesycte - 1; j >= 0; j--)
+            {
+                DataRow workRow = rhoTable.NewRow();
+                workRow["y-x"] = Convert.ToString(j + 1);
+                rhoTable.Rows.Add(workRow);
+                DataRow workRow1 = AndersonRhoTable.NewRow();
+                workRow1["y-x"] = Convert.ToString(j + 1);
+                workRow1["18"] = Convert.ToString(Arhocolumna18[s]);
+                workRow1["89"] = Convert.ToString(Arhocolumna89[s]);
+                AndersonRhoTable.Rows.Add(workRow1);
+                s++;
+
+                for (int i = 0; i < (meshCte.GetXP().Count); i++)
+                {
+                    workRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getRO(), 4));
+
+                }
+            }
+        }
+
+        private void CreatepTable()
+        {
+            int divisionesycte = rCte.getJ();
+
+            pTable.Columns.Add("y-x");
+            AndersonpTable.Columns.Add("y-x");
+            AndersonpTable.Columns.Add("18");
+            AndersonpTable.Columns.Add("89");
+
+            List<double> Apcolumna18 = new List<double> { 0.101e6,0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.787e5, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.101e6, 0.100e6, 0.969e5, 0.891e5, 0.795e5, 0.734e5 };
+            List<double> Apcolumna89 = new List<double> { 0.101e6, 0.101e6, 0.101e6, 0.100e6, 0.100e6, 0.993e5, 0.982e5, 0.968e5, 0.950e5, 0.930e5, 0.907e5, 0.883e5, 0.859e5, 0.834e5, 0.810e5, 0.787e5, 0.765e5, 0.746e5, 0.730e5, 0.719e5, 0.714e5, 0.717e5, 0.725e5, 0.733e5, 0.737e5, 0.735e5, 0.731e5, 0.729e5, 0.729e5, 0.731e5, 0.732e5, 0.731e5, 0.731e5, 0.731e5, 0.731e5, 0.731e5, 0.731e5, 0.731e5, 0.732e5, 0.730e5,0.731e5 };
+
+            for (int i = 0; i < meshCte.GetXP().Count; i++)
+            {
+                pTable.Columns.Add(Convert.ToString(i + 1));
+            }
+            int s = 0;
+            for (int j = divisionesycte - 1; j >= 0; j--)
+            {
+                DataRow workRow = pTable.NewRow();
+                workRow["y-x"] = Convert.ToString(j + 1);
+                pTable.Rows.Add(workRow);
+                DataRow workRow1 = AndersonpTable.NewRow();
+                workRow1["y-x"] = Convert.ToString(j + 1);
+                workRow1["18"] = Convert.ToString(Apcolumna18[s]);
+                workRow1["89"] = Convert.ToString(Apcolumna89[s]);
+                AndersonpTable.Rows.Add(workRow1);
+                s++;
+
+                for (int i = 0; i < (meshCte.GetXP().Count); i++)
+                {
+                    workRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getP(), 4));
+                }
+            }
+        }
+        private void CreateTTable()
+        {
+            int divisionesycte = rCte.getJ();
+
+            AndersonTTable.Columns.Add("y-x");
+            AndersonTTable.Columns.Add("18");
+            AndersonTTable.Columns.Add("89");
+
+            List<double> ATcolumna18 = new List<double> { 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.283e3, 0.277e3, 0.267e3, 0.258e3 };
+            List<double> ATcolumna89 = new List<double> { 0.286e3, 0.286e3, 0.286e3, 0.286e3, 0.285e3, 0.285e3, 0.284e3, 0.283e3, 0.281e3, 0.286e3, 0.279e3, 0.277e3, 0.275e3, 0.273e3, 0.271e3, 0.269e3, 0.266e3, 0.264e3, 0.262e3, 0.261e3, 0.260e3, 0.259e3, 0.259e3, 0.260e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.261e3, 0.263e3, 0.237e3, 0.233e3 };
+
+            TTable.Columns.Add("y-x");
+
+            for (int i = 0; i < meshCte.GetXP().Count; i++)
+            {
+                TTable.Columns.Add(Convert.ToString(i + 1));
+            }
+            int s = 0;
+            for (int j = divisionesycte - 1; j >= 0; j--)
+            {
+                DataRow workRow = TTable.NewRow();
+                workRow["y-x"] = Convert.ToString(j + 1);
+                TTable.Rows.Add(workRow);
+                DataRow workRow1 = AndersonTTable.NewRow();
+                workRow1["y-x"] = Convert.ToString(j + 1);
+                workRow1["18"] = Convert.ToString(ATcolumna18[s]);
+                workRow1["89"] = Convert.ToString(ATcolumna89[s]);
+                AndersonTTable.Rows.Add(workRow1);
+                s++;
+
+                for (int i = 0; i < (meshCte.GetXP().Count); i++)
+                {
+                    workRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getT(), 4));
+                }
+            }
+        }
+
+        private void CreateMTable()
+        {
+            int divisionesycte = rCte.getJ();
+
+            AndersonMTable.Columns.Add("y-x");
+            AndersonMTable.Columns.Add("18");
+            AndersonMTable.Columns.Add("89");
+
+            MTable.Columns.Add("y-x");
+
+            List<double> AMcolumna18 = new List<double> { 0.200e1, 0.200e1, 0.200e1,0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.203e1, 0.208e1, 0.215e1, 0.220e1 };
+            int test = AMcolumna18.Count;
+            List<double> AMcolumna89 = new List<double> { 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.201e1, 0.201e1, 0.202e1, 0.203e1, 0.204e1, 0.205e1, 0.207e1, 0.209e1, 0.210e1, 0.212e1, 0.214e1, 0.216e1, 0.218e1, 0.219e1, 0.221e1, 0.222e1, 0.222e1, 0.222e1, 0.221e1, 0.221e1, 0.220e1, 0.220e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.220e1, 0.231e1, 0.231e1 };
+            
+
+            for (int i = 0; i < meshCte.GetXP().Count; i++)
+            {
+                MTable.Columns.Add(Convert.ToString(i + 1));
+            }
+            int s = 0;
+            for (int j = divisionesycte - 1; j >= 0; j--)
+            {
+                DataRow workRow = MTable.NewRow();
+                workRow["y-x"] = Convert.ToString(j + 1);
+                MTable.Rows.Add(workRow);
+
+                DataRow workRow1 = AndersonMTable.NewRow();
+                workRow1["y-x"] = Convert.ToString(j + 1);
+                workRow1["18"] = Convert.ToString(AMcolumna18[s]);
+                workRow1["89"] = Convert.ToString(AMcolumna89[s]);
+                AndersonMTable.Rows.Add(workRow1);
+                s++;
+
+                for (int i = 0; i < (meshCte.GetXP().Count); i++)
+                {
+                    workRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getM(), 4));
+                }
+            }
+        }
+
+
+        private void uTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.Visibility = Visibility.Visible;
+            gridData.DataContext = UTable.DefaultView;
+            gridAndersonData.DataContext = AndersonUTable.DefaultView;
+        }
+
+        private void vTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.DataContext = VTable.DefaultView;
+            gridAndersonData.DataContext = AndersonVTable.DefaultView;
+        }
+
+        private void rhoTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.DataContext = rhoTable.DefaultView;
+            gridAndersonData.DataContext = AndersonRhoTable.DefaultView;
+        }
+
+        private void pTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.DataContext = pTable.DefaultView;
+            gridAndersonData.DataContext = AndersonpTable.DefaultView;
+        }
+
+        private void TTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.DataContext = TTable.DefaultView;
+            gridAndersonData.DataContext = AndersonTTable.DefaultView;
+        }
+
+        private void MTable_Checked(object sender, RoutedEventArgs e)
+        {
+            gridData.DataContext = MTable.DefaultView;
+            gridAndersonData.DataContext = AndersonMTable.DefaultView;
+        }
+        
 
         private void lntro_Click(object sender, RoutedEventArgs e)
         {
@@ -338,54 +619,12 @@ namespace PradntlMeyerExpansion
             uRB.IsChecked = true;
         }
 
-        private void CreateUTable()
-        {
-            //DataColumn column = new DataColumn();
-            //column.ColumnName = " x / y ";
-            UTable.Columns.Add(" x / y ");
-            for (int j = 0; j < divisionesy+1; j++)
-            {
-                DataRow row = UTable.NewRow();
-                //row[' x / y '] = j+1;
-                UTable.Rows.Add(row);
-            }
 
-            //for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            //{
-            //    for (int j = 0; j < divisionesy; j++)
-            //    {
-            //        UTable.Columns.Add(Convert.ToString(i + 1));
-            //        DataRow row = UTable.Rows[j];
-            //        row[Convert.ToString(i + 1)] = Math.Round(mesh.GetCell(j, i).getU(), 4);
-            //    }
-            //}  
-        }
-
-        private void CreateUTableAnderson()
-        {
-            List<double> columna19 = new List<double> {678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678,678, 678, 679,683,691,701,707};
-            List<double> columna88 = new List<double> { 678, 678, 678, 679, 679, 680, 681, 683, 685, 688, 690, 693, 696, 699, 702, 705, 707, 709, 711, 713, 713, 713, 712, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 710,705 };
-            AndersonUTable.Columns.Add("");
-            for (int j = 0; j < divisionesy; j++)
-            {
-                DataRow row = AndersonUTable.NewRow();
-                row[0] = j+1;
-                AndersonUTable.Rows.Add(row);
-            }
-            AndersonUTable.Columns.Add("18");
-            AndersonUTable.Columns.Add("88");
-            for (int j = 0; j < divisionesy; j++)
-            {
-                DataRow row = AndersonUTable.Rows[j];
-                row["18"] = columna88[j];
-                row["88"] = columna88[j];
-            }
-        }
 
         private void u_Checked(object sender, RoutedEventArgs e)
         {
-            CreateUTable();
-            CreateUTableAnderson();
+            //CreateUTable();
+            //CreateUTableAnderson();
             double maxvalue = -100000000;
             double minvalue = 100000000;
 
@@ -445,11 +684,7 @@ namespace PradntlMeyerExpansion
                 }
             }
         }
-        private void uTable_Checked(object sender, RoutedEventArgs e)
-        {
-            gridData.DataContext = UTable.DefaultView;
-            gridAndersonData.DataContext = AndersonUTable.DefaultView;
-        }
+        
 
 
         private void v_Checked(object sender, RoutedEventArgs e)
@@ -770,30 +1005,7 @@ namespace PradntlMeyerExpansion
 
 
 
-        private void vTable_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rhoTable_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void pTable_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TTable_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MTable_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
         private void polygon_MouseEnter(object sender, MouseEventArgs e)
         {
             //Obtnemos la ubicación del puntero
