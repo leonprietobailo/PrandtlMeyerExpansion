@@ -286,7 +286,7 @@
                     </DockPanel>
                 </Button>
             </Grid>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="100,674,0,0" VerticalAlignment="Top" Height="26" Width="174" Click="Button_Click"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="24,462,0,0" VerticalAlignment="Top" Height="26" Width="40" Click="Button_Click"/>
             <!--<Grid x:Name="Grid" Margin="261,68,49,292"/>-->
             <!--<Polygon Points="0,0 275,0 275,208 50,170 0,170" Fill="Blue"/>-->
             <!--<Canvas Margin="281,51,92,292" x:Name="GridPlano" Width="275" Height="208" >

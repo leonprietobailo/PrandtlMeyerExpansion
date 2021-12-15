@@ -686,7 +686,11 @@ namespace PradntlMeyerExpansion
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            mesh.saveCSV(0);
+            if (Convert.ToBoolean(uRB.IsChecked))
+            {
+                mesh.saveCSV(0);
+            }
+            // Añadir demás ELSE IF.
         }
 
         private void computeEvolutionChange()
