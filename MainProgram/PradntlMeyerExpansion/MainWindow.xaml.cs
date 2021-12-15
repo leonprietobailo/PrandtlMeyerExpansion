@@ -686,11 +686,14 @@ namespace PradntlMeyerExpansion
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (Convert.ToBoolean(uRB.IsChecked))
-            {
-                mesh.saveCSV(0);
-            }
-            // Añadir demás ELSE IF.
+            int mode = 0;
+            if (Convert.ToBoolean(uRB.IsChecked)) { mode = 0; }
+            else if (Convert.ToBoolean(vRB.IsChecked)) { mode = 1; }
+            else if (Convert.ToBoolean(roRB.IsChecked)) { mode = 2; }
+            else if (Convert.ToBoolean(pRB.IsChecked)) { mode = 3; }
+            else if (Convert.ToBoolean(TRB.IsChecked)) { mode = 4; }
+            else if (Convert.ToBoolean(MRB.IsChecked)) { mode = 5; }
+            mesh.saveCSV(mode);
         }
 
         private void computeEvolutionChange()

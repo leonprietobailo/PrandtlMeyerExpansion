@@ -145,7 +145,13 @@ namespace PradntlMeyerExpansion
                     {
                         for (int n = 0; n < Mesh.Count; n++)
                         {
-                            File.AppendAllText(diag.FileName, Mesh[n][i].getU().ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+                            if (mode == 0) { File.AppendAllText(diag.FileName, Mesh[n][i].getU().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                            if (mode == 1) { File.AppendAllText(diag.FileName, Mesh[n][i].getV().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                            if (mode == 2) { File.AppendAllText(diag.FileName, Mesh[n][i].getRO().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                            if (mode == 3) { File.AppendAllText(diag.FileName, Mesh[n][i].getP().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                            if (mode == 4) { File.AppendAllText(diag.FileName, Mesh[n][i].getT().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                            if (mode == 5) { File.AppendAllText(diag.FileName, Mesh[n][i].getM().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+
                             if (n < Mesh.Count - 1)
                             {
                                 File.AppendAllText(diag.FileName, ",");
