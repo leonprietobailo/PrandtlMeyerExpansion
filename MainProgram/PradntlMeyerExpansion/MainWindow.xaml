@@ -44,7 +44,7 @@
             <Button Content="START" HorizontalAlignment="Left" Margin="313,494,0,0" VerticalAlignment="Top" FontFamily="Consolas" FontSize="40" Background="Transparent" Foreground="White" BorderBrush="White" FontWeight="Bold" BorderThickness="3,3,3,3" Height="87" Width="154" Click="Simualtion_Click"/>
             <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
         </Grid>
-        <Grid x:Name="Simulation" Margin="0,70,0,0" Visibility="hidden">
+        <Grid x:Name="Simulation" Margin="0,70,0,0" Visibility="Visible">
             <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="510*"/>
@@ -220,7 +220,7 @@
             <Button Name="RunSim" HorizontalAlignment="Left" Margin="105,440,0,0" VerticalAlignment="Top" Click="Run_Click" FontFamily="Consolas" Height="70" Width="70" Background="#00DDDDDD" BorderBrush="Transparent" Foreground="White" FontWeight="Bold" IsEnabled="False">
                 <Image Height="70" Width="70" Source="/Play.png" />
             </Button>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,425,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" >
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,425,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="ShowOnGM_Click" >
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
                     <Image Width="82"  Height="84" Margin="-8,-25,0,0" Source="/LoadFile.png"   />
                     <Label Content="Load&#xA;File" Margin="-115,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
@@ -280,12 +280,13 @@
                     <Label x:Name="xData" HorizontalAlignment="Left" Margin="21,327,0,0" VerticalAlignment="Top" Foreground="White" Width="109"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="42" FontSize="20"/>
                     <Label x:Name="yData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="21,374,0,0" Width="109"  Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41" FontSize="20"/>
                 </Grid>
-                <Button  x:Name="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="80" HorizontalAlignment="Left" Margin="1000,600,0,0" VerticalAlignment="Top" Width="80"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25">
+                <Button  x:Name="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="80" HorizontalAlignment="Left" Margin="1000,600,0,0" VerticalAlignment="Top" Width="80"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Save_Click">
                     <DockPanel Width="85" Height="75" Margin="0,0,0,0">
                         <Image Width="85" Margin="0,0,0,0" Source="/CSV.png"  />
                     </DockPanel>
                 </Button>
             </Grid>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="100,674,0,0" VerticalAlignment="Top" Height="26" Width="174" Click="Button_Click"/>
             <!--<Grid x:Name="Grid" Margin="261,68,49,292"/>-->
             <!--<Polygon Points="0,0 275,0 275,208 50,170 0,170" Fill="Blue"/>-->
             <!--<Canvas Margin="281,51,92,292" x:Name="GridPlano" Width="275" Height="208" >
@@ -323,7 +324,7 @@
             <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="This simulator has been developed by León Prieto and Verónica Sastre in 2021&#x0a;&#x0a;Simulation Course&#x0a;&#x0a;Aerospace Systems Engineering (EETAC)&#x0a;&#x0a;veronica.sastre@estudiantat.upc.edu&#x0a;leon.enrique.prieto@estudiantat.upc.edu" x:Name="AboutUsText" Margin="0,164,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="394" Height="168" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
 
-        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="visible">
+        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="hidden">
             <Label FontSize="15" Name="SimulatorResults" Content="Simulator Results" HorizontalAlignment="Left" Margin="469,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
             <Label FontSize="15" Name="AndersonResults" Content="Anderson Results" HorizontalAlignment="Left" Margin="1074,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
             <Label FontSize="15" Name="ErrorS" Content="Simulator Error" HorizontalAlignment="Left" Margin="1287,181,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
