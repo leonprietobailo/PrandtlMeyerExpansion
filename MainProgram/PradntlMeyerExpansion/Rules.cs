@@ -11,6 +11,26 @@ namespace PradntlMeyerExpansion
         int j0;
 
         public Rules() { }
+
+        public Rules(Rules r, double thetaIn)
+        {
+            u0 = r.u0;
+            v0 = r.v0;
+            ro0 = r.ro0;
+            p0 = r.p0;
+            T0 = r.T0;
+            M0 = r.M0;
+            Cy0 = r.Cy0;
+            gamma0 = r.gamma0;
+            R0 = r.R0;
+            E0 = r.E0;
+            theta0 = thetaIn;
+            xMax0 = r.xMax0;
+            H0 = r.H0;
+            Courant0 = r.Courant0;
+            j0 = r.j0;
+        }
+
         public Rules(double u, double v, double ro, double p, double T, double M, double Cy, double gamma, double R, double E, double theta, int j, double xMax, double H, double Courant)
         {
             u0 = u;
