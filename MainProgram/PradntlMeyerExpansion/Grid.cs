@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -129,6 +131,55 @@ namespace PradntlMeyerExpansion
             }
         }
 
+        public void saveCSV(int mode)
+        {
+            
+            SaveFileDialog diag = new SaveFileDialog();
+            diag.Filter = "(*.csv)|*.*";
+            diag.DefaultExt = "csv";
+            if (diag.ShowDialog() == true)
+            {
+                if (mode == 0)
+                {
+                    for (int i = r.getJ() - 1; i >= 0; i--)
+                    {
+                        for (int n = 0; n < Mesh.Count; n++)
+                        {
+                            File.AppendAllText(diag.FileName, Mesh[n][i].getU().ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+                            if (n < Mesh.Count - 1)
+                            {
+                                File.AppendAllText(diag.FileName, ",");
+                            }
+                            else
+                            {
+                                File.AppendAllText(diag.FileName, "\n");
+                            }
+                        }
+                    }
+                }
+                else if (mode == 1)
+                {
+
+                }
+                else if (mode == 2)
+                {
+
+                }
+                else if (mode == 3)
+                {
+
+                }
+                else if (mode == 4)
+                {
+
+                }
+                else if (mode == 5)
+                {
+
+                }
+            }
+
+        }
     }
 }
 

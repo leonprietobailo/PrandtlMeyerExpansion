@@ -568,7 +568,6 @@ namespace PradntlMeyerExpansion
             }
         }
 
-
         private void p_Checked(object sender, RoutedEventArgs e)
         {
             double maxvalue = -100000000;
@@ -678,6 +677,25 @@ namespace PradntlMeyerExpansion
             }
         }
 
+        private void ShowOnGM_Click(object sender, RoutedEventArgs e)
+        {
+            r = new Rules();
+            int result = r.loadRules();
+            if (result == 0)
+            {
+                Run_Click(null, null);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            r.saveRules();
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            mesh.saveCSV(0);
+        }
 
         private void computeEvolutionChange()
         {
