@@ -142,12 +142,12 @@ namespace PradntlMeyerExpansion
             ErrorAM.Content = relMAnd.ToString();
 
             // Poner errores del Simulador en el formulario.
-            ErrorAU.Content = relU.ToString();
-            ErrorAV.Content = relV.ToString();
-            ErrorARO.Content = relRO.ToString();
-            ErrorAP.Content = relP.ToString();
-            ErrorAT.Content = relT.ToString();
-            ErrorAM.Content = relM.ToString();
+            ErrorSU.Content = relU.ToString();
+            ErrorSV.Content = relV.ToString();
+            ErrorSRO.Content = relRO.ToString();
+            ErrorSP.Content = relP.ToString();
+            ErrorST.Content = relT.ToString();
+            ErrorSM.Content = relM.ToString();
 
 
             gridData.DataContext = UTable.DefaultView;

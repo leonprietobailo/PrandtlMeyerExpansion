@@ -309,7 +309,7 @@
 
         </Grid>
 
-        <Grid x:Name="VideoTutorial" Margin="0,70,0,0" Visibility="Visible">
+        <Grid x:Name="VideoTutorial" Margin="0,70,0,0" Visibility="Hidden">
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="125" HorizontalAlignment="Center" Margin="0,288,0,0" x:Name="OpenVideo" VerticalAlignment="Top" Width="118"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="OpenVideo_Click">
                 <Image Width="120"  Height="132" Source="/Videoo.png"/>
             </Button>
@@ -320,7 +320,7 @@
         </Grid>
 
 
-        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="Hidden">
+        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="visible">
             <Label FontSize="15" x:Name="ErrorA_Copy" Content="Simulator" HorizontalAlignment="Left" Margin="1401,214,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
 
             <Label FontSize="12" Name="Disclaimer" Content="The results validation has been done with: E = 10 m, x = 65 m, H = 40 m, θ = 5.352°, Δη = 0.025, Cy = 0.5, γ = 1.4, R = 287 J/(kg·K), C = 0,5, po = 10100, ρo = 1.23 kg/m3, To= 286.1 K, uo = 678 m/s and vo = 0 m/s" HorizontalAlignment="Left" Margin="42,650,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="1418" HorizontalContentAlignment="Center" Height="26"/>
@@ -344,6 +344,20 @@
             <Label FontSize="15" x:Name="ErrorAT_Copy" Content="T" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1263,364,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
             <Label FontSize="15" x:Name="ErrorAM_Copy" Content="M"  HorizontalAlignment="Left" Margin="1263,394,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
             <Label FontSize="15" x:Name="ErrorA_Copy1" Content="Magnitude" HorizontalAlignment="Left" Margin="1231,214,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+
+            <Label FontSize="15" x:Name="ErrorSU" Content="U ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,244,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" x:Name="ErrorSV" Content="V ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,274,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" x:Name="ErrorSRO" Content="RO ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,304,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" x:Name="ErrorSP" Content="P ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,334,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" x:Name="ErrorST" Content="T ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,364,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" x:Name="ErrorSM" Content="M ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,394,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+
+            <Rectangle HorizontalAlignment="Left" Height="247" Margin="1231,181,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+            <Rectangle HorizontalAlignment="Left" Height="30" Margin="1231,214,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+            <Rectangle HorizontalAlignment="Left" Height="30" Margin="1231,274,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+            <Rectangle HorizontalAlignment="Left" Height="30" Margin="1231,334,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+            <Rectangle HorizontalAlignment="Left" Height="34" Margin="1231,394,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+            <Rectangle HorizontalAlignment="Left" Height="214" Margin="1315,214,0,0" Stroke="White" VerticalAlignment="Top" Width="86"/>
 
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Name="Utable" Content="u" HorizontalAlignment="Left" Margin="86,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="v" HorizontalAlignment="Left" Margin="124,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
