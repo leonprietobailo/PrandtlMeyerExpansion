@@ -29,7 +29,8 @@ namespace PradntlMeyerExpansion
         int divisionesy;
         Polygon[,] Polygons;
         SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-        
+
+        double umax, umin, vmax, vmin, rhomax, rhomin, pmax, pmin, Tmax, Tmin, Mmax, Mmin;
 
         //Gráficas
         //ChartValues<double> Values = new ChartValues<double>();
@@ -332,6 +333,8 @@ namespace PradntlMeyerExpansion
             gridData.Visibility = Visibility.Visible;
             gridData.DataContext = UTable.DefaultView;
             gridAndersonData.DataContext = AndersonUTable.DefaultView;
+
+
         }
 
         private void vTable_Checked(object sender, RoutedEventArgs e)
@@ -399,6 +402,8 @@ namespace PradntlMeyerExpansion
 
             EstudioAvanzada.IsEnabled = true;
             Grid.IsEnabled = false;
+
+            
         }
 
         private void Validation_Click(object sender, RoutedEventArgs e)
@@ -649,6 +654,8 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
+            umax = maxvalue;
+            umin = minvalue;
             int y = 0;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
@@ -683,6 +690,15 @@ namespace PradntlMeyerExpansion
 
                 }
             }
+            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
+            myHorizontalGradient.StartPoint = new Point(0, 0.3);
+            myHorizontalGradient.EndPoint = new Point(1, 0.3);
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            Gradient.Fill = myHorizontalGradient;
+            minValueGra.Content = Convert.ToString(Math.Round(umax)+" m/s");
+            maxValueGra.Content = Convert.ToString(Math.Round(umin)+ " m/s");
         }
         
 
@@ -707,7 +723,8 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
-
+            vmax = maxvalue;
+            vmin = minvalue;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 //for (int j = 0; j < divisionesy; j++)
@@ -739,6 +756,15 @@ namespace PradntlMeyerExpansion
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
+            myHorizontalGradient.StartPoint = new Point(0, 0.3);
+            myHorizontalGradient.EndPoint = new Point(1, 0.3);
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            Gradient.Fill = myHorizontalGradient;
+            minValueGra.Content = Convert.ToString(Math.Round(vmax) + " m/s");
+            maxValueGra.Content = Convert.ToString(Math.Round(vmin) + " m/s");
         }
 
         private void rho_Checked(object sender, RoutedEventArgs e)
@@ -761,7 +787,8 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
-
+            rhomax = maxvalue;
+            rhomin = minvalue;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 //for (int j = 0; j < divisionesy; j++)
@@ -793,6 +820,15 @@ namespace PradntlMeyerExpansion
                     Polygons[i,j].Fill = mySolidColorBrush;
                 }
             }
+            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
+            myHorizontalGradient.StartPoint = new Point(0, 0.3);
+            myHorizontalGradient.EndPoint = new Point(1, 0.3);
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            Gradient.Fill = myHorizontalGradient;
+            minValueGra.Content = Convert.ToString(Math.Round(rhomax,4) + " kg/m3");
+            maxValueGra.Content = Convert.ToString(Math.Round(rhomin,4) + " kg/m3");
         }
 
         private void p_Checked(object sender, RoutedEventArgs e)
@@ -815,7 +851,8 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
-
+            pmax = maxvalue;
+            pmin = minvalue;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 //for (int j = 0; j < divisionesy; j++)
@@ -848,6 +885,15 @@ namespace PradntlMeyerExpansion
                     Polygons[i,j].Fill = mySolidColorBrush;
                 }
             }
+            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
+            myHorizontalGradient.StartPoint = new Point(0, 0.3);
+            myHorizontalGradient.EndPoint = new Point(1, 0.3);
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            Gradient.Fill = myHorizontalGradient;
+            minValueGra.Content = Convert.ToString(Math.Round(pmax) + " Pa");
+            maxValueGra.Content = Convert.ToString(Math.Round(pmin) + " Pa");
         }
 
         private void T_Checked(object sender, RoutedEventArgs e)
@@ -870,7 +916,8 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
-
+            Tmax = maxvalue;
+            Tmin = minvalue;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 //for (int j = 0; j < divisionesy; j++)
@@ -902,6 +949,15 @@ namespace PradntlMeyerExpansion
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
+            myHorizontalGradient.StartPoint = new Point(0, 0.3);
+            myHorizontalGradient.EndPoint = new Point(1, 0.3);
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            Gradient.Fill = myHorizontalGradient;
+            maxValueGra.Content = Convert.ToString(Math.Round(Tmin)+" K");
+            minValueGra.Content = Convert.ToString(Math.Round(Tmax) + " K");
         }
 
         private void ShowOnGM_Click(object sender, RoutedEventArgs e)
@@ -969,7 +1025,8 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
-
+            Mmax = maxvalue;
+            Mmin = minvalue;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 //for (int j = 0; j < divisionesy; j++)
@@ -1001,6 +1058,15 @@ namespace PradntlMeyerExpansion
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
+            myHorizontalGradient.StartPoint = new Point(0, 0.3);
+            myHorizontalGradient.EndPoint = new Point(1, 0.3);
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            Gradient.Fill = myHorizontalGradient;
+            maxValueGra.Content = Convert.ToString(Math.Round(Mmin,4));
+            minValueGra.Content = Convert.ToString(Math.Round(Mmax,4));
         }
 
 
@@ -1014,12 +1080,12 @@ namespace PradntlMeyerExpansion
             //Mostramos las etiquetas correspondientes a los estados de las celdas
             Info.Visibility = Visibility.Visible;
             //Actualizamos los valores de fase y temperatura
-            uData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getU(), 4);
-            vData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getV(), 4);
-            rhoData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getRO(), 4);
-            pData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getP(), 4);
-            TData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getT(), 4);
-            MData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getM(), 4);
+            uData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getU(), 2)+" m/s";
+            vData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getV(), 2)+ " m/s";
+            rhoData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getRO(), 2)+ " kg/m3";
+            pData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getP(), 2) + " Pa";
+            TData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getT(), 2) + " K";
+            MData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getM(), 2);
             xData.Content = p.X+1;
             yData.Content = p.Y+1;
         }
