@@ -88,6 +88,8 @@ namespace PradntlMeyerExpansion
             vTutorial.Background = Brushes.Transparent;
             aboutUs.Background = Brushes.Transparent;
 
+            EstudioAvanzada.IsEnabled = false;
+
             Simulation.Children.Add(plano);
 
             //Establecemos los valores del gráfico //Canbiaaar
