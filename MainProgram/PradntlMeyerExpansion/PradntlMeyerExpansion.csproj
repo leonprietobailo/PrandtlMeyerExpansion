@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="AboutUs.png" />
     <None Remove="Airfoil.png" />
+    <None Remove="Contour Grid.png" />
     <None Remove="CSV.png" />
     <None Remove="DataView.png" />
     <None Remove="Grid.png" />
@@ -17,6 +18,7 @@
     <None Remove="Play.png" />
     <None Remove="PMExpansion.png" />
     <None Remove="Research.png" />
+    <None Remove="SIM.png" />
     <None Remove="Simulation.png" />
     <None Remove="Videoo.png" />
     <None Remove="VideoTutorial.png" />
@@ -32,6 +34,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Airfoil.png" />
+    <Resource Include="Contour Grid.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="CSV.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -52,6 +57,9 @@
     </Resource>
     <Resource Include="PMExpansion.png" />
     <Resource Include="Research.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="SIM.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Simulation.png">
