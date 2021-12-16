@@ -26,19 +26,18 @@ namespace PradntlMeyerExpansion
             Cell[] row = new Cell[r.getJ()];
             double[] rowY = new double[r.getJ()];
             for (int i = 0; i < r.getJ(); i++) { row[i] = new Cell(r, i, ho); }
-            for (int i = 0; i < r.getJ(); i++) { rowY[i] = i * r.getH()/(r.getJ()-1); }
+            for (int i = 0; i < r.getJ(); i++) { rowY[i] = i * r.getH() / (r.getJ() - 1); }
             Mesh.Add(row);
             xP.Add(0);
             yP.Add(rowY);
         }
-        
 
         public void PrandtlMeyerExpansion()
         {
             while (xi < r.getxMax())
             {
                 Cell[] row = new Cell[r.getJ()];
-                for (int i = 0; i < r.getJ(); i++) { row[i] = new Cell(r,i,ho); }
+                for (int i = 0; i < r.getJ(); i++) { row[i] = new Cell(r, i, ho); }
                 Mesh.Add(row);
                 InitVars();
                 ComputeStepSize();
@@ -53,7 +52,7 @@ namespace PradntlMeyerExpansion
         private void InitVars()
         {
             double[] y = new double[r.getJ()];
-            for(int i = 0; i < r.getJ(); i++)
+            for (int i = 0; i < r.getJ(); i++)
             {
                 double ys;
                 if (xi < r.getE())
@@ -88,9 +87,9 @@ namespace PradntlMeyerExpansion
             double[] anglePlus = new double[r.getJ()];
             double[] angleMin = new double[r.getJ()];
             double mu;
-            for(int i = 0; i < r.getJ(); i++)
+            for (int i = 0; i < r.getJ(); i++)
             {
-                mu = Math.Asin(1 / Mesh[ho-1][i].getM());
+                mu = Math.Asin(1 / Mesh[ho - 1][i].getM());
                 anglePlus[i] = Math.Abs(Math.Tan(r.getTheta() + mu));
                 angleMin[i] = Math.Abs(Math.Tan(r.getTheta() - mu));
             }
@@ -101,12 +100,28 @@ namespace PradntlMeyerExpansion
             dXi = r.getCourant() * dy / MaximumValue;
         }
 
-        public (double u, double v, double ro, double p , double T, double M) getDownstream()
+        public (double u, double v, double ro, double p, double T, double M) getDownstream()
         {
             Cell ret = Mesh[Mesh.Count - 1][0];
-            return (ret.getU(), ret.getV(), ret.getRO(), ret.getP(), ret.getT(), ret.getM());
+            double u = 0;
+            double v = 0;
+            double RO = 0;
+            double P = 0;
+            double T = 0;
+            double M = 0;
+            int counter = 0;
+            for(int i=1; i < Math.Floor(23.0/41.0 * r.getJ()); i++)
+            {
+                u += Mesh[Mesh.Count - 1][i].getU();
+                v += Mesh[Mesh.Count - 1][i].getV();
+                RO += Mesh[Mesh.Count - 1][i].getRO();
+                P += Mesh[Mesh.Count - 1][i].getP();
+                T += Mesh[Mesh.Count - 1][i].getT();
+                M += Mesh[Mesh.Count - 1][i].getM();
+                counter++;
+            }
+            return (u/counter, v / counter, RO / counter, P / counter, T / counter, M / counter);
         }
-
 
         public Cell GetCell(int ve, int ho) { return Mesh[ho][ve]; }
 
@@ -118,7 +133,7 @@ namespace PradntlMeyerExpansion
         {
             FileStream emptyFile = File.Create("test.txt");
             emptyFile.Close();
-            for (int i=0;i<Mesh[0].Length;i++)
+            for (int i = 0; i < Mesh[0].Length; i++)
             {
                 File.AppendAllText("text.txt", Convert.ToString(Mesh[18][i].getM()));
                 File.AppendAllText("text.txt", "\n");
@@ -126,65 +141,40 @@ namespace PradntlMeyerExpansion
             File.AppendAllText("text.txt", "\n");
             for (int i = 0; i < Mesh[0].Length; i++)
             {
-                File.AppendAllText("text.txt", Convert.ToString(Mesh[Mesh.Count-1][i].getM()));
+                File.AppendAllText("text.txt", Convert.ToString(Mesh[Mesh.Count - 1][i].getM()));
                 File.AppendAllText("text.txt", "\n");
             }
         }
 
         public void saveCSV(int mode)
         {
-            
             SaveFileDialog diag = new SaveFileDialog();
             diag.Filter = "(*.csv)|*.*";
             diag.DefaultExt = "csv";
             if (diag.ShowDialog() == true)
             {
-                if (mode == 0)
+                for (int i = r.getJ() - 1; i >= 0; i--)
                 {
-                    for (int i = r.getJ() - 1; i >= 0; i--)
+                    for (int n = 0; n < Mesh.Count; n++)
                     {
-                        for (int n = 0; n < Mesh.Count; n++)
-                        {
-                            if (mode == 0) { File.AppendAllText(diag.FileName, Mesh[n][i].getU().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                            if (mode == 1) { File.AppendAllText(diag.FileName, Mesh[n][i].getV().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                            if (mode == 2) { File.AppendAllText(diag.FileName, Mesh[n][i].getRO().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                            if (mode == 3) { File.AppendAllText(diag.FileName, Mesh[n][i].getP().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                            if (mode == 4) { File.AppendAllText(diag.FileName, Mesh[n][i].getT().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                            if (mode == 5) { File.AppendAllText(diag.FileName, Mesh[n][i].getM().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (mode == 0) { File.AppendAllText(diag.FileName, Mesh[n][i].getU().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (mode == 1) { File.AppendAllText(diag.FileName, Mesh[n][i].getV().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (mode == 2) { File.AppendAllText(diag.FileName, Mesh[n][i].getRO().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (mode == 3) { File.AppendAllText(diag.FileName, Mesh[n][i].getP().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (mode == 4) { File.AppendAllText(diag.FileName, Mesh[n][i].getT().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (mode == 5) { File.AppendAllText(diag.FileName, Mesh[n][i].getM().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
 
-                            if (n < Mesh.Count - 1)
-                            {
-                                File.AppendAllText(diag.FileName, ",");
-                            }
-                            else
-                            {
-                                File.AppendAllText(diag.FileName, "\n");
-                            }
+                        if (n < Mesh.Count - 1)
+                        {
+                            File.AppendAllText(diag.FileName, ",");
+                        }
+                        else
+                        {
+                            File.AppendAllText(diag.FileName, "\n");
                         }
                     }
                 }
-                else if (mode == 1)
-                {
-
-                }
-                else if (mode == 2)
-                {
-
-                }
-                else if (mode == 3)
-                {
-
-                }
-                else if (mode == 4)
-                {
-
-                }
-                else if (mode == 5)
-                {
-
-                }
             }
-
         }
     }
 }

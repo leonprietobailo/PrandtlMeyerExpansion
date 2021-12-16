@@ -10,6 +10,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
 using System.IO;
+using System.Diagnostics;
 
 namespace PradntlMeyerExpansion
 {
@@ -96,7 +97,7 @@ namespace PradntlMeyerExpansion
             //setChartNumbers();
 
             //Sirve para cargar la tabla
-            rCte = new Rules(678, 0, 1.23, 0.101e6, 286.1, 2, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
+            rCte = new Rules(678, 0, 1.23, 0.101e6, 286.1, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
             meshCte = new Grid(rCte);
             meshCte.PrandtlMeyerExpansion();
             CreateUTable();
@@ -105,6 +106,48 @@ namespace PradntlMeyerExpansion
             CreatepTable();
             CreateTTable();
             CreateMTable();
+
+            // Errores
+            double uReal = 710;
+            double vReal = -66.5;
+            double roReal = 0.984;
+            double pReal = 0.739e5;
+            double TReal = 262;
+            double MReal = 2.2;
+
+            double uEVO, vEVO, roEVO, pEVO, TEVO, MEVO;
+            (uEVO, vEVO, roEVO, pEVO, TEVO, MEVO) = meshCte.getDownstream();
+
+            double relU = Math.Round((uEVO - uReal) / uReal * 100, 4);
+            double relV = Math.Round((vEVO - vReal) / vReal * 100,4);
+            double relRO = Math.Round((roEVO - roReal) / roReal * 100,4);
+            double relP = Math.Round((pEVO - pReal) / pReal * 100,4);
+            double relT = Math.Round((TEVO - TReal) / TReal * 100,4);
+            double relM = Math.Round((MEVO - MReal) / MReal * 100,4);
+
+            double relUAnd = 0.45;
+            double relVAnd = 3.76;
+            double relROAnd = 0.813;
+            double relPAnd = 1.08;
+            double relTAnd = 0.038;
+            double relMAnd = 0.45;
+
+            // Poner errores del Anderson en el formulario.
+            ErrorAU.Content = relUAnd.ToString();
+            ErrorAV.Content = relVAnd.ToString();
+            ErrorARO.Content = relROAnd.ToString();
+            ErrorAP.Content = relPAnd.ToString();
+            ErrorAT.Content = relTAnd.ToString();
+            ErrorAM.Content = relMAnd.ToString();
+
+            // Poner errores del Simulador en el formulario.
+            ErrorAU.Content = relU.ToString();
+            ErrorAV.Content = relV.ToString();
+            ErrorARO.Content = relRO.ToString();
+            ErrorAP.Content = relP.ToString();
+            ErrorAT.Content = relT.ToString();
+            ErrorAM.Content = relM.ToString();
+
 
             gridData.DataContext = UTable.DefaultView;
 
@@ -502,7 +545,7 @@ namespace PradntlMeyerExpansion
             double rho = Convert.ToDouble(rho1.Text);
             double p = Convert.ToDouble(p1.Text);
             double T = Convert.ToDouble(T1.Text);
-            double M = Convert.ToDouble(M1.Text);
+            //double M = Convert.ToDouble(M1.Text);
             double Cy = Convert.ToDouble(Cy1.Text);
             double gamma = Convert.ToDouble(gamma1.Text);
             double R = Convert.ToDouble(R1.Text);
@@ -513,7 +556,7 @@ namespace PradntlMeyerExpansion
             double xmax = Convert.ToDouble(x11.Text);
             double H = Convert.ToDouble(H1.Text);
             double C = Convert.ToDouble(C1.Text);
-            r = new Rules(u, v, rho, p, T, M, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
+            r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
 
             //Cambiar cuando hagamos el ajuste al mostrar
             E = r.getE() * 11;
@@ -741,6 +784,15 @@ namespace PradntlMeyerExpansion
             }
         }
 
+        private void OpenVideo_Click(object sender, RoutedEventArgs e)
+        {
+            string url = "https://youtu.be/Qgto2vXkQaY";
+            var psi = new ProcessStartInfo();
+            psi.UseShellExecute = true;
+            psi.FileName = url;
+            Process.Start(psi);
+        }
+
         private void rho_Checked(object sender, RoutedEventArgs e)
         {
             double maxvalue = -100000000;
@@ -936,7 +988,7 @@ namespace PradntlMeyerExpansion
             for(double theta = 10; theta >= 0; theta -= 0.1) // De - 10 grados a 0 grados.
             {
                 double uEVO, vEVO, roEVO, pEVO, TEVO, MEVO;
-                Rules rEVO = new Rules(r, theta);
+                Rules rEVO = new Rules(r, theta * Math.PI / 180);
                 Grid gEVO = new Grid(rEVO);
                 gEVO.PrandtlMeyerExpansion();
                 (uEVO, vEVO, roEVO, pEVO, TEVO, MEVO) = gEVO.getDownstream();
@@ -947,6 +999,12 @@ namespace PradntlMeyerExpansion
                 TEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(TEVO, 4))));
                 MEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(MEVO, 4))));
             }
+            uChartAxis.Value = r.getU();
+            vChartAxis.Value = r.getV();
+            RoChartAxis.Value = r.getRO();
+            pChartAxis.Value = r.getP();
+            TchartAxis.Value = r.getT();
+            MChartAxis.Value = r.getM();
         }
 
         private void M_Checked(object sender, RoutedEventArgs e)

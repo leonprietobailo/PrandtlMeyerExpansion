@@ -19,7 +19,6 @@ namespace PradntlMeyerExpansion
             ro0 = r.ro0;
             p0 = r.p0;
             T0 = r.T0;
-            M0 = r.M0;
             Cy0 = r.Cy0;
             gamma0 = r.gamma0;
             R0 = r.R0;
@@ -29,16 +28,16 @@ namespace PradntlMeyerExpansion
             H0 = r.H0;
             Courant0 = r.Courant0;
             j0 = r.j0;
+            M0 = Math.Sqrt(u0*u0 + v0*v0) / Math.Sqrt(gamma0 * R0 * T0);
         }
 
-        public Rules(double u, double v, double ro, double p, double T, double M, double Cy, double gamma, double R, double E, double theta, int j, double xMax, double H, double Courant)
+        public Rules(double u, double v, double ro, double p, double T, double Cy, double gamma, double R, double E, double theta, int j, double xMax, double H, double Courant)
         {
             u0 = u;
             v0 = v;
             ro0 = ro;
             p0 = p;
             T0 = T;
-            M0 = M;
             Cy0 = Cy;
             gamma0 = gamma;
             R0 = R;
@@ -48,6 +47,7 @@ namespace PradntlMeyerExpansion
             xMax0 = xMax;
             H0 = H;
             Courant0 = Courant;
+            M0 = Math.Sqrt(u0 * u0 + v0 * v0) / Math.Sqrt(gamma0 * R0 * T0);
         }
 
         public double getU() { return u0; }
