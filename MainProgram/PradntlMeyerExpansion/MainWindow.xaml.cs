@@ -488,11 +488,11 @@ namespace PradntlMeyerExpansion
         private void Grid_Click(object sender, RoutedEventArgs e)
         {
             Grids.Visibility = Visibility.Visible;
-            plano.Visibility = Visibility.Visible;
             EstudioAvanzado.Visibility = Visibility.Hidden;
 
             EstudioAvanzada.Visibility = Visibility.Visible;
             Grid.Visibility = Visibility.Hidden;
+            plano.Visibility = Visibility.Visible;
         }
         private void LoadGrid(object sender, RoutedEventArgs e)
         {
@@ -591,6 +591,7 @@ namespace PradntlMeyerExpansion
             Grid.Visibility = Visibility.Hidden;
             EstudioAvanzada.Visibility = Visibility.Visible;
             Grids.Visibility = Visibility.Visible;
+
 
             plano.Children.Clear();
             mesh = new Grid(r);

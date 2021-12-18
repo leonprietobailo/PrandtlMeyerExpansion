@@ -45,7 +45,7 @@
             <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
         </Grid>
 
-        <Grid x:Name="Simulation" Margin="0,70,0,-5" Visibility="Hidden">
+        <Grid x:Name="Simulation" Margin="0,70,0,-5" Visibility="Visible">
 
             <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
@@ -207,72 +207,64 @@
                 <Label Content="Temperature Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="392,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
                 <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="243,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
             </Grid>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,560,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="estudio_Click">
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="210,507,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="estudio_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
                     <Image Width="54"  Height="63" Margin="7,-25,0,0" Source="/Research.png"  />
                     <Label Content="Research" Margin="-100,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="67" Height="42"/>
                 </DockPanel>
             </Button>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,560,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Grid_Click">
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="210,507,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Grid_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
-                    <Image Width="63"  Height="73" Margin="1,-25,0,0" Source="/Grid.png"   />
-                    <Label Content="Canvas" Margin="-105,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
+                    <Image Width="56"  Height="60" Margin="5,-30,0,0" Source="/Grid.png"   />
+                    <Label Content="Physical&#x0a; Plane" Margin="-103,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="66" Height="42"/>
                 </DockPanel>
             </Button>
-            <Button Name="RunSim" HorizontalAlignment="Left" Margin="105,445,0,0" VerticalAlignment="Top" Click="Run_Click" FontFamily="Consolas" Height="70" Width="70" Background="#00DDDDDD" BorderBrush="Transparent" Foreground="White" FontWeight="Bold">
-                <Image Height="70" Width="70" Source="/Play.png" />
-            </Button>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,430,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="ShowOnGM_Click" >
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="110,507,0,0" Name="RunSim" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Run_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
-                    <Image Width="82"  Height="84" Margin="-8,-25,0,0" Source="/LoadFile.png"   />
-
-                    <Label Content="Load&#xA;File" Margin="-115,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
+                    <Image Width="58"  Height="59" Margin="4,-25,0,0" Source="/runSimulation.png"/>
+                    <Label Content="Simulate" Margin="-103,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="66" Height="42"/>
                 </DockPanel>
             </Button>
 
-            <Label FontSize="15" Name="Parameters" Background="#FF232323" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Parameters" HorizontalAlignment="Left" Margin="74,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667" Width="232" Height="49"/>
-            <Grid Background="#FF232323" Margin="74,93,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Height="311">
+
+            <Label FontSize="15" Name="Parameters" Background="#FF232323" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Parameters" HorizontalAlignment="Left" Margin="74,64,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667" Width="232" Height="49"/>
+            <Grid Background="#FF232323" Margin="74,113,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Height="352">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="167*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
                 <Label Content="E[m]       x[m]       H[m]" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="193" FontFamily="Consolas" Margin="25,0,0,0" Foreground="White" />
                 <Label Content="θ[°]        Δη         Cy" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="193" FontFamily="Consolas" Margin="25,50,0,0" Foreground="White"/>
                 <Label Content=" γ      R[J/(kg·K)]    C" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" FontFamily="Consolas" Margin="25,100,0,0" Width="193" Foreground="White"/>
                 <Label Content="po[Pa]   ρo[kg/m3]    To[K]" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" FontFamily="Consolas" Margin="25,150,0,0" Foreground="White"/>
-                <Label Content="          uo[m/s]   vo[m/s]" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" FontFamily="Consolas" Margin="25,200,0,0" Width="193" Foreground="White"/>
+                <Label Content="uo[m/s]   vo[m/s]" HorizontalAlignment="Center" VerticalAlignment="Top" Height="28" FontFamily="Consolas" Margin="0,200,0,0" Width="122" Foreground="White"/>
 
                 <TextBox Text="10" Name="E1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="25,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas"/>
-                <TextBox Text="65" Name="x11" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="95,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas"/>
+                <TextBox Text="65" Name="x11" TextAlignment="Center" HorizontalAlignment="Center" Height="17" Margin="0,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas"/>
                 <TextBox Text="40" Name="H1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
 
                 <TextBox Text="5,352" Name="theta1" TextAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="25,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                <TextBox Text="0,025" x:Name="dEta1" TextAlignment="Center" HorizontalAlignment="Left" Height="16" Margin="95,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="0,025" x:Name="dEta1" TextAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="0,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
                 <TextBox Text="0,5" x:Name="Cy1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontFamily="Consolas" RenderTransformOrigin="0.549,1.239"/>
 
                 <TextBox Text="1,4" Name="gamma1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="25,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                <TextBox Text="287" Name="R1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="95,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="287" Name="R1" TextAlignment="Center" HorizontalAlignment="Center" Height="17" Margin="0,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
                 <TextBox Text="0,5" Name="C1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
 
 
                 <TextBox Text="101000" Name="p1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="25,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                <TextBox Text="1,23" Name="rho1" TextAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="95,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas" />
+                <TextBox Text="1,23" Name="rho1" TextAlignment="Center" HorizontalAlignment="Center" Height="18" Margin="0,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas" />
                 <TextBox Text="286,1" Name="T1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                <TextBox Text="678" Name="u1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="95,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
-                <TextBox Text="0" x:Name="v1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="678" Name="u1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="62,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="0" x:Name="v1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="129,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
 
-                <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Default_Click_1"  >
-                    <DockPanel Width="100" Height="30">
-                        <Image Width="38"  Height="26" Margin="-5,-2,0,0"/>
-                        <Label Content="Default" Margin="-10,0,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="75" Height="27"/>
-                    </DockPanel>
-                </Button>
+                <Button Content="Default" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="14,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="Default_Click_1"  />
+                <Button Content="Load Grid" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Width="204"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="LoadGrid" Grid.RowSpan="2" />
+                <Button Content="Load File" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="124,265,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="ShowOnGM_Click" />
 
-                <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Center" Margin="100,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="LoadGrid" >
-                    <DockPanel Width="100" Height="30">
-                        <Image Width="38"  Height="26" Margin="-5,-2,0,0" Source="/Contour Grid.png"  />
-                        <Label Content="Load Grid" Margin="-10,0,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="75" Height="27"/>
-                    </DockPanel>
-                </Button>
             </Grid>
             <Grid x:Name="Grids" Margin="329,0,0,0" >
-                <Rectangle Name="Gradient" Margin="372,616,445,0" Visibility="visible" VerticalAlignment="Top" Height="18" Stroke="Transparent" Fill="#FF663C3C"/>
+                <Rectangle Name="Gradient" Margin="372,616,445,0" VerticalAlignment="Top" Height="18" Stroke="Transparent" Fill="transparent"/>
                 <Label x:Name="maxValueGra" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="-0.567,0.522" Height="29" FontSize="15" FontWeight="Bold" FontFamily="Consolas" Width="118" Margin="314,639,0,0" VerticalContentAlignment="center" HorizontalContentAlignment="center"/>
                 <Label x:Name="minValueGra" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="-0.567,0.522" Height="29" FontSize="15" FontWeight="Bold" FontFamily="Consolas" Width="106" Margin="665,639,0,0" VerticalContentAlignment="center" HorizontalContentAlignment="center"/>
                 <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="uRB" Content="u" HorizontalAlignment="Left" Margin="394,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="u_Checked"/>
@@ -327,7 +319,7 @@
         </Grid>
 
 
-        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1496" Height="723">
+        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1496" Height="723">
 
             <Label FontSize="12" Name="Disclaimer" Content="The validation has been done with: E = 10 m, x = 65 m, H = 40 m, θ = 5.352°, Δη = 0.025, Cy = 0.5, γ = 1.4, R = 287 J/(kg·K), C = 0,5, po = 10100 Pa, ρo = 1.23 kg/m3, To= 286.1 K, uo = 678 m/s and vo = 0 m/s" HorizontalAlignment="Left" Margin="42,650,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="1418" HorizontalContentAlignment="Center" Height="26"/>
 
