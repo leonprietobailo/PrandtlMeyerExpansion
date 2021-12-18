@@ -18,6 +18,7 @@
     <None Remove="Play.png" />
     <None Remove="PMExpansion.png" />
     <None Remove="Research.png" />
+    <None Remove="runSimulation.png" />
     <None Remove="SIM.png" />
     <None Remove="Simulation.png" />
     <None Remove="Videoo.png" />
@@ -57,6 +58,9 @@
     </Resource>
     <Resource Include="PMExpansion.png" />
     <Resource Include="Research.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="runSimulation.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="SIM.png">
