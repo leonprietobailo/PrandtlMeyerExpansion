@@ -6,12 +6,13 @@ namespace PradntlMeyerExpansion
 {
     public class Rules
     {
-        double u0, v0, ro0, p0, T0, M0; // Initial Magnitudes
-        double Cy0, gamma0, R0, E0, theta0, xMax0, H0, Courant0;
-        int j0;
+        double u0, v0, ro0, p0, T0, M0;                                     // Magnitudes iniciales para el flujo.
+        double Cy0, gamma0, R0, E0, theta0, xMax0, H0, Courant0;            // Condiciones de la malla y de estabilidad.
+        int j0;                                                             // Numero de celdas verticales.
 
+        // Inicialización de reglas, con atributos null.
         public Rules() { }
-
+        // Inicializacion de reglas, con valores heredados de otro objeto reglas y con un angulo Theta diferente.
         public Rules(Rules r, double thetaIn)
         {
             u0 = r.u0;
@@ -30,7 +31,7 @@ namespace PradntlMeyerExpansion
             j0 = r.j0;
             M0 = Math.Sqrt(u0*u0 + v0*v0) / Math.Sqrt(gamma0 * R0 * T0);
         }
-
+        // Inicializacion de reglas, con atributos inicializados a partir del constructor.
         public Rules(double u, double v, double ro, double p, double T, double Cy, double gamma, double R, double E, double theta, int j, double xMax, double H, double Courant)
         {
             u0 = u;
@@ -50,22 +51,7 @@ namespace PradntlMeyerExpansion
             M0 = Math.Sqrt(u0 * u0 + v0 * v0) / Math.Sqrt(gamma0 * R0 * T0);
         }
 
-        public double getU() { return u0; }
-        public double getV() { return v0; }
-        public double getRO() { return ro0; }
-        public double getP() { return p0; }
-        public double getT() { return T0; }
-        public double getM() { return M0; }
-        public double getCy() { return Cy0; }
-        public double getGamma() { return gamma0; }
-        public double getR() { return R0; }
-        public double getH() { return H0; }
-        public double getxMax() { return xMax0; }
-        public int getJ() { return j0; }
-        public double getCourant() { return Courant0; }
-        public double getE() { return E0; }
-        public double getTheta() { return theta0; }
-
+        // Almacenar los valores del objeto en un archivo en formato de texto.
         public void saveRules()
         {
             SaveFileDialog diag = new SaveFileDialog();
@@ -122,23 +108,17 @@ namespace PradntlMeyerExpansion
             }
         }
 
+        // Inicializar la clase reglas con un archivo en formato de texto.
         public int loadRules()
         {
             try
             {
-                //Abre el explorador de archivos y permite especificar un nombre de archivo 
                 OpenFileDialog dig = new OpenFileDialog();
-                //Impide cargar varios archivos a la vez
                 dig.Multiselect = false;
-                //Obtiene la cadena de filtro que determina qué tipos de archivos se muestran desde OpenFileDialog
                 dig.Filter = "(*.txt*)|*.*";
-                //Especifica la cadena de la extensión predeterminada que se va a usar para filtrar la lista de archivos que se muestran
                 dig.DefaultExt = ".txt";
-
-                //Si se ha seleccionado el archivo
                 if (dig.ShowDialog() == true)
                 {
-                    //Lee el archivo seleccionado
                     StreamReader readFile = new StreamReader(dig.FileName);
                     string strReadline = readFile.ReadLine();
                     string[] readed = strReadline.Split('-');
@@ -165,16 +145,35 @@ namespace PradntlMeyerExpansion
                     return -1;
                 }
             }
-            //Caso en el que el formato del archivo que se quiere cargar no sea correcto
-            catch (FileFormatException)
-            {
-                return -1;
-            }
-            //Caso en el que el contenido del archivo que se quiere cargar no sea correcto
-            catch (FormatException)
+            //catch (FileFormatException)
+            //{
+            //    return -1;
+            //}
+            //catch (FormatException)
+            //{
+            //    return -1;
+            //}
+            catch
             {
                 return -1;
             }
         }
+
+        // Getters de la clase reglas.
+        public double getU() { return u0; }
+        public double getV() { return v0; }
+        public double getRO() { return ro0; }
+        public double getP() { return p0; }
+        public double getT() { return T0; }
+        public double getM() { return M0; }
+        public double getCy() { return Cy0; }
+        public double getGamma() { return gamma0; }
+        public double getR() { return R0; }
+        public double getH() { return H0; }
+        public double getxMax() { return xMax0; }
+        public int getJ() { return j0; }
+        public double getCourant() { return Courant0; }
+        public double getE() { return E0; }
+        public double getTheta() { return theta0; }
     }
 }

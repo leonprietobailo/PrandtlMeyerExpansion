@@ -4,19 +4,21 @@ namespace PradntlMeyerExpansion
 {
     public class Cell
     {
-        double u, v, ro, p, T, M; // Magnitudes
-        int chara, ho, ve; // 0 -> Bottom, 1 -> Inflow, 2 -> Top
-        double F1, F2, F3, F4, G1, G2, G3, G4;
-        double F1pre, F2pre, F3pre, F4pre, G1pre, G2pre, G3pre, G4pre;
-        double roPre, pPre;
-        double dF1de, dF2de, dF3de, dF4de;
-        Rules r;
+        double u, v, ro, p, T, M;                                           // Magnitudes fisicas del fluido.
+        int chara;                                                          // 0 -> Inferior (superficie), 1 -> Inflow, 2 -> Superior.
+        int ho, ve;                                                         // Posicion de la celda en la malla.
+        double F1, F2, F3, F4, G1, G2, G3, G4;                              // Valores de F y G.
+        double F1pre, F2pre, F3pre, F4pre, G1pre, G2pre, G3pre, G4pre;      // Valores predichos de F y G.
+        double roPre, pPre;                                                 // Valores predichos de densidad y presion.
+        double dF1de, dF2de, dF3de, dF4de;                                  // Diferenciales de F.
+        Rules r;                                                            // Reglas.
 
 
-        // Init cell.
+        // Inicialización de la celda.
         public Cell(Rules rIn, int veIn, int hoIn)
         {
             r = rIn;
+            // Condiciones iniciales.
             if (ho == 0)
             {
                 u = r.getU();
@@ -37,6 +39,7 @@ namespace PradntlMeyerExpansion
                 G4 = r.getGamma() / (r.getGamma() - 1) * (F2 - Math.Pow(F1, 2) / ro) * F3 / F1 + ro / 2.0 * F3 / F1 * Math.Pow(F1 / ro, 2) + Math.Pow((F3 / F1), 2);
 
             }
+            // Valores por defecto.
             else
             {
                 u = 0;
@@ -46,11 +49,12 @@ namespace PradntlMeyerExpansion
                 T = 0;
                 M = 0;
             }
+            // Distinción de la posicion vertical de la celda.
             if (veIn == 0)
             {
                 chara = 0;
             }
-            else if (veIn == (r.getJ()-1))
+            else if (veIn == (r.getJ() - 1))
             {
                 chara = 2;
             }
@@ -62,8 +66,10 @@ namespace PradntlMeyerExpansion
             ve = veIn;
         }
 
+        // Cálculo del Predictor Step del método de MacCormack.
         public void PredictorStep(double dEtadX, double dEta, double h, double dXi, Grid g)
         {
+            // Inflow.
             if (chara == 1)
             {
                 dF1de = dEtadX * ((g.GetCell(ve, ho - 1).getF(1) - g.GetCell(ve + 1, ho - 1).getF(1)) / dEta) + 1.0 / h * ((g.GetCell(ve, ho - 1).getG(1) - g.GetCell(ve + 1, ho - 1).getG(1)) / dEta);
@@ -81,6 +87,7 @@ namespace PradntlMeyerExpansion
                 F3pre = g.GetCell(ve, ho - 1).getF(3) + dF3de * dXi + SF3;
                 F4pre = g.GetCell(ve, ho - 1).getF(4) + dF4de * dXi + SF4;
             }
+            // Inferior.
             else if (chara == 0)
             {
                 dF1de = dEtadX * ((g.GetCell(ve, ho - 1).getF(1) - g.GetCell(ve + 1, ho - 1).getF(1)) / dEta) + 1.0 / h * ((g.GetCell(ve, ho - 1).getG(1) - g.GetCell(ve + 1, ho - 1).getG(1)) / dEta);
@@ -93,6 +100,7 @@ namespace PradntlMeyerExpansion
                 F3pre = g.GetCell(ve, ho - 1).getF(3) + dF3de * dXi;
                 F4pre = g.GetCell(ve, ho - 1).getF(4) + dF4de * dXi;
             }
+            // Superior.
             else
             {
                 dF1de = dEtadX * ((g.GetCell(ve - 1, ho - 1).getF(1) - g.GetCell(ve, ho - 1).getF(1)) / dEta) + 1.0 / h * ((g.GetCell(ve - 1, ho - 1).getG(1) - g.GetCell(ve, ho - 1).getG(1)) / dEta);
@@ -106,14 +114,11 @@ namespace PradntlMeyerExpansion
                 F4pre = g.GetCell(ve, ho - 1).getF(4) + dF4de * dXi;
             }
 
-            // Predicted values:
+            // Cálculo de las magnitudes predichas, para posteriormente utilizarlas en el corrector step.
             double A = Math.Pow(F3pre, 2) / 2.0 / F1pre - F4pre;
             double B = r.getGamma() / (r.getGamma() - 1) * F1pre * F2pre;
             double C = -(r.getGamma() + 1) / 2.0 / (r.getGamma() - 1) * Math.Pow(F1pre, 3);
             roPre = (-B + Math.Sqrt(Math.Pow(B, 2) - 4 * A * C)) / 2.0 / A;
-
-
-            // Predicted G
             G1pre = roPre * F3pre / F1pre;
             G2pre = F3pre;
             G3pre = roPre * Math.Pow(F3pre / F1pre, 2) + F2pre - Math.Pow(F1pre, 2) / roPre;
@@ -122,12 +127,12 @@ namespace PradntlMeyerExpansion
         }
 
 
-
+        // Cálculo del Predictor Step del método de MacCormack.
         public void CorrectorStep(double dEtadX, double dEta, double h, double dXi, double Xi, Grid g)
         {
+            // Inflow.
             if (chara == 1)
             {
-                // Predicted dFde[INFLOW]
                 double dF1dePre = dEtadX * ((g.GetCell(ve - 1, ho).getFpre(1) - F1pre) / dEta) + 1.0 / h * ((g.GetCell(ve - 1, ho).getGpre(1) - G1pre) / dEta);
                 double dF2dePre = dEtadX * ((g.GetCell(ve - 1, ho).getFpre(2) - F2pre) / dEta) + 1.0 / h * ((g.GetCell(ve - 1, ho).getGpre(2) - G2pre) / dEta);
                 double dF3dePre = dEtadX * ((g.GetCell(ve - 1, ho).getFpre(3) - F3pre) / dEta) + 1.0 / h * ((g.GetCell(ve - 1, ho).getGpre(3) - G3pre) / dEta);
@@ -148,11 +153,9 @@ namespace PradntlMeyerExpansion
                 F3 = g.GetCell(ve, ho - 1).getF(3) + dF3deAvg * dXi + SF3pre;
                 F4 = g.GetCell(ve, ho - 1).getF(4) + dF4deAvg * dXi + SF4pre;
             }
+            // Inferior.
             else if (chara == 0)
             {
-
-                // Predicted dFde[BOT]
-
                 double dF1dePre = dEtadX * ((F1pre - g.GetCell(ve + 1, ho).getFpre(1)) / dEta) + 1.0 / h * ((G1pre - g.GetCell(ve + 1, ho).getGpre(1)) / dEta);
                 double dF2dePre = dEtadX * ((F2pre - g.GetCell(ve + 1, ho).getFpre(2)) / dEta) + 1.0 / h * ((G2pre - g.GetCell(ve + 1, ho).getGpre(2)) / dEta);
                 double dF3dePre = dEtadX * ((F3pre - g.GetCell(ve + 1, ho).getFpre(3)) / dEta) + 1.0 / h * ((G3pre - g.GetCell(ve + 1, ho).getGpre(3)) / dEta);
@@ -168,6 +171,7 @@ namespace PradntlMeyerExpansion
                 F3 = g.GetCell(ve, ho - 1).getF(3) + dF3deAvg * dXi;
                 F4 = g.GetCell(ve, ho - 1).getF(4) + dF4deAvg * dXi;
             }
+            // Superior.
             else
             {
                 double dF1dePre = dEtadX * ((g.GetCell(ve - 1, ho).getFpre(1) - F1pre) / dEta) + 1.0 / h * ((g.GetCell(ve - 1, ho).getGpre(1) - G1pre) / dEta);
@@ -186,9 +190,7 @@ namespace PradntlMeyerExpansion
                 F3 = g.GetCell(ve, ho - 1).getF(3) + dF3deAvg * dXi;
                 F4 = g.GetCell(ve, ho - 1).getF(4) + dF4deAvg * dXi;
             }
-
-            // Magnitudes fisicas
-
+            // Cálculo de las magnitudes físicas.
             double A = Math.Pow(F3, 2) / 2.0 / F1 - F4;
             double B = r.getGamma() / (r.getGamma() - 1) * F1 * F2;
             double C = -(r.getGamma() + 1) / 2 / (r.getGamma() - 1) * Math.Pow(F1, 3);
@@ -200,6 +202,7 @@ namespace PradntlMeyerExpansion
             T = p / ro / r.getR();
             M = Math.Sqrt(Math.Pow(v, 2) + Math.Pow(u, 2)) / Math.Sqrt(r.getGamma() * p / ro);
 
+            // Cálculo del número mach para la frontera inferior. 
             if (chara == 0)
             {
                 double phi;
@@ -213,14 +216,13 @@ namespace PradntlMeyerExpansion
                 }
 
                 double f_cal = Math.Sqrt((r.getGamma() + 1) / (r.getGamma() - 1)) * Math.Atan(Math.Sqrt((r.getGamma() - 1) / (r.getGamma() + 1) * (Math.Pow(M, 2) - 1))) - Math.Atan(Math.Sqrt(Math.Pow(M, 2) - 1));
-
                 double f_act = f_cal + phi;
                 double precision = 0.0000001;
-                // PROVISIONAL SOLUTION
                 double a_int = 1.1;
                 double b_int = 2.9;
                 double zero_f1 = Math.Sqrt((r.getGamma() + 1) / (r.getGamma() - 1)) * (Math.Atan(Math.Sqrt(((r.getGamma() - 1) / (r.getGamma() + 1)) * (Math.Pow(a_int, 2) - 1)))) - (Math.Atan(Math.Sqrt((Math.Pow(a_int, 2) - 1)))) - f_act;
                 double zero_f2 = Math.Sqrt((r.getGamma() + 1) / (r.getGamma() - 1)) * (Math.Atan(Math.Sqrt(((r.getGamma() - 1) / (r.getGamma() + 1)) * (Math.Pow((a_int + b_int) / 2, 2) - 1)))) - (Math.Atan(Math.Sqrt((((Math.Pow((a_int + b_int) / 2, 2) - 1)))))) - f_act;
+                // Guessing del numero mach.
                 while ((b_int - a_int) / 2 > precision)
                 {
                     if (zero_f1 * zero_f2 <= 0)
@@ -235,12 +237,12 @@ namespace PradntlMeyerExpansion
                     zero_f1 = Math.Sqrt((r.getGamma() + 1) / (r.getGamma() - 1)) * (Math.Atan(Math.Sqrt(((r.getGamma() - 1) / (r.getGamma() + 1)) * (Math.Pow(a_int, 2) - 1)))) - (Math.Atan(Math.Sqrt((Math.Pow(a_int, 2) - 1)))) - f_act;
                     zero_f2 = Math.Sqrt((r.getGamma() + 1) / (r.getGamma() - 1)) * (Math.Atan(Math.Sqrt(((r.getGamma() - 1) / (r.getGamma() + 1)) * (Math.Pow((a_int + b_int) / 2, 2) - 1)))) - (Math.Atan(Math.Sqrt((((Math.Pow((a_int + b_int) / 2, 2) - 1)))))) - f_act;
                 }
-                double M_act = (a_int + b_int) / 2.0;
 
+                // Cálculo de las magnitudes reales.
+                double M_act = (a_int + b_int) / 2.0;
                 double pAct = p * Math.Pow((1 + ((r.getGamma() - 1) / 2.0) * Math.Pow(M_act, 2)) / (1 + ((r.getGamma() - 1) / 2.0) * Math.Pow(M_act, 2)), (r.getGamma() / (r.getGamma() - 1)));
                 double TAct = T * ((1 + ((r.getGamma() - 1) / 2.0) * Math.Pow(M_act, 2)) / (1 + ((r.getGamma() - 1) / 2) * Math.Pow(M_act, 2)));
                 double roAct = pAct / r.getR() / TAct;
-
                 p = pAct;
                 T = TAct;
                 ro = roAct;
@@ -255,7 +257,6 @@ namespace PradntlMeyerExpansion
                     v = 0;
                 }
 
-
                 F1 = ro * u;
                 F2 = ro * Math.Pow(u, 2) + p;
                 F3 = ro * u * v;
@@ -265,33 +266,15 @@ namespace PradntlMeyerExpansion
             G2 = F3;
             G3 = ro * Math.Pow((F3 / F1), 2) + F2 - Math.Pow(F1, 2) / ro;
             G4 = r.getGamma() / (r.getGamma() - 1) * (F2 - Math.Pow(F1, 2) / ro) * F3 / F1 + ro / 2.0 * F3 / F1 * Math.Pow(F1 / ro, 2) + Math.Pow((F3 / F1), 2);
-
         }
 
-        public double getU()
-        {
-            return u;
-        }
-        public double getV()
-        {
-            return v;
-        }
-        public double getRO()
-        {
-            return ro;
-        }
-        public double getP()
-        {
-            return p;
-        }
-        public double getT()
-        {
-            return T;
-        }
-        public double getM()
-        {
-            return M;
-        }
+        // Getters de la clase.
+        public double getU() { return u; }
+        public double getV() { return v; }
+        public double getRO() { return ro; }
+        public double getP() { return p; }
+        public double getT() { return T; }
+        public double getM() { return M; }
 
         public double getF(int i)
         {
@@ -325,7 +308,5 @@ namespace PradntlMeyerExpansion
             else { return G4pre; }
         }
         public double getPpre() { return pPre; }
-
-
     }
 }

@@ -45,9 +45,9 @@
             <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
         </Grid>
 
-        <Grid x:Name="Simulation" Margin="0,70,0,0" Visibility="Visible">
+        <Grid x:Name="Simulation" Margin="0,70,0,-5" Visibility="Hidden">
 
-            <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="hidden">
+            <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="510*"/>
                     <ColumnDefinition Width="611*"/>
@@ -207,24 +207,25 @@
                 <Label Content="Temperature Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="392,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
                 <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="243,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
             </Grid>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,560,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="estudio_Click" IsEnabled="false">
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,560,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="estudio_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
                     <Image Width="54"  Height="63" Margin="7,-25,0,0" Source="/Research.png"  />
                     <Label Content="Research" Margin="-100,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="67" Height="42"/>
                 </DockPanel>
             </Button>
-            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,560,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Grid_Click" IsEnabled="false">
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="105,560,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Grid_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
                     <Image Width="63"  Height="73" Margin="1,-25,0,0" Source="/Grid.png"   />
                     <Label Content="Canvas" Margin="-105,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
                 </DockPanel>
             </Button>
-            <Button Name="RunSim" HorizontalAlignment="Left" Margin="105,445,0,0" VerticalAlignment="Top" Click="Run_Click" FontFamily="Consolas" Height="70" Width="70" Background="#00DDDDDD" BorderBrush="Transparent" Foreground="White" FontWeight="Bold" IsEnabled="False">
+            <Button Name="RunSim" HorizontalAlignment="Left" Margin="105,445,0,0" VerticalAlignment="Top" Click="Run_Click" FontFamily="Consolas" Height="70" Width="70" Background="#00DDDDDD" BorderBrush="Transparent" Foreground="White" FontWeight="Bold">
                 <Image Height="70" Width="70" Source="/Play.png" />
             </Button>
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,430,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="ShowOnGM_Click" >
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
                     <Image Width="82"  Height="84" Margin="-8,-25,0,0" Source="/LoadFile.png"   />
+
                     <Label Content="Load&#xA;File" Margin="-115,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
                 </DockPanel>
             </Button>
@@ -320,9 +321,9 @@
         </Grid>
 
 
-        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1496" Height="723">
+        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1496" Height="723">
 
-            <Label FontSize="12" Name="Disclaimer" Content="The results validation has been done with: E = 10 m, x = 65 m, H = 40 m, θ = 5.352°, Δη = 0.025, Cy = 0.5, γ = 1.4, R = 287 J/(kg·K), C = 0,5, po = 10100, ρo = 1.23 kg/m3, To= 286.1 K, uo = 678 m/s and vo = 0 m/s" HorizontalAlignment="Left" Margin="42,650,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="1418" HorizontalContentAlignment="Center" Height="26"/>
+            <Label FontSize="12" Name="Disclaimer" Content="The validation has been done with: E = 10 m, x = 65 m, H = 40 m, θ = 5.352°, Δη = 0.025, Cy = 0.5, γ = 1.4, R = 287 J/(kg·K), C = 0,5, po = 10100 Pa, ρo = 1.23 kg/m3, To= 286.1 K, uo = 678 m/s and vo = 0 m/s" HorizontalAlignment="Left" Margin="42,650,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="1418" HorizontalContentAlignment="Center" Height="26"/>
 
             <Label FontSize="15" Name="SimulatorResults" Content="Simulator Results" HorizontalAlignment="Left" Margin="443,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
             <Label FontSize="15" Name="AndersonResults" Content="Anderson Results" HorizontalAlignment="Left" Margin="1040,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>

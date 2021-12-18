@@ -9,14 +9,15 @@ namespace PradntlMeyerExpansion
 {
     public class Grid
     {
-        List<Cell[]> Mesh = new List<Cell[]>();
-        List<double> xP = new List<double>(0);
-        Rules r;
-        double dEta, h, dy, xi, dXi;
-        int ho;
-        List<double[]> yP = new List<double[]>();
-        double[] dEtadX;
-
+        List<Cell[]> Mesh = new List<Cell[]>();                             // Matriz almacenadora de los objetos "Cell".
+        List<double> xP = new List<double>(0);                              // Vector con los valores de la posición horizontal.
+        Rules r;                                                            // Reglas asociadas a la malla.
+        double dEta, h, dy, xi, dXi;                                        // Valores caractreristicos de cada columna de la malla.
+        int ho;                                                             // Posición horizontal de la malla.
+        List<double[]> yP = new List<double[]>();                           // Matriz con los  valores de la posción vertical. 
+        double[] dEtadX;                                                    // Diferencial de la posición horizontal.
+        
+        // Inicialización de la malla.
         public Grid(Rules rIn)
         {
             r = rIn;
@@ -32,6 +33,7 @@ namespace PradntlMeyerExpansion
             yP.Add(rowY);
         }
 
+        // Cálculo de la expansión de Prandtl-Meyer.
         public void PrandtlMeyerExpansion()
         {
             while (xi < r.getxMax())
@@ -41,14 +43,17 @@ namespace PradntlMeyerExpansion
                 Mesh.Add(row);
                 InitVars();
                 ComputeStepSize();
-                for (int i = 0; i < r.getJ(); i++) { Mesh[ho][i].PredictorStep(dEtadX[i], dEta, h, dXi, this); } //PREDICTOR STEP
-                for (int i = 0; i < r.getJ(); i++) { Mesh[ho][i].CorrectorStep(dEtadX[i], dEta, h, dXi, xi, this); } //CORRECTOR STEP
+
+                // Cálculo del Predictor y Corrector Step.
+                for (int i = 0; i < r.getJ(); i++) { Mesh[ho][i].PredictorStep(dEtadX[i], dEta, h, dXi, this); }
+                for (int i = 0; i < r.getJ(); i++) { Mesh[ho][i].CorrectorStep(dEtadX[i], dEta, h, dXi, xi, this); }
                 ho++;
                 xi += dXi;
                 xP.Add(xi);
             }
         }
 
+        // Inicialización de las variables de la columna.
         private void InitVars()
         {
             double[] y = new double[r.getJ()];
@@ -82,6 +87,7 @@ namespace PradntlMeyerExpansion
             yP.Add(y);
         }
 
+        // Cálculo del tamaño del step.
         private void ComputeStepSize()
         {
             double[] anglePlus = new double[r.getJ()];
@@ -100,6 +106,7 @@ namespace PradntlMeyerExpansion
             dXi = r.getCourant() * dy / MaximumValue;
         }
 
+        // Obtener el valor medio de las magnitudes fisicas en el downstream.
         public (double u, double v, double ro, double p, double T, double M) getDownstream()
         {
             Cell ret = Mesh[Mesh.Count - 1][0];
@@ -123,30 +130,8 @@ namespace PradntlMeyerExpansion
             return (u/counter, v / counter, RO / counter, P / counter, T / counter, M / counter);
         }
 
-        public Cell GetCell(int ve, int ho) { return Mesh[ho][ve]; }
-
-        //public int GetHorizontalPoints() { return ho; }
-        public List<double[]> GetYP() { return yP; }
-        public List<double> GetXP() { return xP; }
-
-        public void data()
-        {
-            FileStream emptyFile = File.Create("test.txt");
-            emptyFile.Close();
-            for (int i = 0; i < Mesh[0].Length; i++)
-            {
-                File.AppendAllText("text.txt", Convert.ToString(Mesh[18][i].getM()));
-                File.AppendAllText("text.txt", "\n");
-            }
-            File.AppendAllText("text.txt", "\n");
-            for (int i = 0; i < Mesh[0].Length; i++)
-            {
-                File.AppendAllText("text.txt", Convert.ToString(Mesh[Mesh.Count - 1][i].getM()));
-                File.AppendAllText("text.txt", "\n");
-            }
-        }
-
-        public void saveCSV(int mode)
+        // Guardar CSV de una magnitud en concreto.
+        public void saveCSV(int magnitude)
         {
             SaveFileDialog diag = new SaveFileDialog();
             diag.Filter = "(*.csv)|*.*";
@@ -157,12 +142,12 @@ namespace PradntlMeyerExpansion
                 {
                     for (int n = 0; n < Mesh.Count; n++)
                     {
-                        if (mode == 0) { File.AppendAllText(diag.FileName, Mesh[n][i].getU().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                        if (mode == 1) { File.AppendAllText(diag.FileName, Mesh[n][i].getV().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                        if (mode == 2) { File.AppendAllText(diag.FileName, Mesh[n][i].getRO().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                        if (mode == 3) { File.AppendAllText(diag.FileName, Mesh[n][i].getP().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                        if (mode == 4) { File.AppendAllText(diag.FileName, Mesh[n][i].getT().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
-                        if (mode == 5) { File.AppendAllText(diag.FileName, Mesh[n][i].getM().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (magnitude == 0) { File.AppendAllText(diag.FileName, Mesh[n][i].getU().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (magnitude == 1) { File.AppendAllText(diag.FileName, Mesh[n][i].getV().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (magnitude == 2) { File.AppendAllText(diag.FileName, Mesh[n][i].getRO().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (magnitude == 3) { File.AppendAllText(diag.FileName, Mesh[n][i].getP().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (magnitude == 4) { File.AppendAllText(diag.FileName, Mesh[n][i].getT().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
+                        if (magnitude == 5) { File.AppendAllText(diag.FileName, Mesh[n][i].getM().ToString(CultureInfo.CreateSpecificCulture("en-GB"))); }
 
                         if (n < Mesh.Count - 1)
                         {
@@ -176,6 +161,12 @@ namespace PradntlMeyerExpansion
                 }
             }
         }
+
+        // Getters de la clase.
+        public Cell GetCell(int ve, int ho) { return Mesh[ho][ve]; }
+        public List<double[]> GetYP() { return yP; }
+        public List<double> GetXP() { return xP; }
+
     }
 }
 

@@ -78,8 +78,11 @@ namespace PradntlMeyerExpansion
             Validation.Visibility = Visibility.Hidden;
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
-            EstudioAvanzado.Visibility= Visibility.Hidden;
-
+            EstudioAvanzado.Visibility = Visibility.Hidden;
+            EstudioAvanzada.Visibility = Visibility.Hidden;
+            RunSim.Visibility = Visibility.Hidden;
+            Grid.Visibility = Visibility.Hidden;
+            
             Info.Visibility = Visibility.Hidden;
 
             topic.Background = mySolidColorBrush;
@@ -87,8 +90,6 @@ namespace PradntlMeyerExpansion
             ValidationButton.Background = Brushes.Transparent;
             vTutorial.Background = Brushes.Transparent;
             aboutUs.Background = Brushes.Transparent;
-
-            EstudioAvanzada.IsEnabled = false;
 
             Simulation.Children.Add(plano);
 
@@ -431,6 +432,8 @@ namespace PradntlMeyerExpansion
 
         private void Simualtion_Click(object sender, RoutedEventArgs e)
         {
+
+            EstudioAvanzado.Visibility = Visibility.Hidden;
             Introduction.Visibility = Visibility.Hidden;
             Simulation.Visibility = Visibility.Visible;
             Simulation.Background = mySolidColorBrush;
@@ -445,10 +448,15 @@ namespace PradntlMeyerExpansion
             vTutorial.Background = Brushes.Transparent;
             aboutUs.Background = Brushes.Transparent;
 
-            EstudioAvanzada.IsEnabled = true;
-            Grid.IsEnabled = false;
+            //EstudioAvanzada.Visibility = Visibility.Visible;
+            Grid.Visibility = Visibility.Hidden;
 
-            
+            if (r != null)
+            {
+                EstudioAvanzada.Visibility = Visibility.Visible;
+                Grids.Visibility = Visibility.Visible;
+                plano.Visibility = Visibility.Visible;
+            }
         }
 
         private void Validation_Click(object sender, RoutedEventArgs e)
@@ -519,11 +527,8 @@ namespace PradntlMeyerExpansion
             vTutorial.Background = Brushes.Transparent;
             aboutUs.Background = Brushes.Transparent;
 
-            EstudioAvanzada.IsEnabled = false;
-            Grid.IsEnabled = true;
-
-            computeEvolutionChange();
-            setChartNumbers();
+            EstudioAvanzada.Visibility = Visibility.Hidden;
+            Grid.Visibility = Visibility.Visible;
         }
 
         private void Grid_Click(object sender, RoutedEventArgs e)
@@ -532,97 +537,111 @@ namespace PradntlMeyerExpansion
             plano.Visibility = Visibility.Visible;
             EstudioAvanzado.Visibility = Visibility.Hidden;
 
-            EstudioAvanzada.IsEnabled = true;
-            Grid.IsEnabled = false;
+            EstudioAvanzada.Visibility = Visibility.Visible;
+            Grid.Visibility = Visibility.Hidden;
         }
         private void LoadGrid(object sender, RoutedEventArgs e)
         {
-            RunSim.IsEnabled = true;
-            Grid.IsEnabled = false;
-            EstudioAvanzada.IsEnabled = false;
-            Grids.Visibility = Visibility.Hidden;
-            plano.Visibility = Visibility.Visible;
-            EstudioAvanzado.Visibility = Visibility.Hidden;
-
-
-            plano.Children.Clear();
-
-            double u = Convert.ToDouble(u1.Text);
-            double v = Convert.ToDouble(v1.Text);
-            double rho = Convert.ToDouble(rho1.Text);
-            double p = Convert.ToDouble(p1.Text);
-            double T = Convert.ToDouble(T1.Text);
-            //double M = Convert.ToDouble(M1.Text);
-            double Cy = Convert.ToDouble(Cy1.Text);
-            double gamma = Convert.ToDouble(gamma1.Text);
-            double R = Convert.ToDouble(R1.Text);
-            double E = Convert.ToDouble(E1.Text);
-            double theta = Convert.ToDouble(theta1.Text);
-            double dEta = Convert.ToDouble(dEta1.Text);
-            int j1 = Convert.ToInt32(1 / dEta + 1);
-            double xmax = Convert.ToDouble(x11.Text);
-            double H = Convert.ToDouble(H1.Text);
-            double C = Convert.ToDouble(C1.Text);
-            r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
-
-            //Cambiar cuando hagamos el ajuste al mostrar
-            E = r.getE() * 11;
-            x1 = r.getxMax() * 11;
-            y1 = r.getH() * 11;
-            angulo = r.getTheta();
-            divisionesy = r.getJ() - 1;
-
-            //Incremento y1
-            double ay1;
-            ay1 = y1 / divisionesy;
-
-            //Incremento y2
-            double ay2;
-            ay2 = (y1 + Math.Tan(angulo) * (x1 - E)) / divisionesy;
-
-            for (int j = 0; j < divisionesy; j++)
+            try
             {
-                Polygon polygon = new Polygon();
-                //Características de los rectángulos del grid
-                System.Windows.Point Point11 = new System.Windows.Point(0, j * ay1);
-                System.Windows.Point Point21 = new System.Windows.Point(E, j * ay1);
-                System.Windows.Point Point31 = new System.Windows.Point(x1, j * ay2);
-
-                System.Windows.Point Point41 = new System.Windows.Point(x1, (j + 1) * ay2);
-                System.Windows.Point Point51 = new System.Windows.Point(E, (j + 1) * ay1);
-                System.Windows.Point Point61 = new System.Windows.Point(0, (j + 1) * ay1);
+                RunSim.Visibility = Visibility.Visible;
+                Grid.Visibility = Visibility.Hidden;
+                EstudioAvanzada.Visibility = Visibility.Hidden;
+                Grids.Visibility = Visibility.Hidden;
+                plano.Visibility = Visibility.Visible;
+                EstudioAvanzado.Visibility = Visibility.Hidden;
 
 
-                PointCollection polygonPoints1 = new PointCollection();
-                polygonPoints1.Add(Point11);
-                polygonPoints1.Add(Point21);
-                polygonPoints1.Add(Point31);
-                polygonPoints1.Add(Point41);
-                polygonPoints1.Add(Point51);
-                polygonPoints1.Add(Point61);
-                polygon.Points = polygonPoints1;
+                plano.Children.Clear();
 
-                SolidColorBrush whiteBrush = new SolidColorBrush();
-                whiteBrush.Color = Colors.White;
-                polygon.Stroke = whiteBrush;
-                polygon.StrokeThickness = 0.1;
-                System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
-                plano.Margin = planoPM;
-                plano.Children.Add(polygon);
-                Canvas.SetTop(polygon, 0);
-                Canvas.SetLeft(polygon, 0);
+                double u = Convert.ToDouble(u1.Text);
+                double v = Convert.ToDouble(v1.Text);
+                double rho = Convert.ToDouble(rho1.Text);
+                double p = Convert.ToDouble(p1.Text);
+                double T = Convert.ToDouble(T1.Text);
+                //double M = Convert.ToDouble(M1.Text);
+                double Cy = Convert.ToDouble(Cy1.Text);
+                double gamma = Convert.ToDouble(gamma1.Text);
+                double R = Convert.ToDouble(R1.Text);
+                double E = Convert.ToDouble(E1.Text);
+                double theta = Convert.ToDouble(theta1.Text);
+                double dEta = Convert.ToDouble(dEta1.Text);
+                int j1 = Convert.ToInt32(1 / dEta + 1);
+                double xmax = Convert.ToDouble(x11.Text);
+                double H = Convert.ToDouble(H1.Text);
+                double C = Convert.ToDouble(C1.Text);
+
+                if (u < 0 || rho < 0 || p < 0 || T < 0 || Cy < 0 || gamma < 0 || R < 0 || E < 0 || theta < 0 || dEta < 0 || j1 < 3 || xmax < 0 || H < 0 || C < 0 || xmax < E)
+                {
+                    throw new Exception("Input values are too small or negative, check them please.");
+                }
+                else
+                {
+                    r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
+                }
+
+                //Cambiar cuando hagamos el ajuste al mostrar
+                E = r.getE() * 11;
+                x1 = r.getxMax() * 11;
+                y1 = r.getH() * 11;
+                angulo = r.getTheta();
+                divisionesy = r.getJ() - 1;
+
+                //Incremento y1
+                double ay1;
+                ay1 = y1 / divisionesy;
+
+                //Incremento y2
+                double ay2;
+                ay2 = (y1 + Math.Tan(angulo) * (x1 - E)) / divisionesy;
+
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    Polygon polygon = new Polygon();
+                    //Características de los rectángulos del grid
+                    System.Windows.Point Point11 = new System.Windows.Point(0, j * ay1);
+                    System.Windows.Point Point21 = new System.Windows.Point(E, j * ay1);
+                    System.Windows.Point Point31 = new System.Windows.Point(x1, j * ay2);
+
+                    System.Windows.Point Point41 = new System.Windows.Point(x1, (j + 1) * ay2);
+                    System.Windows.Point Point51 = new System.Windows.Point(E, (j + 1) * ay1);
+                    System.Windows.Point Point61 = new System.Windows.Point(0, (j + 1) * ay1);
+
+
+                    PointCollection polygonPoints1 = new PointCollection();
+                    polygonPoints1.Add(Point11);
+                    polygonPoints1.Add(Point21);
+                    polygonPoints1.Add(Point31);
+                    polygonPoints1.Add(Point41);
+                    polygonPoints1.Add(Point51);
+                    polygonPoints1.Add(Point61);
+                    polygon.Points = polygonPoints1;
+
+                    SolidColorBrush whiteBrush = new SolidColorBrush();
+                    whiteBrush.Color = Colors.White;
+                    polygon.Stroke = whiteBrush;
+                    polygon.StrokeThickness = 0.1;
+                    System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
+                    plano.Margin = planoPM;
+                    plano.Children.Add(polygon);
+                    Canvas.SetTop(polygon, 0);
+                    Canvas.SetLeft(polygon, 0);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Input error");
             }
         }
         private void Run_Click(object sender, RoutedEventArgs e)
         { 
-            Grid.IsEnabled = false;
-            EstudioAvanzada.IsEnabled = true;
+            Grid.Visibility = Visibility.Hidden;
+            EstudioAvanzada.Visibility = Visibility.Visible;
             Grids.Visibility = Visibility.Visible;
 
             plano.Children.Clear();
             mesh = new Grid(r);
             mesh.PrandtlMeyerExpansion();
-            mesh.data();
 
             E = r.getE() * 11;
             x1 = r.getxMax() * 11;
@@ -667,6 +686,8 @@ namespace PradntlMeyerExpansion
                 }
             }
             uRB.IsChecked = true;
+            computeEvolutionChange();
+            setChartNumbers();
         }
 
 
@@ -1021,6 +1042,11 @@ namespace PradntlMeyerExpansion
             if (result == 0)
             {
                 Run_Click(null, null);
+            }
+            else
+            {
+                RunSim.Visibility = Visibility.Hidden;
+                MessageBox.Show("Wrong file format");
             }
         }
 
