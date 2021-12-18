@@ -219,7 +219,7 @@
                     <Label Content="Canvas" Margin="-105,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="57" Height="42"/>
                 </DockPanel>
             </Button>
-            <Button Name="RunSim" HorizontalAlignment="Left" Margin="105,445,0,0" VerticalAlignment="Top" Click="Run_Click" FontFamily="Consolas" Height="70" Width="70" Background="#00DDDDDD" BorderBrush="Transparent" Foreground="White" FontWeight="Bold" IsEnabled="False">
+            <Button Name="RunSim" HorizontalAlignment="Left" Margin="105,445,0,0" VerticalAlignment="Top" Click="Run_Click" FontFamily="Consolas" Height="70" Width="70" Background="#00DDDDDD" BorderBrush="Transparent" Foreground="White" FontWeight="Bold" >
                 <Image Height="70" Width="70" Source="/Play.png" />
             </Button>
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="200,430,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="ShowOnGM_Click" >
@@ -256,8 +256,14 @@
                 <TextBox Text="678" Name="u1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="95,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
                 <TextBox Text="0" x:Name="v1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
 
+                <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Default_Click_1"  >
+                    <DockPanel Width="100" Height="30">
+                        <Image Width="38"  Height="26" Margin="-5,-2,0,0"/>
+                        <Label Content="Default" Margin="-10,0,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="75" Height="27"/>
+                    </DockPanel>
+                </Button>
 
-                <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Center" Margin="0,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="LoadGrid" >
+                <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Center" Margin="100,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="LoadGrid" >
                     <DockPanel Width="100" Height="30">
                         <Image Width="38"  Height="26" Margin="-5,-2,0,0" Source="/Contour Grid.png"  />
                         <Label Content="Load Grid" Margin="-10,0,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="75" Height="27"/>
