@@ -374,7 +374,7 @@
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="p" HorizontalAlignment="Left" Margin="200,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="T" HorizontalAlignment="Left" Margin="236,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="M" HorizontalAlignment="Left" Margin="270,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
-            <DataGrid HorizontalAlignment="Left" Height="495" Margin="56,134,0,0" VerticalAlignment="Top" Width="925" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
+            <DataGrid HorizontalAlignment="Left" Height="495" Margin="56,134,0,0" VerticalAlignment="Top" Width="925" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" SelectedCellsChanged="gridData_SelectedCellsChanged">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
                         <Border Background="#FF262626"/>
@@ -503,7 +503,7 @@
                 </DataGrid.CellStyle>
             </DataGrid>
 
-            <DataGrid HorizontalAlignment="Left" Height="495" Margin="1040,134,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas">
+            <DataGrid HorizontalAlignment="Left" Height="495" Margin="1040,134,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" MinColumnWidth="50" SelectedCellsChanged="selected_SelectedCellsChanged">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
                         <Border Background="#FF262626"/>

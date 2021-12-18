@@ -361,6 +361,16 @@ namespace PradntlMeyerExpansion
             v1.Text = "0";
         }
 
+        private void selected_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            gridData.SelectedIndex = gridAndersonData.SelectedIndex;
+        }
+
+        private void gridData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            gridAndersonData.SelectedIndex = gridData.SelectedIndex;
+        }
+
         private void MTable_Checked(object sender, RoutedEventArgs e)
         {
             gridData.DataContext = MTable.DefaultView;
@@ -680,8 +690,6 @@ namespace PradntlMeyerExpansion
                     double mediaM = (mesh.GetCell(j, i).getU() + mesh.GetCell(j, i + 1).getU() + mesh.GetCell(j + 1, i + 1).getU() + mesh.GetCell(j + 1, i).getU()) / 4.0;
 
                     byte first = 0;
-                    byte second = 0;
-                    byte third = 0;
 
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
@@ -695,8 +703,8 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
-                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
 
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
@@ -748,8 +756,6 @@ namespace PradntlMeyerExpansion
                     double mediaM = (mesh.GetCell(j, i).getV() + mesh.GetCell(j, i + 1).getV() + mesh.GetCell(j + 1, i + 1).getV() + mesh.GetCell(j + 1, i).getV()) / 4.0;
 
                     byte first = 0;
-                    byte second = 0;
-                    byte third = 0;
 
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
@@ -763,8 +769,8 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
-                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
 
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
@@ -821,8 +827,6 @@ namespace PradntlMeyerExpansion
                     double mediaM = (mesh.GetCell(j, i).getRO() + mesh.GetCell(j, i + 1).getRO() + mesh.GetCell(j + 1, i + 1).getRO() + mesh.GetCell(j + 1, i).getRO()) / 4.0;
 
                     byte first = 0;
-                    byte second = 0;
-                    byte third = 0;
 
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
@@ -836,8 +840,8 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
-                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
 
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
@@ -886,8 +890,6 @@ namespace PradntlMeyerExpansion
                     double mediaM = (mesh.GetCell(j, i).getP() + mesh.GetCell(j, i + 1).getP() + mesh.GetCell(j + 1, i + 1).getP() + mesh.GetCell(j + 1, i).getP()) / 4.0;
 
                     byte first = 0;
-                    byte second = 0;
-                    byte third = 0;
 
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
@@ -901,8 +903,8 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
-                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
 
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
@@ -950,8 +952,6 @@ namespace PradntlMeyerExpansion
                     double mediaM = (mesh.GetCell(j, i).getT() + mesh.GetCell(j, i + 1).getT() + mesh.GetCell(j + 1, i + 1).getT() + mesh.GetCell(j + 1, i).getT()) / 4.0;
 
                     byte first = 0;
-                    byte second = 0;
-                    byte third = 0;
 
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
@@ -965,8 +965,8 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
-                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
 
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
