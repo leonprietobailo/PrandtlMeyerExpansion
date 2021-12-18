@@ -31,6 +31,8 @@ namespace PradntlMeyerExpansion
 
         double umax, umin, vmax, vmin, rhomax, rhomin, pmax, pmin, Tmax, Tmin, Mmax, Mmin;
 
+        double MaxY;
+
         //Gráficas
         //ChartValues<double> Values = new ChartValues<double>();
         //ChartValues<double> BoundaryValues = new ChartValues<double>();
@@ -536,20 +538,20 @@ namespace PradntlMeyerExpansion
             double ay2;
             ay2 = (y1 + Math.Tan(angulo) * (x1 - E)) / divisionesy;
 
-            double MaxMax1 = y1+Math.Tan(angulo)*(x1-E);
+            MaxY = y1+Math.Tan(angulo)*(x1-E);
 
             for (int j = 0; j < divisionesy; j++)
             {
 
                 Polygon polygon = new Polygon();
                 //Características de los rectángulos del grid
-                System.Windows.Point Point11 = new System.Windows.Point(0, j * ay1 * 11 * 45.1028 / MaxMax1);
-                System.Windows.Point Point21 = new System.Windows.Point(E * 715 / x1, j * ay1 * 11 * 45.1028 / MaxMax1);
-                System.Windows.Point Point31 = new System.Windows.Point(x1 * 715 / x1, j * ay2 * 11 * 45.1028 / MaxMax1);
+                System.Windows.Point Point11 = new System.Windows.Point(0, j * ay1 * 11 * 45.1028 / MaxY);
+                System.Windows.Point Point21 = new System.Windows.Point(E * 715 / x1, j * ay1 * 11 * 45.1028 / MaxY);
+                System.Windows.Point Point31 = new System.Windows.Point(x1 * 715 / x1, j * ay2 * 11 * 45.1028 / MaxY);
 
-                System.Windows.Point Point41 = new System.Windows.Point(x1 * 715 / x1, (j + 1) * ay2 * 11 * 45.1028 / MaxMax1);
-                System.Windows.Point Point51 = new System.Windows.Point(E * 715 / x1, (j + 1) * ay1 * 11 * 45.1028 / MaxMax1);
-                System.Windows.Point Point61 = new System.Windows.Point(0, (j + 1) * ay1 * 11 * 45.1028 / MaxMax1);
+                System.Windows.Point Point41 = new System.Windows.Point(x1 * 715 / x1, (j + 1) * ay2 * 11 * 45.1028 / MaxY);
+                System.Windows.Point Point51 = new System.Windows.Point(E * 715 / x1, (j + 1) * ay1 * 11 * 45.1028 / MaxY);
+                System.Windows.Point Point61 = new System.Windows.Point(0, (j + 1) * ay1 * 11 * 45.1028 / MaxY);
 
 
                 PointCollection polygonPoints1 = new PointCollection();
@@ -586,11 +588,6 @@ namespace PradntlMeyerExpansion
 
             Polygons = new Polygon[mesh.GetXP().Count - 1, divisionesy];
 
-            int Max =mesh.GetXP().Count;
-            double maxmax = mesh.GetXP()[Max-1];
-
-            int MaxY = mesh.GetYP()[0].Length;
-            double MaxMax= (mesh.GetYP()[Max-1][MaxY-1]- mesh.GetYP()[Max - 1][0]);
 
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
@@ -600,10 +597,10 @@ namespace PradntlMeyerExpansion
                     //Grid fase
                     Polygon polygon = new Polygon();
                     //Características de los rectángulos del grid
-                    System.Windows.Point Point11 = new System.Windows.Point(mesh.GetXP()[i] * 715/ maxmax, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j]) * 11 * 45.1028/MaxMax);
-                    System.Windows.Point Point21 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / maxmax, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j]) * 11 * 45.1028 / MaxMax);
-                    System.Windows.Point Point31 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / maxmax, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j + 1]) * 11 * 45.1028 / MaxMax);
-                    System.Windows.Point Point41 = new System.Windows.Point(mesh.GetXP()[i] * 715 / maxmax, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j + 1]) * 11 * 45.1028 / MaxMax);
+                    System.Windows.Point Point11 = new System.Windows.Point(mesh.GetXP()[i] * 715/ x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j]) * 11 * 45.1028/ MaxY);
+                    System.Windows.Point Point21 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j]) * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point31 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j + 1]) * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point41 = new System.Windows.Point(mesh.GetXP()[i] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j + 1]) * 11 * 45.1028 / MaxY);
                     PointCollection polygonPoints1 = new PointCollection();
                     polygonPoints1.Add(Point11);
                     polygonPoints1.Add(Point21);
