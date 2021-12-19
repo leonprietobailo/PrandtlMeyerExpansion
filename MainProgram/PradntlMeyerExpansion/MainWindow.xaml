@@ -293,8 +293,8 @@
 
             <Label FontSize="12" Name="Disclaimer" Content="The validation has been done with: E = 10 m, x = 65 m, H = 40 m, θ = 5.352°, Δη = 0.025, Cy = 0.5, γ = 1.4, R = 287 J/(kg·K), C = 0,5, po = 10100 Pa, ρo = 1.23 kg/m3, To= 286.1 K, uo = 678 m/s and vo = 0 m/s" HorizontalAlignment="Left" Margin="42,650,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="1418" HorizontalContentAlignment="Center" Height="26"/>
 
-            <Label FontSize="15" Name="SimulatorResults" Content="Simulator Results" HorizontalAlignment="Left" Margin="443,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
-            <Label FontSize="15" Name="AndersonResults" Content="Anderson Results" HorizontalAlignment="Left" Margin="1040,83,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" Name="SimulatorResults" Content="Simulator Results" HorizontalAlignment="Left" Margin="443,60,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" Name="AndersonResults" Content="Anderson Results" HorizontalAlignment="Left" Margin="1030,60,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
 
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="454" Margin="-32,30,0,0" Width="1518">
                 <Label FontSize="15" Name="ErrorS" Content="Relative Error [%]" HorizontalAlignment="Left" Margin="1280,183,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
@@ -336,7 +336,7 @@
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="p" HorizontalAlignment="Left" Margin="200,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="T" HorizontalAlignment="Left" Margin="236,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
             <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="M" HorizontalAlignment="Left" Margin="270,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
-            <DataGrid HorizontalAlignment="Left" Height="495" Margin="56,134,0,0" VerticalAlignment="Top" Width="925" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" SelectedCellsChanged="gridData_SelectedCellsChanged">
+            <DataGrid HorizontalAlignment="Left" Height="520" Margin="56,109,0,0" VerticalAlignment="Top" Width="925" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" SelectedCellsChanged="gridData_SelectedCellsChanged">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
                         <Border Background="#FF262626"/>
@@ -428,16 +428,16 @@
                             </Trigger>
                         </Style.Triggers>
                     </Style>
-                    <!--<LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="#FF6B8E95" Offset="0"/>
                         <GradientStop Color="#FF14A7C1" Offset="1"/>
                         <GradientStop Color="#FF1E424E" Offset="0.509"/>
                         <GradientStop Color="#FF1D4855" Offset="0.542"/>
                         <GradientStop Color="#FF1D4855" Offset="0.542"/>
                         <GradientStop Color="#FF193A44" Offset="0.526"/>
-                    </LinearGradientBrush>-->
+                    </LinearGradientBrush>
                     <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                        <!--<Setter Property="Background" Value="{StaticResource HeaderBrush}" />-->
+                        <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="BorderBrush" Value="White"/>
@@ -465,7 +465,7 @@
                 </DataGrid.CellStyle>
             </DataGrid>
 
-            <DataGrid HorizontalAlignment="Left" Height="495" Margin="1040,134,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" MinColumnWidth="50" SelectedCellsChanged="selected_SelectedCellsChanged">
+            <DataGrid HorizontalAlignment="Left" Height="520" Margin="1040,109,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" MinColumnWidth="50" SelectedCellsChanged="selected_SelectedCellsChanged">
                 <DataGrid.Resources>
                     <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
                         <Border Background="#FF262626"/>
@@ -557,16 +557,16 @@
                             </Trigger>
                         </Style.Triggers>
                     </Style>
-                    <!--<LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="#FF6B8E95" Offset="0"/>
                         <GradientStop Color="#FF14A7C1" Offset="1"/>
                         <GradientStop Color="#FF1E424E" Offset="0.509"/>
                         <GradientStop Color="#FF1D4855" Offset="0.542"/>
                         <GradientStop Color="#FF1D4855" Offset="0.542"/>
                         <GradientStop Color="#FF193A44" Offset="0.526"/>
-                    </LinearGradientBrush>-->
+                    </LinearGradientBrush>
                     <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                        <!--<Setter Property="Background" Value="{StaticResource HeaderBrush}" />-->
+                        <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="BorderBrush" Value="White"/>

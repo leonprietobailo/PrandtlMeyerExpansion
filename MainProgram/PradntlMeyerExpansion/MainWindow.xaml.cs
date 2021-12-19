@@ -300,6 +300,7 @@ namespace PradntlMeyerExpansion
             plano.Visibility = Visibility.Hidden;
             EstudioAvanzada.Visibility = Visibility.Hidden;
             Grid.Visibility = Visibility.Visible;
+            RunSim.Visibility = Visibility.Hidden;
 
             // Se cambia el color de fondo de los botones principales del simulador
             topic.Background = Brushes.Transparent;
@@ -418,10 +419,12 @@ namespace PradntlMeyerExpansion
             EstudioAvanzada.Visibility = Visibility.Visible;
             Grids.Visibility = Visibility.Visible;
 
-            // Se limpia el plano 
-            //plano.Children.Clear();
-            //mesh = new Grid(r);
+            // Se calcula la expansión de Prandtl-Meyer
+            plano.Children.Clear();
             mesh.PrandtlMeyerExpansion();
+
+            // Se desactiva el radio button "u"
+            uRB.IsChecked = false;
 
             // Se crea un nuevo vector de polígonos
             Polygons = new Polygon[mesh.GetXP().Count - 1, divisionesy];
@@ -465,18 +468,17 @@ namespace PradntlMeyerExpansion
                     Polygons[i, j] = polygon;
                 }
             }
-            // Se actiba el radio button "u" para poder ver el plano físico con los valores de la velocidad horizontal por defecto
+            // Se activa el radio button "u" para poder ver el plano físico con los valores de la velocidad horizontal por defecto
             uRB.IsChecked = true;
-
             computeEvolutionChange();
             setChartNumbers();
             
         }
 
-
         // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la velocidad horizontal
         private void u_Checked(object sender, RoutedEventArgs e)
         {
+            // Asociamos un valor máximo y mínimo teniendo un gran margen para poder calcularlos posteriormente
             maxvalue = -100000000;
             minvalue = 100000000;
             // Calculamos los valores máximo y mínimo de la velocidad horizontal
@@ -496,15 +498,15 @@ namespace PradntlMeyerExpansion
                 }
             }
             // Coloreamos cada polígono 
-            int y = 0;
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
+                    // Se obtiene una media con los valores de las cuatro esquinas del polígono
                     double mediaM = (mesh.GetCell(j, i).getU() + mesh.GetCell(j, i + 1).getU() + mesh.GetCell(j + 1, i + 1).getU() + mesh.GetCell(j + 1, i).getU()) / 4.0;
-
+                    
+                    // Se obtiene el color asocado a R
                     byte first = 0;
-
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
                         first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
@@ -517,23 +519,30 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
+                    // Se obtiene el color asocado a G
                     byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    // Se obtiene el color asocado a B
                     byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
+                    // Se crea el color RGB con los valores anteriormente calculados
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    // Se colorea el interior de cada polígono
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
-            }     
+            }
+            // Se muestra el valor maxímo en la leyenda del gradiente
             minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " m/s");
+            // Se muestra el valor mínimo en la leyenda del gradiente
             maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " m/s");
         }
 
         // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la velocidad vertical
         private void v_Checked(object sender, RoutedEventArgs e)
         {
+            // Asociamos un valor máximo y mínimo teniendo un gran margen para poder calcularlos posteriormente
             maxvalue = -100000000;
             minvalue = 100000000;
+            // Calculamos los valores máximo y mínimo de la velocidad vertical
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 for (int j = 0; j < divisionesy; j++)
@@ -549,15 +558,16 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
+            // Coloreamos cada polígono 
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
-                //for (int j = 0; j < divisionesy; j++)
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
+                    // Se obtiene una media con los valores de las cuatro esquinas del polígono
                     double mediaM = (mesh.GetCell(j, i).getV() + mesh.GetCell(j, i + 1).getV() + mesh.GetCell(j + 1, i + 1).getV() + mesh.GetCell(j + 1, i).getV()) / 4.0;
 
+                    // Se obtiene el color asocado a R
                     byte first = 0;
-
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
                         first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
@@ -570,24 +580,31 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
+                    // Se obtiene el color asocado a G
                     byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    // Se obtiene el color asocado a B
                     byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
+                    // Se crea el color RGB con los valores anteriormente calculados
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    // Se colorea el interior de cada polígono
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            // Se muestra el valor maxímo en la leyenda del gradiente
             minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " m/s");
+            // Se muestra el valor mínimo en la leyenda del gradiente
             maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " m/s");
         }
 
         // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la densidad
         private void rho_Checked(object sender, RoutedEventArgs e)
         {
+            // Asociamos un valor máximo y mínimo teniendo un gran margen para poder calcularlos posteriormente
             maxvalue = -100000000;
             minvalue = 100000000;
 
+            // Calculamos los valores máximo y mínimo de la densidad
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 for (int j = 0; j < divisionesy; j++)
@@ -603,15 +620,17 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
+
+            // Coloreamos cada polígono 
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
-                //for (int j = 0; j < divisionesy; j++)
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
+                    // Se obtiene una media con los valores de las cuatro esquinas del polígono
                     double mediaM = (mesh.GetCell(j, i).getRO() + mesh.GetCell(j, i + 1).getRO() + mesh.GetCell(j + 1, i + 1).getRO() + mesh.GetCell(j + 1, i).getRO()) / 4.0;
 
+                    // Se obtiene el color asocado a R
                     byte first = 0;
-
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
                         first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
@@ -624,24 +643,31 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
+                    // Se obtiene el color asocado a G
                     byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    // Se obtiene el color asocado a B
                     byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
+                    // Se crea el color RGB con los valores anteriormente calculados
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    // Se colorea el interior de cada polígono
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            // Se muestra el valor maxímo en la leyenda del gradiente
             minValueGra.Content = Convert.ToString(Math.Round(maxvalue, 4) + " kg/m3");
+            // Se muestra el valor mínimo en la leyenda del gradiente
             maxValueGra.Content = Convert.ToString(Math.Round(minvalue, 4) + " kg/m3");
         }
 
         // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la presión
         private void p_Checked(object sender, RoutedEventArgs e)
         {
+            // Asociamos un valor máximo y mínimo teniendo un gran margen para poder calcularlos posteriormente
             double maxvalue = -100000000;
             double minvalue = 100000000;
 
+            // Calculamos los valores máximo y mínimo de la presión
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 for (int j = 0; j < divisionesy; j++)
@@ -657,16 +683,17 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
+
+            // Coloreamos cada polígono 
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
-                //for (int j = 0; j < divisionesy; j++)
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
-
+                    // Se obtiene una media con los valores de las cuatro esquinas del polígono
                     double mediaM = (mesh.GetCell(j, i).getP() + mesh.GetCell(j, i + 1).getP() + mesh.GetCell(j + 1, i + 1).getP() + mesh.GetCell(j + 1, i).getP()) / 4.0;
-
+                    
+                    // Se obtiene el color asocado a R
                     byte first = 0;
-
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
                         first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
@@ -679,24 +706,31 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
+                    // Se obtiene el color asocado a G
                     byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    // Se obtiene el color asocado a B
                     byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
+                    // Se crea el color RGB con los valores anteriormente calculados
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    // Se colorea el interior de cada polígono
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            // Se muestra el valor maxímo en la leyenda del gradiente
             minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " Pa");
+            // Se muestra el valor mínimo en la leyenda del gradiente
             maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " Pa");
         }
 
         // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la temperatura
         private void T_Checked(object sender, RoutedEventArgs e)
         {
+            // Asociamos un valor máximo y mínimo teniendo un gran margen para poder calcularlos posteriormente
             double maxvalue = -100000000;
             double minvalue = 100000000;
 
+            // Calculamos los valores máximo y mínimo de la temperatura
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 for (int j = 0; j < divisionesy; j++)
@@ -712,15 +746,17 @@ namespace PradntlMeyerExpansion
                     }
                 }
             }
+
+            // Coloreamos cada polígono 
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
-                //for (int j = 0; j < divisionesy; j++)
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
+                    // Se obtiene una media con los valores de las cuatro esquinas del polígono
                     double mediaM = (mesh.GetCell(j, i).getT() + mesh.GetCell(j, i + 1).getT() + mesh.GetCell(j + 1, i + 1).getT() + mesh.GetCell(j + 1, i).getT()) / 4.0;
 
+                    // Se obtiene el color asocado a R
                     byte first = 0;
-
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
                         first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
@@ -733,24 +769,31 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
+                    // Se obtiene el color asocado a G
                     byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    // Se obtiene el color asocado a B
                     byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
+                    // Se crea el color RGB con los valores anteriormente calculados
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    // Se colorea el interior de cada polígono
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            // Se muestra el valor mínimo en la leyenda del gradiente
             maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " K");
+            // Se muestra el valor maxímo en la leyenda del gradiente
             minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " K");
         }
 
         // Evento que colorea los polígonos del plano físico de acuerdo a los valores del número de Mach
         private void M_Checked(object sender, RoutedEventArgs e)
         {
+            // Asociamos un valor máximo y mínimo teniendo un gran margen para poder calcularlos posteriormente
             double maxvalue = -100000000;
             double minvalue = 100000000;
 
+            // Calculamos los valores máximo y mínimo del número de Mach
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
                 for (int j = 0; j < divisionesy; j++)
@@ -767,17 +810,16 @@ namespace PradntlMeyerExpansion
                 }
             }
 
+            // Coloreamos cada polígono 
             for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
             {
-                //for (int j = 0; j < divisionesy; j++)
                 for (int j = (divisionesy - 1); j > -1; j--)
                 {
+                    // Se obtiene una media con los valores de las cuatro esquinas del polígono
                     double mediaM = (mesh.GetCell(j, i).getM() + mesh.GetCell(j, i + 1).getM() + mesh.GetCell(j + 1, i + 1).getM() + mesh.GetCell(j + 1, i).getM()) / 4.0;
 
+                    // Se obtiene el color asocado a R
                     byte first = 0;
-                    byte second = 0;
-                    byte third = 0;
-
                     if (mediaM < ((maxvalue + minvalue) / 2))
                     {
                         first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
@@ -790,15 +832,20 @@ namespace PradntlMeyerExpansion
                     {
                         first = Convert.ToByte(76);
                     }
-                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
+                    // Se obtiene el color asocado a G
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    // Se obtiene el color asocado a B
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+                    // Se crea el color RGB con los valores anteriormente calculados
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                     mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    // Se colorea el interior de cada polígono
                     Polygons[i, j].Fill = mySolidColorBrush;
                 }
             }
+            // Se muestra el valor mínimo en la leyenda del gradiente
             maxValueGra.Content = Convert.ToString(Math.Round(minvalue, 4));
+            // Se muestra el valor maxímo en la leyenda del gradiente
             minValueGra.Content = Convert.ToString(Math.Round(maxvalue, 4));
         }
 
