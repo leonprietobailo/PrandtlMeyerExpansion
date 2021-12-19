@@ -9,67 +9,61 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
-using System.IO;
 using System.Diagnostics;
 
 namespace PradntlMeyerExpansion
 {
     public partial class MainWindow : Window
     {
-        Grid mesh,meshCte;
-        Rules r,rCte;
+        Grid mesh,meshCte;                                            // Creación de objeto Grid (mesh: caso general y modificable. meshCte: caso específio Anderson)
+        Rules r,rCte;                                                 // Creación de objeto Rules (r: caso general y modificable. rCte: caso específio Anderson)
+        Canvas plano = new Canvas();                                  // Creación de objeto Canvas
+        double angulo, x1, y1, MaxY;                                  // Valores característicos del plano físico
+        int divisionesy;                                              // Valor característico del plano físico
+        double maxvalue, minvalue;                                    // Valores máximo y mínimo de cada magnitud del fluido
+        Polygon[,] Polygons;                                          // Matriz que contiene todos los polígonos del plano físico
+        SolidColorBrush mySolidColorBrush = new SolidColorBrush();    // Creación de un nuevo color
+        SolidColorBrush color = new SolidColorBrush();                // Creación de un nuevo color
+        SolidColorBrush whiteBrush = new SolidColorBrush();           // Creación de un nuevo color
 
-        //valores iniciales
-        double angulo, E,x1,y1,dEta,dXi;
-        Canvas plano = new Canvas();
-        int divisionesy;
-        Polygon[,] Polygons;
+        // Creación de las colecciones que contendrán los valores de las gráficas del estudio avanzado
+        ChartValues<ObservablePoint> uEVOList = new ChartValues<ObservablePoint>();     // Velocidad horizontal 
+        ChartValues<ObservablePoint> vEVOList = new ChartValues<ObservablePoint>();     // Velocidad vertical
+        ChartValues<ObservablePoint> roEVOList = new ChartValues<ObservablePoint>();    // Densidad
+        ChartValues<ObservablePoint> pEVOList = new ChartValues<ObservablePoint>();     // Presión
+        ChartValues<ObservablePoint> TEVOList = new ChartValues<ObservablePoint>();     // Temperatura
+        ChartValues<ObservablePoint> MEVOList = new ChartValues<ObservablePoint>();     // Número Mach
 
-        // Colores
-        SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-        SolidColorBrush color = new SolidColorBrush();
+        //Creación de las series para plotear
+        public SeriesCollection SeriesCollection, uCollection, vCollection, roCOllection, pCollection, TCollection, MCollection; 
 
-        double umax, umin, vmax, vmin, rhomax, rhomin, pmax, pmin, Tmax, Tmin, Mmax, Mmin;
+        // Creación de las tablas que contendrán los resultados obtenidos por el simulador
+        DataTable UTable = new DataTable();                           // Velocidad horizontal
+        DataTable VTable = new DataTable();                           // Velocidad vertical
+        DataTable rhoTable = new DataTable();                         // Densidad
+        DataTable pTable = new DataTable();                           // Presión
+        DataTable TTable = new DataTable();                           // Temperatura
+        DataTable MTable = new DataTable();                           // Número Mach
 
-        double MaxY;
+        // Creación de las tablas que contendrán los resultados obtenidos por el Anderson
+        DataTable AndersonUTable = new DataTable();                   // Velocidad horizontal
+        DataTable AndersonVTable = new DataTable();                   // Velocidad vertical
+        DataTable AndersonRhoTable = new DataTable();                 // Densidad
+        DataTable AndersonpTable = new DataTable();                   // Presión
+        DataTable AndersonTTable = new DataTable();                   // Temperatura
+        DataTable AndersonMTable = new DataTable();                   // Número Mach
 
-        //Gráficas
-        //ChartValues<double> Values = new ChartValues<double>();
-        //ChartValues<double> BoundaryValues = new ChartValues<double>();
-
-        //Estudio avanzado
-        ChartValues<ObservablePoint> uEVOList = new ChartValues<ObservablePoint>();
-        ChartValues<ObservablePoint> vEVOList = new ChartValues<ObservablePoint>();
-        ChartValues<ObservablePoint> roEVOList = new ChartValues<ObservablePoint>();
-        ChartValues<ObservablePoint> pEVOList = new ChartValues<ObservablePoint>();
-        ChartValues<ObservablePoint> TEVOList = new ChartValues<ObservablePoint>();
-        ChartValues<ObservablePoint> MEVOList = new ChartValues<ObservablePoint>();
-
-        public SeriesCollection SeriesCollection, uCollection, vCollection, roCOllection, pCollection, TCollection, MCollection;
-
-        //Tables
-        DataTable UTable = new DataTable();
-        DataTable VTable = new DataTable();
-        DataTable rhoTable = new DataTable();
-        DataTable pTable = new DataTable();
-        DataTable TTable = new DataTable();
-        DataTable MTable = new DataTable();
-
-        DataTable AndersonUTable = new DataTable();
-        DataTable AndersonVTable = new DataTable();
-        DataTable AndersonRhoTable = new DataTable();
-        DataTable AndersonpTable = new DataTable();
-        DataTable AndersonTTable = new DataTable();
-        DataTable AndersonMTable = new DataTable();
+        LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            mySolidColorBrush.Color = Color.FromRgb(75, 70, 70);
+            mySolidColorBrush.Color = Color.FromRgb(75, 70, 70);      // Color gris
+            color.Color = Color.FromRgb(82, 222, 197);                // Color negro
+            whiteBrush.Color = Colors.White;                          // Color blanco
 
-            color.Color = Color.FromRgb(82, 222, 197);
-
+            // Cambiamos la visibilidad d elas diferentes pestañas
             Introduction.Visibility = Visibility.Visible;
             Introduction.Background = mySolidColorBrush;
             Simulation.Visibility = Visibility.Hidden;
@@ -80,30 +74,34 @@ namespace PradntlMeyerExpansion
             EstudioAvanzada.Visibility = Visibility.Hidden;
             RunSim.Visibility = Visibility.Hidden;
             Grid.Visibility = Visibility.Hidden;
-            
             Info.Visibility = Visibility.Hidden;
 
+            // Cambiamos el color del fondo de los diferentes botones del simulador (Home, Simulation, Validation, Video Tutorial, About Us)
             topic.Background = mySolidColorBrush;
             simulation.Background = Brushes.Transparent;
             ValidationButton.Background = Brushes.Transparent;
             vTutorial.Background = Brushes.Transparent;
             aboutUs.Background = Brushes.Transparent;
 
+            // Añadimos el canvas creado anteriormente a la pestaña de simulación
             Simulation.Children.Add(plano);
 
-            //Establecemos los valores del gráfico //Canbiaaar
-            //Values.Add(1.3);
-            //Values.Add(3);
-            //BoundaryValues.Add(3);
-            //BoundaryValues.Add(1.3);
-            //setChartNumbers();
+            // Asociamops al gradiente los diferentes colores
+            myHorizontalGradient.StartPoint = new Point(0, 0.3);
+            myHorizontalGradient.EndPoint = new Point(1, 0.3);
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            Gradient.Fill = myHorizontalGradient;
 
-            //Sirve para cargar la tabla
+            // Creación tablas del Anderson y del simulador
+            // Se introducen los valores utilizados por el Anderson en las rules rCte
             rCte = new Rules(678, 0, 1.23, 0.101e6, 286.1, 0.5, 1.4, 287, 10, 5.352 * Math.PI / 180, 41, 65, 40, 0.5);
+            // Se crea un grid con las rules rCte anteriormente creadas 
             meshCte = new Grid(rCte);
+            // Se llama al evento que realiza el cálculo de la expanción de Prandtl-Meyer
             meshCte.PrandtlMeyerExpansion();
-
-
+            // Se llama al método que crea las tablas
             CreateTables();
 
             // Errores
@@ -117,6 +115,7 @@ namespace PradntlMeyerExpansion
             double uEVO, vEVO, roEVO, pEVO, TEVO, MEVO;
             (uEVO, vEVO, roEVO, pEVO, TEVO, MEVO) = meshCte.getDownstream();
 
+            // Cálculo del error relativo
             double relU = Math.Round((uEVO - uReal) / uReal * 100, 4);
             double relV = Math.Round((vEVO - vReal) / vReal * 100,4);
             double relRO = Math.Round((roEVO - roReal) / roReal * 100,4);
@@ -124,6 +123,7 @@ namespace PradntlMeyerExpansion
             double relT = Math.Round((TEVO - TReal) / TReal * 100,4);
             double relM = Math.Round((MEVO - MReal) / MReal * 100,4);
 
+            // Error relativo obtendio por el Anderson
             double relUAnd = 0.45;
             double relVAnd = 3.76;
             double relROAnd = 0.813;
@@ -146,21 +146,692 @@ namespace PradntlMeyerExpansion
             ErrorSP.Content = relP.ToString();
             ErrorST.Content = relT.ToString();
             ErrorSM.Content = relM.ToString();
-
-
-            gridData.DataContext = UTable.DefaultView;
-
         }
+
+        // Evento que muestra la pestaña de Introdución y oculta el resto
+        private void lntro_Click(object sender, RoutedEventArgs e)
+        {
+            // Se cambia la visibilidad de las diferentes pestañas
+            Introduction.Visibility = Visibility.Visible;
+            Introduction.Background = mySolidColorBrush;
+            Simulation.Visibility = Visibility.Hidden;
+            Validation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Hidden;
+
+            // Se cambia el color de fondo de los botones principales del simulador
+            topic.Background = mySolidColorBrush;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+        }
+
+        // Evento que muestra la pestaña de Simulación y oculta el resto
+        private void Simualtion_Click(object sender, RoutedEventArgs e)
+        {
+            // Se cambia la visibilidad de las diferentes pestañas
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Visible;
+            Simulation.Background = mySolidColorBrush;
+            EstudioAvanzado.Visibility = Visibility.Hidden;
+            Validation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Hidden;
+            Grids.Visibility = Visibility.Hidden;
+
+            // Se cambia el color de fondo de los botones principales del simulador
+            topic.Background = Brushes.Transparent;
+            simulation.Background = mySolidColorBrush;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+
+            if (r != null)
+            {
+                EstudioAvanzada.Visibility = Visibility.Visible;
+                Grids.Visibility = Visibility.Visible;
+                plano.Visibility = Visibility.Visible;
+            }
+        }
+
+        // Evento que muestra la pestaña de Validación y oculta el resto
+        private void Validation_Click(object sender, RoutedEventArgs e)
+        {
+            // Se cambia la visibilidad de las diferentes pestañas
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Hidden;
+            Validation.Visibility = Visibility.Visible;
+            Validation.Background = mySolidColorBrush;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Hidden;
+
+            // Se cambia el color de fondo de los botones principales del simulador
+            topic.Background = Brushes.Transparent;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = mySolidColorBrush;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+
+            // Se actiba el radio button "u" para poder ver las tablas de la velocidad horizontal de manera predeterminada cuando se presiona el botón de Validación
+            Utable.IsChecked = true;
+        }
+
+        // Evento que muestra la pestaña del Video Tutorial y oculta el resto
+        private void vTutorial_Click(object sender, RoutedEventArgs e)
+        {
+            // Se cambia la visibilidad de las diferentes pestañas
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Hidden;
+            Validation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Visible;
+            VideoTutorial.Background = mySolidColorBrush;
+            AboutUs.Visibility = Visibility.Hidden;
+
+            // Se cambia el color de fondo de los botones principales del simulador
+            topic.Background = Brushes.Transparent;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = mySolidColorBrush;
+            aboutUs.Background = Brushes.Transparent;
+        }
+
+        // Evento que muestra la pestaña de About Us y oculta el resto
+        private void aboutUs_Click(object sender, RoutedEventArgs e)
+        {
+            // Se cambia la visibilidad de las diferentes pestañas
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Hidden;
+            Validation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Visible;
+            AboutUs.Background = mySolidColorBrush;
+
+            // Se cambia el color de fondo de los botones principales del simulador
+            topic.Background = Brushes.Transparent;
+            simulation.Background = Brushes.Transparent;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = mySolidColorBrush;
+        }
+
+        // Evento que cambia los parámetros a los de default utilizados en el Anderson
+        private void Default_Click_1(object sender, RoutedEventArgs e)
+        {
+            E1.Text = "10";
+            x11.Text = "65";
+            H1.Text = "40";
+            theta1.Text = "5,352";
+            dEta1.Text = "0,025";
+            Cy1.Text = "0,5";
+            gamma1.Text = "1,4";
+            R1.Text = "287";
+            C1.Text = "0,5";
+            p1.Text = "10100";
+            rho1.Text = "1,23";
+            T1.Text = "286,1";
+            u1.Text = "678";
+            v1.Text = "0";
+        }
+
+        // Evento que muestra la pestaña con el plano físico de la simulación y oculta la del estudio avanzado
+        private void Grid_Click(object sender, RoutedEventArgs e)
+        {
+
+            Grids.Visibility = Visibility.Visible;
+            EstudioAvanzado.Visibility = Visibility.Hidden;
+            EstudioAvanzada.Visibility = Visibility.Visible;
+            Grid.Visibility = Visibility.Hidden;
+            plano.Visibility = Visibility.Visible;
+        }
+
+        // Evento que oculta la pestaña con el plano físico de la simulación y muestra la del estudio avanzado
+        private void estudio_Click(object sender, RoutedEventArgs e)
+        {
+            // Se cambia la visibilidad de las diferentes pestañas
+            Introduction.Visibility = Visibility.Hidden;
+            Simulation.Visibility = Visibility.Visible;
+            Simulation.Background = mySolidColorBrush;
+            EstudioAvanzado.Visibility = Visibility.Visible;
+            Validation.Visibility = Visibility.Hidden;
+            VideoTutorial.Visibility = Visibility.Hidden;
+            AboutUs.Visibility = Visibility.Hidden;
+            Grids.Visibility = Visibility.Hidden;
+            plano.Visibility = Visibility.Hidden;
+            EstudioAvanzada.Visibility = Visibility.Hidden;
+            Grid.Visibility = Visibility.Visible;
+
+            // Se cambia el color de fondo de los botones principales del simulador
+            topic.Background = Brushes.Transparent;
+            simulation.Background = mySolidColorBrush;
+            ValidationButton.Background = Brushes.Transparent;
+            vTutorial.Background = Brushes.Transparent;
+            aboutUs.Background = Brushes.Transparent;
+        }
+
+        // Evento que carga la frontera y las divisiones verticales del plano físico
+        private void LoadGrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Se cambia la visibilidad de las diferentes pestañas
+                RunSim.Visibility = Visibility.Visible;
+                Grid.Visibility = Visibility.Hidden;
+                EstudioAvanzada.Visibility = Visibility.Hidden;
+                Grids.Visibility = Visibility.Hidden;
+                plano.Visibility = Visibility.Visible;
+                EstudioAvanzado.Visibility = Visibility.Hidden;
+
+                // Se limpia el plano 
+                plano.Children.Clear();
+
+                // Se recogen todos los parámetros de simulación y se crean las reglas y el grid con ellos
+                double u = Convert.ToDouble(u1.Text);
+                double v = Convert.ToDouble(v1.Text);
+                double rho = Convert.ToDouble(rho1.Text);
+                double p = Convert.ToDouble(p1.Text);
+                double T = Convert.ToDouble(T1.Text);
+                double Cy = Convert.ToDouble(Cy1.Text);
+                double gamma = Convert.ToDouble(gamma1.Text);
+                double R = Convert.ToDouble(R1.Text);
+                double E = Convert.ToDouble(E1.Text);
+                double theta = Convert.ToDouble(theta1.Text);
+                double dEta = Convert.ToDouble(dEta1.Text);
+                int j1 = Convert.ToInt32(1 / dEta + 1);
+                double xmax = Convert.ToDouble(x11.Text);
+                double H = Convert.ToDouble(H1.Text);
+                double C = Convert.ToDouble(C1.Text);
+                r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
+                mesh = new Grid(r);
+
+                // Se recogen ciertos parámetros necesarios par dibujar el plano físico
+                E = r.getE();
+                x1 = r.getxMax();
+                y1 = r.getH();
+                angulo = r.getTheta();
+                divisionesy = r.getJ() - 1;
+
+                // Se calcula el primer incremento de la coordenada y
+                double ay1;
+                ay1 = y1 / divisionesy;
+                // Se calcula el segundo incremento de la coordenada y
+                double ay2;
+                ay2 = (y1 + Math.Tan(angulo) * (x1 - E)) / divisionesy;
+                // Se recoge el valor máximo de la coordenada y
+                MaxY = y1 + Math.Tan(angulo) * (x1 - E);
+
+
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    // Se crea un nuevo polígono
+                    Polygon polygon = new Polygon();
+                    // Se crean puntos con las coordenadas de cada vértice de cada polígono
+                    System.Windows.Point Point11 = new System.Windows.Point(0, j * ay1 * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point21 = new System.Windows.Point(E * 715 / x1, j * ay1 * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point31 = new System.Windows.Point(x1 * 715 / x1, j * ay2 * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point41 = new System.Windows.Point(x1 * 715 / x1, (j + 1) * ay2 * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point51 = new System.Windows.Point(E * 715 / x1, (j + 1) * ay1 * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point61 = new System.Windows.Point(0, (j + 1) * ay1 * 11 * 45.1028 / MaxY);
+                    // Se crean las colleciones de puntos
+                    PointCollection polygonPoints1 = new PointCollection();
+                    // Se añaden los puntos anteriormente creados a la coleccion de puntos
+                    polygonPoints1.Add(Point11);
+                    polygonPoints1.Add(Point21);
+                    polygonPoints1.Add(Point31);
+                    polygonPoints1.Add(Point41);
+                    polygonPoints1.Add(Point51);
+                    polygonPoints1.Add(Point61);
+                    // Se asocia la colección de puntos anteriormente creada a los puntos del polígono
+                    polygon.Points = polygonPoints1;
+                    // Se añade el color del borde del polígono y se le asocia un grosor
+                    polygon.Stroke = whiteBrush;
+                    polygon.StrokeThickness = 0.1;
+                    // Se crea un margen para el poano físico
+                    System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
+                    plano.Margin = planoPM;
+                    // Se añaden los polígonos al plano físico
+                    plano.Children.Add(polygon);
+                    // Se coloca el canvas
+                    Canvas.SetTop(polygon, 0);
+                    Canvas.SetLeft(polygon, 0);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Input error");
+            }
+        }
+
+        // Evento que carga el plano físico
+        private void Run_Click(object sender, RoutedEventArgs e)
+        {
+            // Se cambia la visibilidad de las diferentes pestañas
+            Grid.Visibility = Visibility.Hidden;
+            EstudioAvanzada.Visibility = Visibility.Visible;
+            Grids.Visibility = Visibility.Visible;
+
+            // Se limpia el plano 
+            //plano.Children.Clear();
+            //mesh = new Grid(r);
+            mesh.PrandtlMeyerExpansion();
+
+            // Se crea un nuevo vector de polígonos
+            Polygons = new Polygon[mesh.GetXP().Count - 1, divisionesy];
+
+
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = (divisionesy - 1); j > -1; j--)
+                {
+                    // Se crea un nuevo polígono
+                    Polygon polygon = new Polygon();
+                    // Se crean puntos con las coordenadas de cada vértice de cada polígono
+                    System.Windows.Point Point11 = new System.Windows.Point(mesh.GetXP()[i] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j]) * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point21 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j]) * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point31 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j + 1]) * 11 * 45.1028 / MaxY);
+                    System.Windows.Point Point41 = new System.Windows.Point(mesh.GetXP()[i] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j + 1]) * 11 * 45.1028 / MaxY);
+                    // Se crean las colleciones de puntos
+                    PointCollection polygonPoints1 = new PointCollection();
+                    // Se añaden los puntos anteriormente creados a la coleccion de puntos
+                    polygonPoints1.Add(Point11);
+                    polygonPoints1.Add(Point21);
+                    polygonPoints1.Add(Point31);
+                    polygonPoints1.Add(Point41);
+                    // Se asocia la colección de puntos anteriormente creada a los puntos del polígono
+                    polygon.Points = polygonPoints1;
+                    // Se añade el color del borde del polígono y se le asocia un grosor
+                    polygon.Stroke = whiteBrush;
+                    polygon.StrokeThickness = 0.1;
+                    // Se crea un margen para el poano físico
+                    System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
+                    plano.Margin = planoPM;
+                    // Se añaden los polígonos al plano físico
+                    plano.Children.Add(polygon);
+                    // Se añade un tag  a cada polígono creado
+                    polygon.Tag = new Point(i, j);
+                    // Se asocia a cada polígono un evento cuando el usuario pone el mouse encima del plano físico
+                    polygon.MouseEnter += new MouseEventHandler(polygon_MouseEnter);
+                    // Se asocia a cada polígono un evento cuando el usuario pone el mouse fuera del plano físico
+                    polygon.MouseLeave += new MouseEventHandler(polygon_MouseLeave);
+                    // Se añade cada polígono al vector de polígonos
+                    Polygons[i, j] = polygon;
+                }
+            }
+            // Se actiba el radio button "u" para poder ver el plano físico con los valores de la velocidad horizontal por defecto
+            uRB.IsChecked = true;
+
+            computeEvolutionChange();
+            setChartNumbers();
+        }
+
+
+        // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la velocidad horizontal
+        private void u_Checked(object sender, RoutedEventArgs e)
+        {
+            maxvalue = -100000000;
+            minvalue = 100000000;
+            // Calculamos los valores máximo y mínimo de la velocidad horizontal
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    if (mesh.GetCell(j, i).getU() > maxvalue)
+                    {
+                        maxvalue = mesh.GetCell(j, i).getU();
+                    }
+
+                    if (mesh.GetCell(j, i).getU() < minvalue)
+                    {
+                        minvalue = mesh.GetCell(j, i).getU();
+                    }
+                }
+            }
+            // Coloreamos cada polígono 
+            int y = 0;
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = (divisionesy - 1); j > -1; j--)
+                {
+                    double mediaM = (mesh.GetCell(j, i).getU() + mesh.GetCell(j, i + 1).getU() + mesh.GetCell(j + 1, i + 1).getU() + mesh.GetCell(j + 1, i).getU()) / 4.0;
+
+                    byte first = 0;
+
+                    if (mediaM < ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM > ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM == ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(76);
+                    }
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    Polygons[i, j].Fill = mySolidColorBrush;
+                }
+            }     
+            minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " m/s");
+            maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " m/s");
+        }
+
+        // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la velocidad vertical
+        private void v_Checked(object sender, RoutedEventArgs e)
+        {
+            maxvalue = -100000000;
+            minvalue = 100000000;
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    if (mesh.GetCell(j, i).getV() > maxvalue)
+                    {
+                        maxvalue = mesh.GetCell(j, i).getV();
+                    }
+
+                    if (mesh.GetCell(j, i).getV() < minvalue)
+                    {
+                        minvalue = mesh.GetCell(j, i).getV();
+                    }
+                }
+            }
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                //for (int j = 0; j < divisionesy; j++)
+                for (int j = (divisionesy - 1); j > -1; j--)
+                {
+                    double mediaM = (mesh.GetCell(j, i).getV() + mesh.GetCell(j, i + 1).getV() + mesh.GetCell(j + 1, i + 1).getV() + mesh.GetCell(j + 1, i).getV()) / 4.0;
+
+                    byte first = 0;
+
+                    if (mediaM < ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM > ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM == ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(76);
+                    }
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    Polygons[i, j].Fill = mySolidColorBrush;
+                }
+            }
+            minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " m/s");
+            maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " m/s");
+        }
+
+        // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la densidad
+        private void rho_Checked(object sender, RoutedEventArgs e)
+        {
+            maxvalue = -100000000;
+            minvalue = 100000000;
+
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    if (mesh.GetCell(j, i).getRO() > maxvalue)
+                    {
+                        maxvalue = mesh.GetCell(j, i).getRO();
+                    }
+
+                    if (mesh.GetCell(j, i).getRO() < minvalue)
+                    {
+                        minvalue = mesh.GetCell(j, i).getRO();
+                    }
+                }
+            }
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                //for (int j = 0; j < divisionesy; j++)
+                for (int j = (divisionesy - 1); j > -1; j--)
+                {
+                    double mediaM = (mesh.GetCell(j, i).getRO() + mesh.GetCell(j, i + 1).getRO() + mesh.GetCell(j + 1, i + 1).getRO() + mesh.GetCell(j + 1, i).getRO()) / 4.0;
+
+                    byte first = 0;
+
+                    if (mediaM < ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM > ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM == ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(76);
+                    }
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    Polygons[i, j].Fill = mySolidColorBrush;
+                }
+            }
+            minValueGra.Content = Convert.ToString(Math.Round(maxvalue, 4) + " kg/m3");
+            maxValueGra.Content = Convert.ToString(Math.Round(minvalue, 4) + " kg/m3");
+        }
+
+        // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la presión
+        private void p_Checked(object sender, RoutedEventArgs e)
+        {
+            double maxvalue = -100000000;
+            double minvalue = 100000000;
+
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    if (mesh.GetCell(j, i).getP() > maxvalue)
+                    {
+                        maxvalue = mesh.GetCell(j, i).getP();
+                    }
+
+                    if (mesh.GetCell(j, i).getP() < minvalue)
+                    {
+                        minvalue = mesh.GetCell(j, i).getP();
+                    }
+                }
+            }
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                //for (int j = 0; j < divisionesy; j++)
+                for (int j = (divisionesy - 1); j > -1; j--)
+                {
+
+                    double mediaM = (mesh.GetCell(j, i).getP() + mesh.GetCell(j, i + 1).getP() + mesh.GetCell(j + 1, i + 1).getP() + mesh.GetCell(j + 1, i).getP()) / 4.0;
+
+                    byte first = 0;
+
+                    if (mediaM < ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM > ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM == ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(76);
+                    }
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    Polygons[i, j].Fill = mySolidColorBrush;
+                }
+            }
+            minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " Pa");
+            maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " Pa");
+        }
+
+        // Evento que colorea los polígonos del plano físico de acuerdo a los valores de la temperatura
+        private void T_Checked(object sender, RoutedEventArgs e)
+        {
+            double maxvalue = -100000000;
+            double minvalue = 100000000;
+
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    if (mesh.GetCell(j, i).getT() > maxvalue)
+                    {
+                        maxvalue = mesh.GetCell(j, i).getT();
+                    }
+
+                    if (mesh.GetCell(j, i).getT() < minvalue)
+                    {
+                        minvalue = mesh.GetCell(j, i).getT();
+                    }
+                }
+            }
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                //for (int j = 0; j < divisionesy; j++)
+                for (int j = (divisionesy - 1); j > -1; j--)
+                {
+                    double mediaM = (mesh.GetCell(j, i).getT() + mesh.GetCell(j, i + 1).getT() + mesh.GetCell(j + 1, i + 1).getT() + mesh.GetCell(j + 1, i).getT()) / 4.0;
+
+                    byte first = 0;
+
+                    if (mediaM < ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM > ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM == ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(76);
+                    }
+                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    Polygons[i, j].Fill = mySolidColorBrush;
+                }
+            }
+            maxValueGra.Content = Convert.ToString(Math.Round(minvalue) + " K");
+            minValueGra.Content = Convert.ToString(Math.Round(maxvalue) + " K");
+        }
+
+        // Evento que colorea los polígonos del plano físico de acuerdo a los valores del número de Mach
+        private void M_Checked(object sender, RoutedEventArgs e)
+        {
+            double maxvalue = -100000000;
+            double minvalue = 100000000;
+
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                for (int j = 0; j < divisionesy; j++)
+                {
+                    if (mesh.GetCell(j, i).getM() > maxvalue)
+                    {
+                        maxvalue = mesh.GetCell(j, i).getM();
+                    }
+
+                    if (mesh.GetCell(j, i).getM() < minvalue)
+                    {
+                        minvalue = mesh.GetCell(j, i).getM();
+                    }
+                }
+            }
+
+            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
+            {
+                //for (int j = 0; j < divisionesy; j++)
+                for (int j = (divisionesy - 1); j > -1; j--)
+                {
+                    double mediaM = (mesh.GetCell(j, i).getM() + mesh.GetCell(j, i + 1).getM() + mesh.GetCell(j + 1, i + 1).getM() + mesh.GetCell(j + 1, i).getM()) / 4.0;
+
+                    byte first = 0;
+                    byte second = 0;
+                    byte third = 0;
+
+                    if (mediaM < ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM > ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
+                    }
+                    else if (mediaM == ((maxvalue + minvalue) / 2))
+                    {
+                        first = Convert.ToByte(76);
+                    }
+                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
+                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
+
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
+                    Polygons[i, j].Fill = mySolidColorBrush;
+                }
+            }
+            maxValueGra.Content = Convert.ToString(Math.Round(minvalue, 4));
+            minValueGra.Content = Convert.ToString(Math.Round(maxvalue, 4));
+        }
+
+        // Evento que muestra los valores de las diferentes magnitudes físicas cuando el usuario pone el mouse sobre alguna celda del plano físico
+        private void polygon_MouseEnter(object sender, MouseEventArgs e)
+        {
+            // Obtenemos la ubicación del puntero
+            Polygon pol = (Polygon)sender;
+            Point p = (Point)pol.Tag;
+            // Cambiamos la visibilidad de las labels
+            Info.Visibility = Visibility.Visible;
+            // Mostramos los valores de las diferentes magnitudes físicas del fluido en las labels
+            uData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getU(), 2) + " m/s";
+            vData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getV(), 2) + " m/s";
+            rhoData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getRO(), 2) + " kg/m3";
+            pData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getP(), 2) + " Pa";
+            TData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getT(), 2) + " K";
+            MData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getM(), 2);
+            xData.Content = p.X + 1;
+            yData.Content = p.Y + 1;
+        }
+
+        // Evento que oculta los valores de las diferentes magnitudes físicas cuando el usuario retira el mouse del plano físico
+        private void polygon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            // Cambiamos la visibilidad de las labels
+            Info.Visibility = Visibility.Hidden;
+        }
+
+        // Creación de las tablas para la validación
         private void CreateTables()
         {
-            int divisionesycte = rCte.getJ();
+            int divisionesycte = rCte.getJ();       // Otenemos el número de filas que tendrá la tabla
 
             // u Table
-            UTable.Columns.Add("y-x");
+            UTable.Columns.Add("y-x");              // Añadimos la  primera columna a la tabla de resultados del simulador
             // u Anderson Table
-            AndersonUTable.Columns.Add("y-x");
-            AndersonUTable.Columns.Add("18");
-            AndersonUTable.Columns.Add("89");
+            AndersonUTable.Columns.Add("y-x");      // Añadimos la  primera columna a la tabla del Anderson de u
+            AndersonUTable.Columns.Add("18");       // Añadimos la  segunda columna a la tabla del Anderson de u
+            AndersonUTable.Columns.Add("89");       // Añadimos la  tercera columna a la tabla del Anderson de u
+
+            // Introducimos en dos listas los valores del Anderson de u
             List<double> uAcolumna18 = new List<double> { 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 678, 679, 683, 691, 701, 707 };
             List<double> uAcolumna89 = new List<double> { 678, 678, 678, 679, 679, 680, 681, 683, 685, 688, 690, 693, 696, 699, 702, 705, 707, 709, 711, 713, 713, 713, 712, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 711, 710, 705 };
 
@@ -209,7 +880,7 @@ namespace PradntlMeyerExpansion
             List<double> MAcolumna18 = new List<double> { 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.203e1, 0.208e1, 0.215e1, 0.220e1 };
             List<double> MAcolumna89 = new List<double> { 0.200e1, 0.200e1, 0.200e1, 0.200e1, 0.201e1, 0.201e1, 0.202e1, 0.203e1, 0.204e1, 0.205e1, 0.207e1, 0.209e1, 0.210e1, 0.212e1, 0.214e1, 0.216e1, 0.218e1, 0.219e1, 0.221e1, 0.222e1, 0.222e1, 0.222e1, 0.221e1, 0.221e1, 0.220e1, 0.220e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.221e1, 0.220e1, 0.231e1, 0.231e1 };
 
-
+            // Añadimos todas las columnas a cada una de las tablas de las magnitudes del fluido
             for (int i = 0; i < meshCte.GetXP().Count; i++)
             {
                 // u Table
@@ -229,10 +900,12 @@ namespace PradntlMeyerExpansion
             for (int j = divisionesycte - 1; j >= 0; j--)
             {
                 // u Table
+                // Añadimos el número de las filas a la tabla de resultados del simulador
                 DataRow uRow = UTable.NewRow();
                 uRow["y-x"] = Convert.ToString(j + 1);
                 UTable.Rows.Add(uRow);
                 // u Anderson Table
+                // Añadimos los valores de las listas creadas anteriormente a las tablas del Anderson
                 DataRow AuRow = AndersonUTable.NewRow();
                 AuRow["y-x"] = Convert.ToString(j + 1);
                 AuRow["18"] = Convert.ToString(uAcolumna18[s]);
@@ -297,6 +970,7 @@ namespace PradntlMeyerExpansion
                 for (int i = 0; i < (meshCte.GetXP().Count); i++)
                 {
                     // u Table
+                    // Rellenamos la tabla con los valores obtenidos por el simualador
                     uRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getU(), 4));
                     // v Table
                     vRow[Convert.ToString(i + 1)] = Convert.ToString(Math.Round(meshCte.GetCell(j, i).getV(), 4));
@@ -312,54 +986,56 @@ namespace PradntlMeyerExpansion
             }
         }
 
+        // Evento que muestra las tablas de la velocidad horizontal cuando se presiona el radio button "u"
         private void uTable_Checked(object sender, RoutedEventArgs e)
         {
+            // Se muestra la tabla
             gridData.Visibility = Visibility.Visible;
+            // Se pasa la información del data table al DataGrid
             gridData.DataContext = UTable.DefaultView;
             gridAndersonData.DataContext = AndersonUTable.DefaultView;
         }
 
+        // Evento que muestra las tablas de la velocidad vertical cuando se presiona el radio button "v"
         private void vTable_Checked(object sender, RoutedEventArgs e)
         {
+            // Se pasa la información del data table al DataGrid
             gridData.DataContext = VTable.DefaultView;
             gridAndersonData.DataContext = AndersonVTable.DefaultView;
         }
 
+        // Evento que muestra las tablas de la densidad cuando se presiona el radio button "ρ"
         private void rhoTable_Checked(object sender, RoutedEventArgs e)
         {
+            // Se pasa la información del data table al DataGrid
             gridData.DataContext = rhoTable.DefaultView;
             gridAndersonData.DataContext = AndersonRhoTable.DefaultView;
         }
 
+        // Evento que muestra las tablas de la presión cuando se presiona el radio button "p"
         private void pTable_Checked(object sender, RoutedEventArgs e)
         {
+            // Se pasa la información del data table al DataGrid
             gridData.DataContext = pTable.DefaultView;
             gridAndersonData.DataContext = AndersonpTable.DefaultView;
         }
 
+        // Evento que muestra las tablas de la temperatura cuando se presiona el radio button "T"
         private void TTable_Checked(object sender, RoutedEventArgs e)
         {
+            // Se pasa la información del data table al DataGrid
             gridData.DataContext = TTable.DefaultView;
             gridAndersonData.DataContext = AndersonTTable.DefaultView;
         }
 
-        private void Default_Click_1(object sender, RoutedEventArgs e)
+        // Evento que muestra las tablas del Mach Number cuando se presiona el radio button "M"
+        private void MTable_Checked(object sender, RoutedEventArgs e)
         {
-            E1.Text ="10";
-            x11.Text = "65";
-            H1.Text = "40";
-            theta1.Text = "5,352";
-            dEta1.Text = "0,025";
-            Cy1.Text = "0,5";
-            gamma1.Text = "1,4";
-            R1.Text = "287";
-            C1.Text = "0,5";
-            p1.Text = "10100";
-            rho1.Text = "1,23";
-            T1.Text = "286,1";
-            u1.Text = "678";
-            v1.Text = "0";
+            // Se pasa la información del data table al DataGrid
+            gridData.DataContext = MTable.DefaultView;
+            gridAndersonData.DataContext = AndersonMTable.DefaultView;
         }
+
 
         private void selected_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
@@ -371,619 +1047,8 @@ namespace PradntlMeyerExpansion
             gridAndersonData.SelectedIndex = gridData.SelectedIndex;
         }
 
-        private void MTable_Checked(object sender, RoutedEventArgs e)
-        {
-            gridData.DataContext = MTable.DefaultView;
-            gridAndersonData.DataContext = AndersonMTable.DefaultView;
-        }
+
         
-
-        private void lntro_Click(object sender, RoutedEventArgs e)
-        {
-            Introduction.Visibility = Visibility.Visible;
-            Introduction.Background = mySolidColorBrush;
-            Simulation.Visibility = Visibility.Hidden;
-            Validation.Visibility = Visibility.Hidden;
-            VideoTutorial.Visibility = Visibility.Hidden;
-            AboutUs.Visibility = Visibility.Hidden;
-
-            topic.Background = mySolidColorBrush;
-            simulation.Background = Brushes.Transparent;
-            ValidationButton.Background = Brushes.Transparent;
-            vTutorial.Background = Brushes.Transparent;
-            aboutUs.Background = Brushes.Transparent;
-        }
-
-        private void Simualtion_Click(object sender, RoutedEventArgs e)
-        {
-
-            EstudioAvanzado.Visibility = Visibility.Hidden;
-            Introduction.Visibility = Visibility.Hidden;
-            Simulation.Visibility = Visibility.Visible;
-            Simulation.Background = mySolidColorBrush;
-            Validation.Visibility = Visibility.Hidden;
-            VideoTutorial.Visibility = Visibility.Hidden;
-            AboutUs.Visibility = Visibility.Hidden;
-            Grids.Visibility = Visibility.Hidden;
-
-            topic.Background = Brushes.Transparent;
-            simulation.Background = mySolidColorBrush;
-            ValidationButton.Background = Brushes.Transparent;
-            vTutorial.Background = Brushes.Transparent;
-            aboutUs.Background = Brushes.Transparent;
-
-            //EstudioAvanzada.Visibility = Visibility.Visible;
-            Grid.Visibility = Visibility.Hidden;
-
-            if (r != null)
-            {
-                EstudioAvanzada.Visibility = Visibility.Visible;
-                Grids.Visibility = Visibility.Visible;
-                plano.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void Validation_Click(object sender, RoutedEventArgs e)
-        {
-            Introduction.Visibility = Visibility.Hidden;
-            Simulation.Visibility = Visibility.Hidden;
-            Validation.Visibility = Visibility.Visible;
-            Validation.Background = mySolidColorBrush;
-            VideoTutorial.Visibility = Visibility.Hidden;
-            AboutUs.Visibility = Visibility.Hidden;
-
-            topic.Background = Brushes.Transparent;
-            simulation.Background = Brushes.Transparent;
-            ValidationButton.Background = mySolidColorBrush;
-            vTutorial.Background = Brushes.Transparent;
-            aboutUs.Background = Brushes.Transparent;
-
-            Utable.IsChecked = true;
-        }
-
-        private void vTutorial_Click(object sender, RoutedEventArgs e)
-        {
-            Introduction.Visibility = Visibility.Hidden;
-            Simulation.Visibility = Visibility.Hidden;
-            Validation.Visibility = Visibility.Hidden;
-            VideoTutorial.Visibility = Visibility.Visible;
-            VideoTutorial.Background = mySolidColorBrush;
-            AboutUs.Visibility = Visibility.Hidden;
-
-            topic.Background = Brushes.Transparent;
-            simulation.Background = Brushes.Transparent;
-            ValidationButton.Background = Brushes.Transparent;
-            vTutorial.Background = mySolidColorBrush;
-            aboutUs.Background = Brushes.Transparent;
-        }
-
-        private void aboutUs_Click(object sender, RoutedEventArgs e)
-        {
-            Introduction.Visibility = Visibility.Hidden;
-            Simulation.Visibility = Visibility.Hidden;
-            Validation.Visibility = Visibility.Hidden;
-            VideoTutorial.Visibility = Visibility.Hidden;
-            AboutUs.Visibility = Visibility.Visible;
-            AboutUs.Background = mySolidColorBrush;
-
-            topic.Background = Brushes.Transparent;
-            simulation.Background = Brushes.Transparent;
-            ValidationButton.Background = Brushes.Transparent;
-            vTutorial.Background = Brushes.Transparent;
-            aboutUs.Background = mySolidColorBrush;
-        }
-
-        private void estudio_Click(object sender, RoutedEventArgs e)
-        {
-            Introduction.Visibility = Visibility.Hidden;
-            Simulation.Visibility = Visibility.Visible;
-            Simulation.Background = mySolidColorBrush;
-            EstudioAvanzado.Visibility = Visibility.Visible;
-            Validation.Visibility = Visibility.Hidden;
-            VideoTutorial.Visibility = Visibility.Hidden;
-            AboutUs.Visibility = Visibility.Hidden;
-            Grids.Visibility= Visibility.Hidden;
-            plano.Visibility = Visibility.Hidden;
-
-            topic.Background = Brushes.Transparent;
-            simulation.Background = mySolidColorBrush;
-            ValidationButton.Background = Brushes.Transparent;
-            vTutorial.Background = Brushes.Transparent;
-            aboutUs.Background = Brushes.Transparent;
-
-            EstudioAvanzada.Visibility = Visibility.Hidden;
-            Grid.Visibility = Visibility.Visible;
-        }
-
-        private void Grid_Click(object sender, RoutedEventArgs e)
-        {
-            Grids.Visibility = Visibility.Visible;
-            EstudioAvanzado.Visibility = Visibility.Hidden;
-
-            EstudioAvanzada.Visibility = Visibility.Visible;
-            Grid.Visibility = Visibility.Hidden;
-            plano.Visibility = Visibility.Visible;
-        }
-        private void LoadGrid(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                RunSim.Visibility = Visibility.Visible;
-                Grid.Visibility = Visibility.Hidden;
-                EstudioAvanzada.Visibility = Visibility.Hidden;
-                Grids.Visibility = Visibility.Hidden;
-                plano.Visibility = Visibility.Visible;
-                EstudioAvanzado.Visibility = Visibility.Hidden;
-
-
-                plano.Children.Clear();
-
-                double u = Convert.ToDouble(u1.Text);
-                double v = Convert.ToDouble(v1.Text);
-                double rho = Convert.ToDouble(rho1.Text);
-                double p = Convert.ToDouble(p1.Text);
-                double T = Convert.ToDouble(T1.Text);
-                //double M = Convert.ToDouble(M1.Text);
-                double Cy = Convert.ToDouble(Cy1.Text);
-                double gamma = Convert.ToDouble(gamma1.Text);
-                double R = Convert.ToDouble(R1.Text);
-                double E = Convert.ToDouble(E1.Text);
-                double theta = Convert.ToDouble(theta1.Text);
-                double dEta = Convert.ToDouble(dEta1.Text);
-                int j1 = Convert.ToInt32(1 / dEta + 1);
-                double xmax = Convert.ToDouble(x11.Text);
-                double H = Convert.ToDouble(H1.Text);
-                double C = Convert.ToDouble(C1.Text);
-                r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
-                mesh = new Grid(r);
-
-                //Cambiar cuando hagamos el ajuste al mostrar
-                E = r.getE();
-                x1 = r.getxMax();
-                y1 = r.getH();
-                angulo = r.getTheta();
-                divisionesy = r.getJ() - 1;
-
-                angulo = r.getTheta();
-                divisionesy = r.getJ() - 1;
-
-                //Incremento y1
-                double ay1;
-                ay1 = y1 / divisionesy;
-
-                //Incremento y2
-                double ay2;
-                ay2 = (y1 + Math.Tan(angulo) * (x1 - E)) / divisionesy;
-
-                MaxY = y1 + Math.Tan(angulo) * (x1 - E);
-
-                for (int j = 0; j < divisionesy; j++)
-                {
-
-                    Polygon polygon = new Polygon();
-                    //Características de los rectángulos del grid
-                    System.Windows.Point Point11 = new System.Windows.Point(0, j * ay1 * 11 * 45.1028 / MaxY);
-                    System.Windows.Point Point21 = new System.Windows.Point(E * 715 / x1, j * ay1 * 11 * 45.1028 / MaxY);
-                    System.Windows.Point Point31 = new System.Windows.Point(x1 * 715 / x1, j * ay2 * 11 * 45.1028 / MaxY);
-
-                    System.Windows.Point Point41 = new System.Windows.Point(x1 * 715 / x1, (j + 1) * ay2 * 11 * 45.1028 / MaxY);
-                    System.Windows.Point Point51 = new System.Windows.Point(E * 715 / x1, (j + 1) * ay1 * 11 * 45.1028 / MaxY);
-                    System.Windows.Point Point61 = new System.Windows.Point(0, (j + 1) * ay1 * 11 * 45.1028 / MaxY);
-
-
-                    PointCollection polygonPoints1 = new PointCollection();
-                    polygonPoints1.Add(Point11);
-                    polygonPoints1.Add(Point21);
-                    polygonPoints1.Add(Point31);
-                    polygonPoints1.Add(Point41);
-                    polygonPoints1.Add(Point51);
-                    polygonPoints1.Add(Point61);
-                    polygon.Points = polygonPoints1;
-
-                    SolidColorBrush whiteBrush = new SolidColorBrush();
-                    whiteBrush.Color = Colors.White;
-                    polygon.Stroke = whiteBrush;
-                    polygon.StrokeThickness = 0.1;
-                    System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
-                    plano.Margin = planoPM;
-                    plano.Children.Add(polygon);
-                    Canvas.SetTop(polygon, 0);
-                    Canvas.SetLeft(polygon, 0);
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Input error");
-            }
-        }
-        private void Run_Click(object sender, RoutedEventArgs e)
-        { 
-            Grid.Visibility = Visibility.Hidden;
-            EstudioAvanzada.Visibility = Visibility.Visible;
-            Grids.Visibility = Visibility.Visible;
-
-
-            plano.Children.Clear();
-            mesh = new Grid(r);
-            mesh.PrandtlMeyerExpansion();
-
-
-            Polygons = new Polygon[mesh.GetXP().Count - 1, divisionesy];
-
-
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                //for (int j = 0; j < divisionesy; j++)
-                for (int j = (divisionesy - 1); j > -1; j--)
-                {
-                    //Grid fase
-                    Polygon polygon = new Polygon();
-                    //Características de los rectángulos del grid
-                    System.Windows.Point Point11 = new System.Windows.Point(mesh.GetXP()[i] * 715/ x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j]) * 11 * 45.1028/ MaxY);
-                    System.Windows.Point Point21 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j]) * 11 * 45.1028 / MaxY);
-                    System.Windows.Point Point31 = new System.Windows.Point(mesh.GetXP()[i + 1] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i + 1][j + 1]) * 11 * 45.1028 / MaxY);
-                    System.Windows.Point Point41 = new System.Windows.Point(mesh.GetXP()[i] * 715 / x1, (mesh.GetYP()[0][40] - mesh.GetYP()[i][j + 1]) * 11 * 45.1028 / MaxY);
-                    PointCollection polygonPoints1 = new PointCollection();
-                    polygonPoints1.Add(Point11);
-                    polygonPoints1.Add(Point21);
-                    polygonPoints1.Add(Point31);
-                    polygonPoints1.Add(Point41);
-                    polygon.Points = polygonPoints1;
-
-                    SolidColorBrush whiteBrush = new SolidColorBrush();
-                    whiteBrush.Color = Colors.White;
-                    polygon.Stroke = whiteBrush;
-                    polygon.StrokeThickness = 0.1;
-                    System.Windows.Thickness planoPM = new System.Windows.Thickness(520, 100, 92, 292);
-
-                    plano.Margin = planoPM;
-                    plano.Children.Add(polygon);
-
-                    polygon.Tag = new Point(i, j);
-                    polygon.MouseEnter += new MouseEventHandler(polygon_MouseEnter);
-                    polygon.MouseLeave += new MouseEventHandler(polygon_MouseLeave);
-                    Polygons[i, j] = polygon;
-                }
-            }
-            uRB.IsChecked = true;
-            computeEvolutionChange();
-            setChartNumbers();
-        }
-
-
-
-        private void u_Checked(object sender, RoutedEventArgs e)
-        {
-            //CreateUTable();
-            //CreateUTableAnderson();
-            double maxvalue = -100000000;
-            double minvalue = 100000000;
-
-            List<double> test = new List<double>();
-            test = mesh.GetXP();
-
-
-            double uValue;
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                for (int j = 0; j < divisionesy; j++)
-                {
-                    uValue = mesh.GetCell(j, i).getU();
-                    if (uValue > maxvalue)
-                    {
-                        maxvalue = uValue;
-                    }
-
-                    if (uValue < minvalue)
-                    {
-                        minvalue = uValue;
-                    }
-                }
-            }
-            umax = maxvalue;
-            umin = minvalue;
-            int y = 0;
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                //for (int j = 0; j < divisionesy; j++)
-                for (int j = (divisionesy - 1); j > -1; j--)
-                {
-                    double mediaM = (mesh.GetCell(j, i).getU() + mesh.GetCell(j, i + 1).getU() + mesh.GetCell(j + 1, i + 1).getU() + mesh.GetCell(j + 1, i).getU()) / 4.0;
-
-                    byte first = 0;
-
-                    if (mediaM < ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM > ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM == ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(76);
-                    }
-                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
-                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
-                    Polygons[i,j].Fill = mySolidColorBrush;
-
-
-                }
-            }
-            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
-            myHorizontalGradient.StartPoint = new Point(0, 0.3);
-            myHorizontalGradient.EndPoint = new Point(1, 0.3);
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
-            Gradient.Fill = myHorizontalGradient;
-            minValueGra.Content = Convert.ToString(Math.Round(umax)+" m/s");
-            maxValueGra.Content = Convert.ToString(Math.Round(umin)+ " m/s");
-        }
-        
-
-
-        private void v_Checked(object sender, RoutedEventArgs e)
-        {
-            double maxvalue = -100000000;
-            double minvalue = 100000000;
-
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                for (int j = 0; j < divisionesy; j++)
-                {
-                    if (mesh.GetCell(j, i).getV() > maxvalue)
-                    {
-                        maxvalue = mesh.GetCell(j, i).getV();
-                    }
-
-                    if (mesh.GetCell(j, i).getV() < minvalue)
-                    {
-                        minvalue = mesh.GetCell(j, i).getV();
-                    }
-                }
-            }
-            vmax = maxvalue;
-            vmin = minvalue;
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                //for (int j = 0; j < divisionesy; j++)
-                for (int j = (divisionesy - 1); j > -1; j--)
-                {
-                    double mediaM = (mesh.GetCell(j, i).getV() + mesh.GetCell(j, i + 1).getV() + mesh.GetCell(j + 1, i + 1).getV() + mesh.GetCell(j + 1, i).getV()) / 4.0;
-
-                    byte first = 0;
-
-                    if (mediaM < ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM > ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM == ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(76);
-                    }
-                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
-                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
-                    Polygons[i, j].Fill = mySolidColorBrush;
-                }
-            }
-            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
-            myHorizontalGradient.StartPoint = new Point(0, 0.3);
-            myHorizontalGradient.EndPoint = new Point(1, 0.3);
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
-            Gradient.Fill = myHorizontalGradient;
-            minValueGra.Content = Convert.ToString(Math.Round(vmax) + " m/s");
-            maxValueGra.Content = Convert.ToString(Math.Round(vmin) + " m/s");
-        }
-
-        private void OpenVideo_Click(object sender, RoutedEventArgs e)
-        {
-            string url = "https://youtu.be/Qgto2vXkQaY";
-            var psi = new ProcessStartInfo();
-            psi.UseShellExecute = true;
-            psi.FileName = url;
-            Process.Start(psi);
-        }
-
-        private void rho_Checked(object sender, RoutedEventArgs e)
-        {
-            double maxvalue = -100000000;
-            double minvalue = 100000000;
-
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                for (int j = 0; j < divisionesy; j++)
-                {
-                    if (mesh.GetCell(j, i).getRO() > maxvalue)
-                    {
-                        maxvalue = mesh.GetCell(j, i).getRO();
-                    }
-
-                    if (mesh.GetCell(j, i).getRO() < minvalue)
-                    {
-                        minvalue = mesh.GetCell(j, i).getRO();
-                    }
-                }
-            }
-            rhomax = maxvalue;
-            rhomin = minvalue;
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                //for (int j = 0; j < divisionesy; j++)
-                for (int j = (divisionesy - 1); j > -1; j--)
-                {
-                    double mediaM = (mesh.GetCell(j, i).getRO() + mesh.GetCell(j, i + 1).getRO() + mesh.GetCell(j + 1, i + 1).getRO() + mesh.GetCell(j + 1, i).getRO()) / 4.0;
-
-                    byte first = 0;
-
-                    if (mediaM < ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM > ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM == ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(76);
-                    }
-                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
-                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
-                    Polygons[i,j].Fill = mySolidColorBrush;
-                }
-            }
-            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
-            myHorizontalGradient.StartPoint = new Point(0, 0.3);
-            myHorizontalGradient.EndPoint = new Point(1, 0.3);
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
-            Gradient.Fill = myHorizontalGradient;
-            minValueGra.Content = Convert.ToString(Math.Round(rhomax,4) + " kg/m3");
-            maxValueGra.Content = Convert.ToString(Math.Round(rhomin,4) + " kg/m3");
-        }
-
-        private void p_Checked(object sender, RoutedEventArgs e)
-        {
-            double maxvalue = -100000000;
-            double minvalue = 100000000;
-
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                for (int j = 0; j < divisionesy; j++)
-                {
-                    if (mesh.GetCell(j, i).getP() > maxvalue)
-                    {
-                        maxvalue = mesh.GetCell(j, i).getP();
-                    }
-
-                    if (mesh.GetCell(j, i).getP() < minvalue)
-                    {
-                        minvalue = mesh.GetCell(j, i).getP();
-                    }
-                }
-            }
-            pmax = maxvalue;
-            pmin = minvalue;
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                //for (int j = 0; j < divisionesy; j++)
-                for (int j = (divisionesy - 1); j > -1; j--)
-                {
-
-                    double mediaM = (mesh.GetCell(j, i).getP() + mesh.GetCell(j, i + 1).getP() + mesh.GetCell(j + 1, i + 1).getP() + mesh.GetCell(j + 1, i).getP()) / 4.0;
-
-                    byte first = 0;
-
-                    if (mediaM < ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM > ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM == ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(76);
-                    }
-                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
-                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
-                    Polygons[i,j].Fill = mySolidColorBrush;
-                }
-            }
-            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
-            myHorizontalGradient.StartPoint = new Point(0, 0.3);
-            myHorizontalGradient.EndPoint = new Point(1, 0.3);
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
-            Gradient.Fill = myHorizontalGradient;
-            minValueGra.Content = Convert.ToString(Math.Round(pmax) + " Pa");
-            maxValueGra.Content = Convert.ToString(Math.Round(pmin) + " Pa");
-        }
-
-        private void T_Checked(object sender, RoutedEventArgs e)
-        {
-            double maxvalue = -100000000;
-            double minvalue = 100000000;
-
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                for (int j = 0; j < divisionesy; j++)
-                {
-                    if (mesh.GetCell(j, i).getT() > maxvalue)
-                    {
-                        maxvalue = mesh.GetCell(j, i).getT();
-                    }
-
-                    if (mesh.GetCell(j, i).getT() < minvalue)
-                    {
-                        minvalue = mesh.GetCell(j, i).getT();
-                    }
-                }
-            }
-            Tmax = maxvalue;
-            Tmin = minvalue;
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                //for (int j = 0; j < divisionesy; j++)
-                for (int j = (divisionesy - 1); j > -1; j--)
-                {
-                    double mediaM = (mesh.GetCell(j, i).getT() + mesh.GetCell(j, i + 1).getT() + mesh.GetCell(j + 1, i + 1).getT() + mesh.GetCell(j + 1, i).getT()) / 4.0;
-
-                    byte first = 0;
-
-                    if (mediaM < ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM > ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM == ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(76);
-                    }
-                    byte second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    byte third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
-                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
-                    Polygons[i, j].Fill = mySolidColorBrush;
-                }
-            }
-            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
-            myHorizontalGradient.StartPoint = new Point(0, 0.3);
-            myHorizontalGradient.EndPoint = new Point(1, 0.3);
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
-            Gradient.Fill = myHorizontalGradient;
-            maxValueGra.Content = Convert.ToString(Math.Round(Tmin)+" K");
-            minValueGra.Content = Convert.ToString(Math.Round(Tmax) + " K");
-        }
 
         private void ShowOnGM_Click(object sender, RoutedEventArgs e)
         {
@@ -1041,95 +1106,10 @@ namespace PradntlMeyerExpansion
             MChartAxis.Value = r.getM();
         }
 
-        private void M_Checked(object sender, RoutedEventArgs e)
-        {
-            double maxvalue = -100000000;
-            double minvalue = 100000000;
-
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                for (int j = 0; j < divisionesy; j++)
-                {
-                    if (mesh.GetCell(j, i).getM() > maxvalue)
-                    {
-                        maxvalue = mesh.GetCell(j, i).getM();
-                    }
-
-                    if (mesh.GetCell(j, i).getM() < minvalue)
-                    {
-                        minvalue = mesh.GetCell(j, i).getM();
-                    }
-                }
-            }
-            Mmax = maxvalue;
-            Mmin = minvalue;
-            for (int i = 0; i < (mesh.GetXP().Count - 1); i++)
-            {
-                //for (int j = 0; j < divisionesy; j++)
-                for (int j = (divisionesy - 1); j > -1; j--)
-                {
-                    double mediaM = (mesh.GetCell(j, i).getM() + mesh.GetCell(j, i + 1).getM() + mesh.GetCell(j + 1, i + 1).getM() + mesh.GetCell(j + 1, i).getM()) / 4.0;
-
-                    byte first = 0;
-                    byte second = 0;
-                    byte third = 0;
-
-                    if (mediaM < ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (41 * (mediaM - (maxvalue + minvalue) / 2)) / (minvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM > ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(Math.Round(76 + (164 * (mediaM - (maxvalue + minvalue) / 2)) / (maxvalue - (maxvalue + minvalue) / 2)));
-                    }
-                    else if (mediaM == ((maxvalue + minvalue) / 2))
-                    {
-                        first = Convert.ToByte(76);
-                    }
-                    second = Convert.ToByte(Math.Round(95 + (160 * (mediaM - minvalue)) / (maxvalue - minvalue)));
-                    third = Convert.ToByte(Math.Round((160 * (mediaM - maxvalue) / (minvalue - maxvalue))));
-
-                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                    mySolidColorBrush.Color = Color.FromRgb(first, second, third);
-                    Polygons[i, j].Fill = mySolidColorBrush;
-                }
-            }
-            LinearGradientBrush myHorizontalGradient = new LinearGradientBrush();
-            myHorizontalGradient.StartPoint = new Point(0, 0.3);
-            myHorizontalGradient.EndPoint = new Point(1, 0.3);
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
-            Gradient.Fill = myHorizontalGradient;
-            maxValueGra.Content = Convert.ToString(Math.Round(Mmin,4));
-            minValueGra.Content = Convert.ToString(Math.Round(Mmax,4));
-        }
-
-
+        
 
         
-        private void polygon_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //Obtnemos la ubicación del puntero
-            Polygon pol = (Polygon)sender;
-            Point p = (Point)pol.Tag;
-            //Mostramos las etiquetas correspondientes a los estados de las celdas
-            Info.Visibility = Visibility.Visible;
-            //Actualizamos los valores de fase y temperatura
-            uData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getU(), 2)+" m/s";
-            vData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getV(), 2)+ " m/s";
-            rhoData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getRO(), 2)+ " kg/m3";
-            pData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getP(), 2) + " Pa";
-            TData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getT(), 2) + " K";
-            MData.Content = Math.Round(mesh.GetCell(Convert.ToInt32(p.Y), Convert.ToInt32(p.X)).getM(), 2);
-            xData.Content = p.X+1;
-            yData.Content = p.Y+1;
-        }
-
-        private void polygon_MouseLeave(object sender, MouseEventArgs e)
-        {
-            Info.Visibility = Visibility.Hidden;
-        }
+        
 
         private void setChartNumbers()
         {
@@ -1206,6 +1186,14 @@ namespace PradntlMeyerExpansion
             pChart.Series = pCollection;
             Tchart.Series = TCollection;
             Mchart.Series = MCollection;
+        }
+        private void OpenVideo_Click(object sender, RoutedEventArgs e)
+        {
+            string url = "https://youtu.be/Qgto2vXkQaY";
+            var psi = new ProcessStartInfo();
+            psi.UseShellExecute = true;
+            psi.FileName = url;
+            Process.Start(psi);
         }
     }
 }
