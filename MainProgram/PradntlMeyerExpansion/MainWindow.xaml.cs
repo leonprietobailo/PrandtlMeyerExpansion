@@ -179,6 +179,7 @@ namespace PradntlMeyerExpansion
             VideoTutorial.Visibility = Visibility.Hidden;
             AboutUs.Visibility = Visibility.Hidden;
             Grids.Visibility = Visibility.Hidden;
+            Grid.Visibility = Visibility.Hidden;
 
             // Se cambia el color de fondo de los botones principales del simulador
             topic.Background = Brushes.Transparent;
