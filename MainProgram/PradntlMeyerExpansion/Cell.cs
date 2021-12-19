@@ -267,6 +267,7 @@ namespace PradntlMeyerExpansion
                 ro = roAct;
                 M = M_act;
 
+                // Cálculo de la velocidad vertical.
                 if (Xi > r.getE())
                 {
                     v = -(u * Math.Tan(r.getTheta()));
@@ -276,25 +277,33 @@ namespace PradntlMeyerExpansion
                     v = 0;
                 }
 
+                // Cálculo de los valores de F para recuperar las magnitudes fiscias.
                 F1 = ro * u;
                 F2 = ro * Math.Pow(u, 2) + p;
                 F3 = ro * u * v;
                 F4 = r.getGamma() / (r.getGamma() - 1) * p * u + ro * u * (Math.Pow(u, 2) + Math.Pow(v, 2)) / 2.0;
             }
+
+            // Cálculo de G.
             G1 = ro * F3 / F1;
             G2 = F3;
             G3 = ro * Math.Pow((F3 / F1), 2) + F2 - Math.Pow(F1, 2) / ro;
             G4 = r.getGamma() / (r.getGamma() - 1) * (F2 - Math.Pow(F1, 2) / ro) * F3 / F1 + ro / 2.0 * F3 / F1 * Math.Pow(F1 / ro, 2) + Math.Pow((F3 / F1), 2);
         }
 
-        // Getters de la clase.
+        // Recuperar velocidad horizontal.
         public double getU() { return u; }
+        // Recuperar velocidad vertical.
         public double getV() { return v; }
+        // Recuperar densidad.
         public double getRO() { return ro; }
+        // Recuperar presion.
         public double getP() { return p; }
+        // Recuprerar temperatura.
         public double getT() { return T; }
+        // Recuperar numero mach.
         public double getM() { return M; }
-
+        // Recuperar valores de F.
         public double getF(int i)
         {
             if (i == 1) { return F1; }
@@ -302,7 +311,7 @@ namespace PradntlMeyerExpansion
             else if (i == 3) { return F3; }
             else { return F4; }
         }
-
+        // Recuperar valores de G.
         public double getG(int i)
         {
             if (i == 1) { return G1; }
@@ -310,7 +319,7 @@ namespace PradntlMeyerExpansion
             else if (i == 3) { return G3; }
             else { return G4; }
         }
-
+        // Recuperar valores de F predicho.
         public double getFpre(int i)
         {
             if (i == 1) { return F1pre; }
@@ -318,7 +327,7 @@ namespace PradntlMeyerExpansion
             else if (i == 3) { return F3pre; }
             else { return F4pre; }
         }
-
+        // Recuperar valores de G predicho.
         public double getGpre(int i)
         {
             if (i == 1) { return G1pre; }
@@ -326,6 +335,7 @@ namespace PradntlMeyerExpansion
             else if (i == 3) { return G3pre; }
             else { return G4pre; }
         }
+        // Recuperar presión predicha.
         public double getPpre() { return pPre; }
     }
 }

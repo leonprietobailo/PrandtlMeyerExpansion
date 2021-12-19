@@ -314,14 +314,6 @@ namespace PradntlMeyerExpansion
         {
             try
             {
-                // Se cambia la visibilidad de las diferentes pestañas
-                RunSim.Visibility = Visibility.Visible;
-                Grid.Visibility = Visibility.Hidden;
-                EstudioAvanzada.Visibility = Visibility.Hidden;
-                Grids.Visibility = Visibility.Hidden;
-                plano.Visibility = Visibility.Visible;
-                EstudioAvanzado.Visibility = Visibility.Hidden;
-
                 // Se limpia el plano 
                 plano.Children.Clear();
 
@@ -395,16 +387,32 @@ namespace PradntlMeyerExpansion
                     Canvas.SetTop(polygon, 0);
                     Canvas.SetLeft(polygon, 0);
                 }
+                // Se cambia la visibilidad de las diferentes pestañas
+                RunSim.Visibility = Visibility.Visible;
+                Grid.Visibility = Visibility.Hidden;
+                EstudioAvanzada.Visibility = Visibility.Hidden;
+                Grids.Visibility = Visibility.Hidden;
+                plano.Visibility = Visibility.Visible;
+                EstudioAvanzado.Visibility = Visibility.Hidden;
+                Error_Label.Visibility = Visibility.Hidden;
             }
             catch
             {
-                MessageBox.Show("Input error");
+                Error_Label.Visibility = Visibility.Visible;
+                RunSim.Visibility = Visibility.Hidden;
             }
         }
 
         // Evento que carga el plano físico
         private void Run_Click(object sender, RoutedEventArgs e)
         {
+            // Se vacian las listas del estudio avanzado para volver a realizar los calculos.
+            uEVOList.Clear();
+            vEVOList.Clear();
+            roEVOList.Clear();
+            pEVOList.Clear();
+            TEVOList.Clear();
+            MEVOList.Clear();
             // Se cambia la visibilidad de las diferentes pestañas
             Grid.Visibility = Visibility.Hidden;
             EstudioAvanzada.Visibility = Visibility.Visible;
@@ -462,6 +470,7 @@ namespace PradntlMeyerExpansion
 
             computeEvolutionChange();
             setChartNumbers();
+            
         }
 
 
@@ -1052,16 +1061,25 @@ namespace PradntlMeyerExpansion
 
         private void ShowOnGM_Click(object sender, RoutedEventArgs e)
         {
-            r = new Rules();
-            int result = r.loadRules();
-            if (result == 0)
+            try
             {
-                Run_Click(null, null);
+                r = new Rules();
+                int result = r.loadRules();
+                if (result == 0)
+                {
+                    Run_Click(null, null);
+                    Error_Label.Visibility = Visibility.Hidden;
+                    RunSim.Visibility = Visibility.Visible;
+                }
+                //else
+                //{
+                //    RunSim.Visibility = Visibility.Hidden;
+                //}
             }
-            else
+            catch
             {
+                Error_Label.Visibility = Visibility.Visible;
                 RunSim.Visibility = Visibility.Hidden;
-                MessageBox.Show("Wrong file format");
             }
         }
 

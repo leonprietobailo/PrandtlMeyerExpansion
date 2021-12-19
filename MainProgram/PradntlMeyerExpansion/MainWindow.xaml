@@ -274,6 +274,8 @@
                     </DockPanel>
                 </Button>
             </Grid>
+            <Label FontSize="15" x:Name="Parameters_Copy" Background="#FF232323" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Parameters" HorizontalAlignment="Left" Margin="74,64,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667" Width="232" Height="49"/>
+            <Label FontSize="15" x:Name="Error_Label" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Please, check your inputs and try again." HorizontalAlignment="Left" Margin="-16,17,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="Red" FontWeight="Bold" RenderTransformOrigin="0.408,0.667" Width="412" Height="48" Visibility="Hidden"/>
         </Grid>
 
         <Grid x:Name="VideoTutorial" Margin="0,70,0,0" Visibility="hidden">
