@@ -285,6 +285,9 @@ namespace PradntlMeyerExpansion
             EstudioAvanzada.Visibility = Visibility.Visible;
             Grid.Visibility = Visibility.Hidden;
             plano.Visibility = Visibility.Visible;
+
+            RunSim.Visibility = Visibility.Visible;
+
         }
 
         // Evento que oculta la pestaña con el plano físico de la simulación y muestra la del estudio avanzado
