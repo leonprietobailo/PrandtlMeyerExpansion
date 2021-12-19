@@ -192,6 +192,7 @@ namespace PradntlMeyerExpansion
                 EstudioAvanzada.Visibility = Visibility.Visible;
                 Grids.Visibility = Visibility.Visible;
                 plano.Visibility = Visibility.Visible;
+                RunSim.Visibility = Visibility.Visible;
             }
         }
 
@@ -267,7 +268,7 @@ namespace PradntlMeyerExpansion
             gamma1.Text = "1,4";
             R1.Text = "287";
             C1.Text = "0,5";
-            p1.Text = "10100";
+            p1.Text = "101000";
             rho1.Text = "1,23";
             T1.Text = "286,1";
             u1.Text = "678";
@@ -334,8 +335,19 @@ namespace PradntlMeyerExpansion
                 double xmax = Convert.ToDouble(x11.Text);
                 double H = Convert.ToDouble(H1.Text);
                 double C = Convert.ToDouble(C1.Text);
-                r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
-                mesh = new Grid(r);
+
+
+
+                // Si hay valores que carcen de sentido fisico o generan un grid abstracto, lanzar error.
+                if (u < 0 || v < 0 || rho < 0 || p < 0 || T < 0 || Cy < 0 || gamma < 0 || R < 0 || E < 0 || theta < 0 || dEta < 0 || j1 < 3 || xmax < 0 || H < 0 || C < 0 || E > xmax)
+                {
+                    throw new Exception("Negative values or senseless format");
+                }
+                else
+                {
+                    r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
+                    mesh = new Grid(r);
+                }
 
                 // Se recogen ciertos parámetros necesarios par dibujar el plano físico
                 E = r.getE();
@@ -396,11 +408,14 @@ namespace PradntlMeyerExpansion
                 plano.Visibility = Visibility.Visible;
                 EstudioAvanzado.Visibility = Visibility.Hidden;
                 Error_Label.Visibility = Visibility.Hidden;
+                
             }
             catch
             {
                 Error_Label.Visibility = Visibility.Visible;
                 RunSim.Visibility = Visibility.Hidden;
+                Grids.Visibility = Visibility.Hidden;
+                EstudioAvanzada.Visibility = Visibility.Hidden;
             }
         }
 
@@ -1092,49 +1107,52 @@ namespace PradntlMeyerExpansion
             gridAndersonData.DataContext = AndersonMTable.DefaultView;
         }
 
-
+        // Evento para seleccionar en el grid calculado la misma fila que seleccionamos en en grid de Anderson.
         private void selected_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             gridData.SelectedIndex = gridAndersonData.SelectedIndex;
         }
 
+        // Evento para seleccionar en el grid de Anderson la misma fila que seleccionamos en en grid calculado.
         private void gridData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             gridAndersonData.SelectedIndex = gridData.SelectedIndex;
         }
 
-
-        
-
+        // Cargar simulación desde un archivo de texto.
         private void ShowOnGM_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // Creamos un objeto de reglas vacío.
                 r = new Rules();
+                // Ejecutamos la funcion de lectura de archivo y almacenamos el resultado.
                 int result = r.loadRules();
+                // Si el resultado es satisfactorio, simulamos y ocultamos etiquetas de error y mostramos el boton de ejecutar.
                 if (result == 0)
                 {
                     Run_Click(null, null);
                     Error_Label.Visibility = Visibility.Hidden;
                     RunSim.Visibility = Visibility.Visible;
                 }
-                //else
-                //{
-                //    RunSim.Visibility = Visibility.Hidden;
-                //}
             }
             catch
             {
+                // Si ha habido un error, ocultar el boton de simulacion y mostrar el error.
                 Error_Label.Visibility = Visibility.Visible;
                 RunSim.Visibility = Visibility.Hidden;
+                Grids.Visibility = Visibility.Hidden;
+                EstudioAvanzada.Visibility = Visibility.Hidden;
             }
         }
 
+        // Evento que permite salvar las reglas.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             r.saveRules();
         }
 
+        // Evento que permite salvar el CSV.
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             int mode = 0;
@@ -1147,15 +1165,23 @@ namespace PradntlMeyerExpansion
             mesh.saveCSV(mode);
         }
 
+        // Evento que permite hacer el cálculo del estudio avanzado.
         private void computeEvolutionChange()
         {
-            for(double theta = 10; theta >= 0; theta -= 0.1) // De - 10 grados a 0 grados.
+            // Calculamos el valor de la expansion de Prandtl-Meyer desde -10 grados a 0 grados.
+            for(double theta = 10; theta >= 0; theta -= 0.1)
             {
+                // Variables que almacenaran los resultados para posteriormente añadirlos a las listas.
                 double uEVO, vEVO, roEVO, pEVO, TEVO, MEVO;
+                // Definicion de las nuevas reglas.
                 Rules rEVO = new Rules(r, theta * Math.PI / 180);
+                // Generamos una malla para las reglas.
                 Grid gEVO = new Grid(rEVO);
+                // Ejecutamos la expansión de Prandtl-Meyer.
                 gEVO.PrandtlMeyerExpansion();
+                // Obtenemos valores medios.
                 (uEVO, vEVO, roEVO, pEVO, TEVO, MEVO) = gEVO.getDownstream();
+                // Añadimos resultados a las gráficas.
                 uEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(uEVO, 4))));
                 vEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(vEVO, 4))));
                 roEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(roEVO, 4))));
@@ -1163,6 +1189,7 @@ namespace PradntlMeyerExpansion
                 TEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(TEVO, 4))));
                 MEVOList.Add(new ObservablePoint(-Convert.ToDouble(Math.Round(theta, 4)), Convert.ToDouble(Math.Round(MEVO, 4))));
             }
+            // Añadimos condiciones iniciales a la gráfica.
             uChartAxis.Value = r.getU();
             vChartAxis.Value = r.getV();
             RoChartAxis.Value = r.getRO();
@@ -1171,13 +1198,10 @@ namespace PradntlMeyerExpansion
             MChartAxis.Value = r.getM();
         }
 
-        
-
-        
-        
-
+        // Evento que permite inicializar y vincular las listas a los graficos del estudio avanzado.
         private void setChartNumbers()
         {
+            // Inicializamos gráfico de velocidad horizontal.
             uCollection = new SeriesCollection
             {
                 new LineSeries
@@ -1191,6 +1215,7 @@ namespace PradntlMeyerExpansion
                 }
             };
 
+            // Inicializamos gráfico de velocidad vertical.
             vCollection = new SeriesCollection
             {
                 new LineSeries
@@ -1202,6 +1227,7 @@ namespace PradntlMeyerExpansion
                 }
             };
 
+            // Inicializamos gráfico de densidad.
             roCOllection = new SeriesCollection
             {
                 new LineSeries
@@ -1213,6 +1239,7 @@ namespace PradntlMeyerExpansion
                 }
             };
 
+            // Inicializamos gráfico de presión.
             pCollection = new SeriesCollection
             {
                 new LineSeries
@@ -1224,6 +1251,7 @@ namespace PradntlMeyerExpansion
                 }
             };
 
+            // Inicializamos gráfico de temperatura.
             TCollection = new SeriesCollection
             {
                 new LineSeries
@@ -1235,6 +1263,7 @@ namespace PradntlMeyerExpansion
                 }
             };
 
+            // Inicializamos gráfico de numero mach.
             MCollection = new SeriesCollection
             {
                 new LineSeries
@@ -1245,6 +1274,8 @@ namespace PradntlMeyerExpansion
                     Fill = Brushes.Transparent,
                 }
             };
+            
+            // Vinculamos gráficos con las listas.
             uChart.Series = uCollection;
             vChart.Series = vCollection;
             roChart.Series = roCOllection;
@@ -1252,6 +1283,8 @@ namespace PradntlMeyerExpansion
             Tchart.Series = TCollection;
             Mchart.Series = MCollection;
         }
+
+        // Mostramos el video alojado en YouTube.
         private void OpenVideo_Click(object sender, RoutedEventArgs e)
         {
             string url = "https://youtu.be/Qgto2vXkQaY";
