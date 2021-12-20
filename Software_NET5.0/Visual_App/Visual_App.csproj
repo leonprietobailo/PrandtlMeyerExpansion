@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Contour Grid.png">
+    <Resource Include="Images\Contour Grid.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -43,52 +43,52 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="AboutUs.png">
+    <Resource Include="Images\AboutUs.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Airfoil.png">
+    <Resource Include="Images\Airfoil.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="CSV.png">
+    <Resource Include="Images\CSV.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="DataView.png">
+    <Resource Include="Images\DataView.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Grid.png">
+    <Resource Include="Images\Grid.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Home.png">
+    <Resource Include="Images\Home.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="LoadFile.png">
+    <Resource Include="Images\LoadFile.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="LoadFileBlack.png">
+    <Resource Include="Images\LoadFileBlack.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Play.png">
+    <Resource Include="Images\Play.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="PMExpansion.png">
+    <Resource Include="Images\PMExpansion.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Research.png">
+    <Resource Include="Images\Research.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="runSimulation.png">
+    <Resource Include="Images\runSimulation.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="SIM.png">
+    <Resource Include="Images\SIM.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Simulation.png">
+    <Resource Include="Images\Simulation.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Videoo.png">
+    <Resource Include="Images\Videoo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="VideoTutorial.png">
+    <Resource Include="Images\VideoTutorial.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
