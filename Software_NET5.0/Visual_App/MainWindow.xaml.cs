@@ -348,7 +348,7 @@ namespace Visual_App
 
 
                 // Si hay valores que carcen de sentido fisico o generan un grid abstracto, lanzar error.
-                if (u < 0 || v < 0 || rho < 0 || p < 0 || T < 0 || Cy < 0 || gamma < 0 || R < 0 || E < 0 || theta < 0 || dEta < 0 || j1 < 3 || xmax < 0 || H < 0 || C < 0 || E > xmax)
+                if (u < 0 || theta > 20 || v < 0 || rho < 0 || p < 0 || T < 0 || Cy < 0 || gamma < 0 || R < 0 || E < 0 || theta < 0 || dEta < 0 || j1 < 3 || xmax < 0 || H < 0 || C < 0 || E > xmax)
                 {
                     throw new Exception("Negative values or senseless format");
                 }
@@ -1146,9 +1146,25 @@ namespace Visual_App
                 {
                     r = new Rules();
                     r.loadRules(dig.FileName);
+                    mesh = new Class_Library.Grid(r);
                     Run_Click(null, null);
                     Error_Label.Visibility = Visibility.Hidden;
                     RunSim.Visibility = Visibility.Visible;
+
+                    E1.Text = Convert.ToString(r.getE());
+                    x11.Text = Convert.ToString(r.getxMax());
+                    H1.Text = Convert.ToString(r.getH());
+                    theta1.Text = Convert.ToString(r.getTheta() * 180.0 / Math.PI);
+                    dEta1.Text = Convert.ToString(1.0 / (r.getJ() - 1));
+                    Cy1.Text = Convert.ToString(r.getCy());
+                    gamma1.Text = Convert.ToString(r.getGamma());
+                    R1.Text = Convert.ToString(r.getR());
+                    C1.Text = Convert.ToString(r.getCy());
+                    p1.Text = Convert.ToString(r.getP());
+                    rho1.Text = Convert.ToString(r.getRO());
+                    T1.Text = Convert.ToString(r.getT());
+                    u1.Text = Convert.ToString(r.getU());
+                    v1.Text = Convert.ToString(r.getV());
                 }
             }
             catch
