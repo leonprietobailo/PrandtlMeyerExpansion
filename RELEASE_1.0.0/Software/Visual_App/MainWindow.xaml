@@ -1,0 +1,598 @@
+﻿<Window x:Class="Visual_App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Visual_App"
+        mc:Ignorable="d"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Prandtl Meyer Expansion Simulator" Height="803" Width="1496" Background="#FF232323" Icon="/Images/Airfoil.png" ResizeMode="CanMinimize" >
+    <Grid Margin="0,0,0,-6">
+        <Label HorizontalAlignment="Left" Content="   Prandtl Meyer&#x0a;Expansion Simulator" FontSize="20" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="231" Height="70" VerticalAlignment="Top" Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button Click="lntro_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="231,0,0,0" x:Name="topic" VerticalAlignment="Top" Width="253" Background="#00436C70" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25">
+            <DockPanel Width="195">
+                <Image Source="/Images/Home.png" Width="62" Visibility="Visible" Name="HomePIC" Height="35" Margin="30,0,0,0"/>
+                <Label Margin="-50,0,0,0" Content="Home" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="80"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="484,0,0,0" x:Name="simulation" VerticalAlignment="Top" Width="253" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Simualtion_Click">
+            <DockPanel Width="216" Height="52">
+                <Image Width="69" Height="51" Margin="7,-3,0,0" Source="/Images/Simulation.png"/>
+                <Label Margin="0,-3,0,0" Content="Simulation" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="151"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="737,0,0,0" x:Name="ValidationButton" VerticalAlignment="Top" Width="253"  Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Validation_Click">
+            <DockPanel Width="230" Height="64">
+                <Image Width="45" Source="/Images/DataView.png" Height="40" Margin="25,0,2,2"/>
+                <Label Content="Validation" Margin="-25,-4,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="159" Height="48"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="990,0,0,0" x:Name="vTutorial" VerticalAlignment="Top" Width="253" Background="Transparent" BorderBrush="Transparent" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="vTutorial_Click">
+            <DockPanel Width="247" Height="65" >
+                <Image Width="58"  Height="51" Margin="10,0,2,2" Source="/Images/VideoTutorial.png" />
+                <Label Content="Video Tutorial" Margin="-25,-3,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="166" Height="48"/>
+            </DockPanel>
+        </Button>
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="1243,0,0,0" x:Name="aboutUs" VerticalAlignment="Top" Width="253"  Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="aboutUs_Click">
+            <DockPanel Width="247" Height="65">
+                <Image Width="65"  Height="40" Margin="15,3,2,2" Source="/Images/AboutUs.png" />
+                <Label Content="About us" Margin="-60,-3,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="138" Height="48"/>
+            </DockPanel>
+        </Button>
+        <Grid x:Name="Introduction" Margin="0,70,0,0" Visibility="hidden">
+            <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="The Prandtl-Meyer expansion is the process that occurs when a supersonic flow turns around a convex corner, forming a divergent fan consisting of an infinite number of Mach waves. Across the expansion fan, the flow accelerates so, the Mach number increases and the static pressure, temperature and density decreases. Since the flow turns in small angles and the changes across each expansion wave are small, the whole process is isentropic. Due to the fact that the whole process is isentropic, the stagnation pressure, temperature and density remain constant across the fan.&#x0a;&#x0a;This simulator calculates the different parameters evolve in the Prandtl-Meyer expansion and does the validation with the Anderson book for a concrete case used as default.&#x0a;&#x0a;Get started!" x:Name="text1" Margin="163,119,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" Width="454" Height="370" VerticalAlignment="Top" Background="#00000000"/>
+            <Button Content="START" HorizontalAlignment="Left" Margin="313,494,0,0" VerticalAlignment="Top" FontFamily="Consolas" FontSize="40" Background="Transparent" Foreground="White" BorderBrush="White" FontWeight="Bold" BorderThickness="3,3,3,3" Height="87" Width="154" Click="Simualtion_Click"/>
+            <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/Images/PMExpansion.png"/>
+        </Grid>
+
+        <Grid x:Name="Simulation" Margin="0,70,0,-5" Visibility="Visible">
+            <Grid x:Name="EstudioAvanzado" Margin="329,0,0,10" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="510*"/>
+                    <ColumnDefinition Width="611*"/>
+                </Grid.ColumnDefinitions>
+                <Label HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398">
+                    <Label Content="Horizontal Velocity Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
+                </Label>
+                <lvc:CartesianChart Name="uChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,70,0,0" FontFamily="Consolas" Width="330" Height="284">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White">
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Horizontal Velocity [m/s]" FontSize="13" FontFamily="Consolas" Foreground="White">
+
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Name="uChartAxis" Value="678" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+
+                            <lvc:Axis.Separator>
+                                <lvc:Separator></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+
+                <lvc:CartesianChart x:Name="vChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="404,69,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Vertical Velocity [m/s]" FontSize="13" FontFamily="Consolas" Foreground="White">
+
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Name="vChartAxis" Value="0" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+
+
+                            <lvc:Axis.Separator>
+                                <lvc:Separator/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <lvc:CartesianChart x:Name="pChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,388,0,0" FontFamily="Consolas" Height="285" Width="355">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Pressure [Pa]" FontSize="13" FontFamily="Consolas" Foreground="White">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Name="pChartAxis" Value="101000" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+
+
+                            <lvc:Axis.Separator>
+                                <lvc:Separator/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <lvc:CartesianChart x:Name="Tchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,384,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.ColumnSpan="2">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Temperature [K]"   FontSize="13" FontFamily="Consolas" Foreground="White">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Name ="TchartAxis" Value="286.1" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+                            <lvc:Axis.Separator>
+                                <lvc:Separator/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <lvc:CartesianChart x:Name="roChart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,71,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
+                    <lvc:CartesianChart.Series>
+                        <lvc:LineSeries Name="blueAxis" ScalesYAt="0"/>
+                    </lvc:CartesianChart.Series>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Density [kg/m^3]" FontSize="13" FontFamily="Consolas" Foreground="White">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Name="RoChartAxis" Value="1.23" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="0.25"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <lvc:CartesianChart x:Name="Mchart" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="261,385,0,0" FontFamily="Consolas" Height="285" Width="330" Grid.Column="1">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="θ[°]" MinValue="-10" MaxValue="0" FontSize="13" FontFamily="Consolas" Foreground="White"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Mach Number [1]" FontSize="13" FontFamily="Consolas" Foreground="White">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Name="MChartAxis" Value="2" StrokeThickness="3" Stroke="Red">
+                                    <lvc:AxisSection.Fill>
+                                        <SolidColorBrush Color="#A3A3FF" Opacity=".4"></SolidColorBrush>
+                                    </lvc:AxisSection.Fill>
+                                </lvc:AxisSection>
+                            </lvc:Axis.Sections>
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="0.25"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                <Label Content="Vertical Velocity Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="375,30,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
+                <Label Content="Density Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="252,28,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
+                <Label Content="Pressure Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="15,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398"/>
+                <Label Content="Temperature Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="392,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.ColumnSpan="2"/>
+                <Label Content="Mach Number Evolution" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="243,357,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Consolas" FontWeight="Bold" Height="28" Width="398" Grid.Column="1"/>
+            </Grid>
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="210,507,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="estudio_Click">
+                <DockPanel Width="108" Height="95" Margin="0,0,0,0">
+                    <Image Width="54"  Height="63" Margin="7,-25,0,0" Source="/Images/Research.png"  />
+                    <Label Content="Research" Margin="-100,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="67" Height="42"/>
+                </DockPanel>
+            </Button>
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="210,507,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Grid_Click">
+                <DockPanel Width="108" Height="95" Margin="0,0,0,0">
+                    <Image Width="56"  Height="60" Margin="5,-30,0,0" Source="/Images/Grid.png"   />
+                    <Label Content="Physical&#x0a; Plane" Margin="-103,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="66" Height="42"/>
+                </DockPanel>
+            </Button>
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="110,507,0,0" Name="RunSim" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Run_Click">
+                <DockPanel Width="108" Height="95" Margin="0,0,0,0">
+                    <Image Width="58"  Height="59" Margin="4,-25,0,0" Source="/Images/runSimulation.png"/>
+                    <Label Content="Simulate" Margin="-103,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="66" Height="42"/>
+                </DockPanel>
+            </Button>
+            <Label FontSize="15" Name="Parameters" Background="#FF232323" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Parameters" HorizontalAlignment="Left" Margin="74,64,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667" Width="232" Height="49"/>
+            <Grid Background="#FF232323" Margin="74,113,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="232" Height="352">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="167*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Label Content="E[m]       x[m]       H[m]" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="193" FontFamily="Consolas" Margin="25,0,0,0" Foreground="White" />
+                <Label Content="θ[°]        Δη         Cy" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="193" FontFamily="Consolas" Margin="25,50,0,0" Foreground="White"/>
+                <Label Content=" γ      R[J/(kg·K)]    C" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" FontFamily="Consolas" Margin="25,100,0,0" Width="193" Foreground="White"/>
+                <Label Content="po[Pa]   ρo[kg/m3]    To[K]" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" FontFamily="Consolas" Margin="25,150,0,0" Foreground="White"/>
+                <Label Content="uo[m/s]   vo[m/s]" HorizontalAlignment="Center" VerticalAlignment="Top" Height="28" FontFamily="Consolas" Margin="0,200,0,0" Width="122" Foreground="White"/>
+
+                <TextBox Text="10" Name="E1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="25,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas"/>
+                <TextBox Text="65" Name="x11" TextAlignment="Center" HorizontalAlignment="Center" Height="17" Margin="0,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas"/>
+                <TextBox Text="40" Name="H1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+
+                <TextBox Text="5,352" Name="theta1" TextAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="25,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="0,025" x:Name="dEta1" TextAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="0,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="0,5" x:Name="Cy1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontFamily="Consolas" RenderTransformOrigin="0.549,1.239"/>
+
+                <TextBox Text="1,4" Name="gamma1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="25,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="287" Name="R1" TextAlignment="Center" HorizontalAlignment="Center" Height="17" Margin="0,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="0,5" Name="C1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+
+
+                <TextBox Text="101000" Name="p1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="25,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="1,23" Name="rho1" TextAlignment="Center" HorizontalAlignment="Center" Height="18" Margin="0,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontFamily="Consolas" />
+                <TextBox Text="286,1" Name="T1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="165,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="678" Name="u1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="62,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+                <TextBox Text="0" x:Name="v1" TextAlignment="Center" HorizontalAlignment="Left" Height="17" Margin="129,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" FontFamily="Consolas"/>
+
+                <Button Content="Default" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="14,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="Default_Click_1"/>
+                <Button Content="Load Grid" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Width="204"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="LoadGrid" Grid.RowSpan="2" />
+                <Button Content="Load File" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="124,265,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="LoadFile_Click" />
+
+            </Grid>
+            <Grid x:Name="Grids" Margin="329,0,0,0" >
+                <Rectangle Name="Gradient" Margin="372,616,445,0" VerticalAlignment="Top" Height="18" Stroke="Transparent" Fill="transparent"/>
+                <Label x:Name="maxValueGra" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="-0.567,0.522" Height="29" FontSize="15" FontWeight="Bold" FontFamily="Consolas" Width="118" Margin="314,639,0,0" VerticalContentAlignment="center" HorizontalContentAlignment="center"/>
+                <Label x:Name="minValueGra" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="-0.567,0.522" Height="29" FontSize="15" FontWeight="Bold" FontFamily="Consolas" Width="106" Margin="665,639,0,0" VerticalContentAlignment="center" HorizontalContentAlignment="center"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="uRB" Content="u" HorizontalAlignment="Left" Margin="394,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="u_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="vRB" Content="v" HorizontalAlignment="Left" Margin="453,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="v_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="pRB" Content="ρ" HorizontalAlignment="Left" Margin="504,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rho_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="roRB" Content="p" HorizontalAlignment="Left" Margin="554,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="p_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="TRB" Content="T" HorizontalAlignment="Left" Margin="602,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="T_Checked"/>
+                <RadioButton HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Name="MRB" Content="M" HorizontalAlignment="Left" Margin="650,35,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="M_Checked"/>
+                <Grid x:Name="Info" Margin="960,136,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Height="415">
+                    <Label x:Name="variables" Content="u:&#x0a;&#x0a;v:&#x0a;&#x0a;ρ:&#x0a;&#x0a;p:&#x0a;&#x0a;T:&#x0a;&#x0a;M:&#x0a;&#x0a;x:&#x0a;&#x0a;y:&#x0a;&#x0a;" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" RenderTransformOrigin="-0.567,0.522" Height="415" FontSize="20" FontWeight="Bold" FontFamily="Consolas"/>
+                    <Label x:Name="uData" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,0,0,0" Width="136" Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20" FontWeight="Normal" FontFamily="Consolas"/>
+                    <Label x:Name="vData" HorizontalAlignment="Left" Margin="24,47,0,0" VerticalAlignment="Top" Foreground="White" Width="143"  Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20"  FontFamily="Consolas"/>
+                    <Label x:Name="rhoData" HorizontalAlignment="Left" Margin="24,94,0,0" VerticalAlignment="Top" Foreground="White" Width="143"  Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20"  FontFamily="Consolas"/>
+                    <Label x:Name="pData" HorizontalAlignment="Left" Margin="24,141,0,0" VerticalAlignment="Top" Foreground="White" Width="143"  Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20"  FontFamily="Consolas"/>
+                    <Label x:Name="TData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="143" Margin="24,188,0,0"  Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20"  FontFamily="Consolas"/>
+                    <Label x:Name="MData" HorizontalAlignment="Left" Margin="24,235,0,0" VerticalAlignment="Top" Foreground="White" Width="62"  Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20"  FontFamily="Consolas" FontWeight="Normal"/>
+
+                    <Label x:Name="xData" HorizontalAlignment="Left" Margin="24,281,0,0" VerticalAlignment="Top" Foreground="White" Width="44"  Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20"  FontFamily="Consolas"/>
+
+                    <Label x:Name="yData" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="25,328,0,0" Width="44"  Background="#00000000" HorizontalContentAlignment="left" VerticalContentAlignment="Center" Height="36" FontSize="20"  FontFamily="Consolas"/>
+                </Grid>
+                <Button  x:Name="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="60" HorizontalAlignment="Left" Margin="1050,600,0,0" VerticalAlignment="Top" Width="60"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Save_Click">
+                    <DockPanel Width="50" Height="60" Margin="0,0,0,0">
+                        <Image Width="49" Margin="0,0,0,0" Source="/Images/CSV.png"  />
+                    </DockPanel>
+                </Button>
+                <Button  x:Name="Button" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="60" HorizontalAlignment="Left" Margin="980,600,0,0" VerticalAlignment="Top" Width="60"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Button_Click">
+                    <DockPanel Width="50" Height="60" Margin="0,0,0,0">
+                        <Image Width="49" Margin="0,0,0,0" Source="/Images/SIM.png"  />
+                    </DockPanel>
+                </Button>
+            </Grid>
+            <Label FontSize="15" x:Name="Parameters_Copy" Background="#FF232323" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Parameters" HorizontalAlignment="Left" Margin="74,64,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667" Width="232" Height="49"/>
+            <Label FontSize="15" x:Name="Error_Label" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Please, check your inputs and try again." HorizontalAlignment="Left" Margin="-16,17,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="Red" FontWeight="Bold" RenderTransformOrigin="0.408,0.667" Width="412" Height="48" Visibility="Hidden"/>
+        </Grid>
+
+        <Grid x:Name="VideoTutorial" Margin="0,70,0,0" Visibility="hidden">
+            <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="132" HorizontalAlignment="Center" Margin="0,288,0,0" x:Name="OpenVideo" VerticalAlignment="Top" Width="132"  Background="transparent" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="OpenVideo_Click">
+                <Image Width="132"  Height="132" Source="/Images/Videoo.png"/>
+            </Button>
+            <TextBlock FontSize="20" TextAlignment="Center" TextWrapping="Wrap" Text="The video tutorial of the simulator can be found below." x:Name="videoText" Margin="0,204,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="685" Height="63" VerticalAlignment="Top" Background="#00000000"/>
+        </Grid>
+        <Grid x:Name="AboutUs" Margin="0,70,0,0" Visibility="hidden">
+            <TextBlock FontSize="20" TextAlignment="Center" TextWrapping="Wrap" Text="This simulator has been developed by León Prieto and Verónica Sastre in 2021&#x0a;&#x0a;Simulation Course&#x0a;&#x0a;Aerospace Systems Engineering (EETAC)&#x0a;&#x0a;veronica.sastre@estudiantat.upc.edu&#x0a;leon.enrique.prieto@estudiantat.upc.edu" x:Name="AboutUsText" Margin="0,164,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="440" Height="236" VerticalAlignment="Top" Background="#00000000"/>
+        </Grid>
+
+
+        <Grid x:Name="Validation" Margin="0,70,0,0" Visibility="hidden" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1496" Height="723">
+
+            <Label FontSize="12" Name="Disclaimer" Content="The validation has been done with: E = 10 m, x = 65 m, H = 40 m, θ = 5.352°, Δη = 0.025, Cy = 0.5, γ = 1.4, R = 287 J/(kg·K), C = 0,5, po = 10100 Pa, ρo = 1.23 kg/m3, To= 286.1 K, uo = 678 m/s and vo = 0 m/s" HorizontalAlignment="Left" Margin="42,650,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="1418" HorizontalContentAlignment="Center" Height="26"/>
+
+            <Label FontSize="15" Name="SimulatorResults" Content="Simulator Results" HorizontalAlignment="Left" Margin="443,60,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+            <Label FontSize="15" Name="AndersonResults" Content="Anderson Results" HorizontalAlignment="Left" Margin="1030,60,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="454" Margin="-32,30,0,0" Width="1518">
+                <Label FontSize="15" Name="ErrorS" Content="Relative Error [%]" HorizontalAlignment="Left" Margin="1280,183,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" Name="ErrorA" Content="Anderson" HorizontalAlignment="Left" Margin="1321,214,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorA_Copy" Content="Simulator" HorizontalAlignment="Left" Margin="1401,214,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+
+                <Label FontSize="15" Name="ErrorAU" Content="U ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1321,244,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White"/>
+                <Label FontSize="15" Name="ErrorAV" Content="V ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1321,274,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White"  />
+                <Label FontSize="15" Name="ErrorARO" Content="RO ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1321,304,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" />
+                <Label FontSize="15" Name="ErrorAP" Content="P ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1321,334,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" />
+                <Label FontSize="15" Name="ErrorAT" Content="T ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1321,364,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" />
+                <Label FontSize="15" Name="ErrorAM" Content="M ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1321,394,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White"/>
+
+                <Label FontSize="15" x:Name="ErrorAU_Copy" Content="u" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1263,244,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorAV_Copy" Content="v" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1263,274,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White"  RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorARO_Copy" Content="ρ" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1263,304,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White"  RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorAP_Copy" Content="p" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1263,334,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White"  RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorAT_Copy" Content="T" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1263,364,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorAM_Copy" Content="M"  HorizontalAlignment="Left" Margin="1263,394,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorA_Copy1" Content="Magnitude" HorizontalAlignment="Left" Margin="1231,214,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.408,0.667"/>
+
+                <Label FontSize="15" x:Name="ErrorSU" Content="U ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,244,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorSV" Content="V ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,274,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorSRO" Content="RO ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,304,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorSP" Content="P ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,334,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorST" Content="T ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,364,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+                <Label FontSize="15" x:Name="ErrorSM" Content="M ERROR" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="1408,394,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" RenderTransformOrigin="0.408,0.667"/>
+
+                <Rectangle HorizontalAlignment="Left" Height="247" Margin="1231,181,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+                <Rectangle HorizontalAlignment="Left" Height="30" Margin="1231,214,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+                <Rectangle HorizontalAlignment="Left" Height="30" Margin="1231,274,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+                <Rectangle HorizontalAlignment="Left" Height="30" Margin="1231,334,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+                <Rectangle HorizontalAlignment="Left" Height="34" Margin="1231,394,0,0" Stroke="White" VerticalAlignment="Top" Width="255"/>
+                <Rectangle HorizontalAlignment="Left" Height="214" Margin="1315,214,0,0" Stroke="White" VerticalAlignment="Top" Width="86"/>
+            </Grid>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Name="Utable" Content="u" HorizontalAlignment="Left" Margin="86,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="uTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="v" HorizontalAlignment="Left" Margin="124,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="vTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="ρ" HorizontalAlignment="Left" Margin="162,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="rhoTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="p" HorizontalAlignment="Left" Margin="200,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="pTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="T" HorizontalAlignment="Left" Margin="236,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="TTable_Checked"/>
+            <RadioButton HorizontalContentAlignment="center" VerticalContentAlignment="center" FontSize="20" Content="M" HorizontalAlignment="Left" Margin="270,44,0,0" VerticalAlignment="Top" FontFamily="Consolas" Foreground="White" Visibility="Visible" Checked="MTable_Checked"/>
+            <DataGrid HorizontalAlignment="Left" Height="520" Margin="56,109,0,0" VerticalAlignment="Top" Width="925" x:Name="gridData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" SelectedCellsChanged="gridData_SelectedCellsChanged">
+                <DataGrid.Resources>
+                    <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
+                        <Border Background="#FF262626"/>
+                    </ControlTemplate>
+                    <Style x:Key="scroll_thumb_style" TargetType="{x:Type Thumb}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="OverridesDefaultStyle" Value="true"/>
+                        <Setter Property="IsTabStop" Value="false"/>
+                        <Setter Property="Focusable" Value="false"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Rectangle Width="10" Fill="#7D7D7D" RadiusX="5" RadiusY="5"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="scroll_thumb_stylecrosswise" TargetType="{x:Type Thumb}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="OverridesDefaultStyle" Value="true"/>
+                        <Setter Property="IsTabStop" Value="false"/>
+                        <Setter Property="Focusable" Value="false"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Rectangle  Fill="#7D7D7D" RadiusX="5" RadiusY="5"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="{x:Type ScrollBar}">
+                        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+                        <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                        <Setter Property="Width" Value="10"/>
+                        <Setter Property="MinWidth" Value="10"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                    <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="#7FBFBFBF">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.00001*"/>
+                                        </Grid.RowDefinitions>
+                                        <Track HorizontalAlignment="Center" x:Name="PART_Track" Width="{TemplateBinding Width}" Maximum="{TemplateBinding Maximum}" Minimum="{TemplateBinding Minimum}"
+                                    Value="{TemplateBinding Value}"  IsDirectionReversed="true">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineUpCommand"  />
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineDownCommand" />
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb Style="{StaticResource scroll_thumb_style}" />
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Width" Value="Auto"/>
+                                <Setter Property="MinWidth" Value="0"/>
+                                <Setter Property="Height" Value="10"/>
+                                <Setter Property="MinHeight" Value="10"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                            <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="#7FA7A7A7">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="0.00001*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Track x:Name="PART_Track" Grid.Column="1" IsEnabled="{TemplateBinding IsMouseOver}">
+                                                    <Track.DecreaseRepeatButton>
+                                                        <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineUpCommand"  />
+                                                    </Track.DecreaseRepeatButton>
+                                                    <Track.IncreaseRepeatButton>
+                                                        <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineDownCommand" />
+                                                    </Track.IncreaseRepeatButton>
+                                                    <Track.Thumb>
+                                                        <Thumb  Style="{DynamicResource scroll_thumb_stylecrosswise}" Height="8"/>
+                                                    </Track.Thumb>
+                                                </Track>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#FF6B8E95" Offset="0"/>
+                        <GradientStop Color="#FF14A7C1" Offset="1"/>
+                        <GradientStop Color="#FF1E424E" Offset="0.509"/>
+                        <GradientStop Color="#FF1D4855" Offset="0.542"/>
+                        <GradientStop Color="#FF1D4855" Offset="0.542"/>
+                        <GradientStop Color="#FF193A44" Offset="0.526"/>
+                    </LinearGradientBrush>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="BorderBrush" Value="White"/>
+                        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type DataGridRowHeader}}" TargetType="{x:Type DataGridRowHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="BorderBrush" Value="white"/>
+                        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.CellStyle >
+                    <Style TargetType="{x:Type DataGridCell}" x:Name="cellStyle">
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF6B8E95"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
+
+            <DataGrid HorizontalAlignment="Left" Height="520" Margin="1040,109,0,0" VerticalAlignment="Top" Width="129" x:Name="gridAndersonData" ItemsSource="{Binding}" SelectionMode="Single"  IsReadOnly="True"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Transparent" Foreground="White" RowBackground="Transparent" Background="Transparent" FontFamily="Consolas" MinColumnWidth="50" SelectedCellsChanged="selected_SelectedCellsChanged">
+                <DataGrid.Resources>
+                    <ControlTemplate x:Key="scroll_background" TargetType="{x:Type RepeatButton}">
+                        <Border Background="#FF262626"/>
+                    </ControlTemplate>
+                    <Style x:Key="scroll_thumb_style" TargetType="{x:Type Thumb}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="OverridesDefaultStyle" Value="true"/>
+                        <Setter Property="IsTabStop" Value="false"/>
+                        <Setter Property="Focusable" Value="false"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Rectangle Width="10" Fill="#7D7D7D" RadiusX="5" RadiusY="5"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="scroll_thumb_stylecrosswise" TargetType="{x:Type Thumb}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="OverridesDefaultStyle" Value="true"/>
+                        <Setter Property="IsTabStop" Value="false"/>
+                        <Setter Property="Focusable" Value="false"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Rectangle  Fill="#7D7D7D" RadiusX="5" RadiusY="5"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="{x:Type ScrollBar}">
+                        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+                        <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                        <Setter Property="Width" Value="10"/>
+                        <Setter Property="MinWidth" Value="10"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                    <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="#7FBFBFBF">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.00001*"/>
+                                        </Grid.RowDefinitions>
+                                        <Track HorizontalAlignment="Center" x:Name="PART_Track" Width="{TemplateBinding Width}" Maximum="{TemplateBinding Maximum}" Minimum="{TemplateBinding Minimum}"
+                                    Value="{TemplateBinding Value}"  IsDirectionReversed="true">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineUpCommand"  />
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineDownCommand" />
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb Style="{StaticResource scroll_thumb_style}" />
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Width" Value="Auto"/>
+                                <Setter Property="MinWidth" Value="0"/>
+                                <Setter Property="Height" Value="10"/>
+                                <Setter Property="MinHeight" Value="10"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                            <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="#7FA7A7A7">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="0.00001*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Track x:Name="PART_Track" Grid.Column="1" IsEnabled="{TemplateBinding IsMouseOver}">
+                                                    <Track.DecreaseRepeatButton>
+                                                        <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineUpCommand"  />
+                                                    </Track.DecreaseRepeatButton>
+                                                    <Track.IncreaseRepeatButton>
+                                                        <RepeatButton Template="{StaticResource scroll_background}" Command="ScrollBar.LineDownCommand" />
+                                                    </Track.IncreaseRepeatButton>
+                                                    <Track.Thumb>
+                                                        <Thumb  Style="{DynamicResource scroll_thumb_stylecrosswise}" Height="8"/>
+                                                    </Track.Thumb>
+                                                </Track>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#FF6B8E95" Offset="0"/>
+                        <GradientStop Color="#FF14A7C1" Offset="1"/>
+                        <GradientStop Color="#FF1E424E" Offset="0.509"/>
+                        <GradientStop Color="#FF1D4855" Offset="0.542"/>
+                        <GradientStop Color="#FF1D4855" Offset="0.542"/>
+                        <GradientStop Color="#FF193A44" Offset="0.526"/>
+                    </LinearGradientBrush>
+                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="BorderBrush" Value="White"/>
+                        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type DataGridRowHeader}}" TargetType="{x:Type DataGridRowHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="BorderBrush" Value="white"/>
+                        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.CellStyle >
+                    <Style TargetType="{x:Type DataGridCell}" x:Name="cellStyle2">
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF6B8E95"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
