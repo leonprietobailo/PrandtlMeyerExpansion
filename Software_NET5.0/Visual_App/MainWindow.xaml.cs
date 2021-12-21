@@ -15,13 +15,10 @@ using Microsoft.Win32;
 
 namespace Visual_App
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        Class_Library.Grid mesh, meshCte;                                            // Creación de objeto Grid (mesh: caso general y modificable. meshCte: caso específio Anderson)
-        Rules r, rCte;                                                 // Creación de objeto Rules (r: caso general y modificable. rCte: caso específio Anderson)
+        Class_Library.Grid mesh, meshCte;                             // Creación de objeto Grid (mesh: caso general y modificable. meshCte: caso específio Anderson)
+        Rules r, rCte;                                                // Creación de objeto Rules (r: caso general y modificable. rCte: caso específio Anderson)
         Canvas plano = new Canvas();                                  // Creación de objeto Canvas
         double angulo, x1, y1, MaxY;                                  // Valores característicos del plano físico
         int divisionesy;                                              // Valor característico del plano físico
@@ -117,6 +114,7 @@ namespace Visual_App
             double TReal = 262;
             double MReal = 2.2;
 
+            // Obtenemos los valores de las magnitudes físiscas en el downstream para realizar el estudio avanzado
             double uEVO, vEVO, roEVO, pEVO, TEVO, MEVO;
             (uEVO, vEVO, roEVO, pEVO, TEVO, MEVO) = meshCte.getDownstream();
 
@@ -193,9 +191,12 @@ namespace Visual_App
             vTutorial.Background = Brushes.Transparent;
             aboutUs.Background = Brushes.Transparent;
 
+            // Si hay unos parámetros ya cargados
             if (r != null)
             {
+                // Mostramos el botón del estudio avanzado
                 EstudioAvanzada.Visibility = Visibility.Visible;
+                // Mostramos él plano físico, los botones asociados a él y el botón Simulate
                 Grids.Visibility = Visibility.Visible;
                 plano.Visibility = Visibility.Visible;
                 RunSim.Visibility = Visibility.Visible;
@@ -284,15 +285,12 @@ namespace Visual_App
         // Evento que muestra la pestaña con el plano físico de la simulación y oculta la del estudio avanzado
         private void Grid_Click(object sender, RoutedEventArgs e)
         {
-
             Grids.Visibility = Visibility.Visible;
             EstudioAvanzado.Visibility = Visibility.Hidden;
             EstudioAvanzada.Visibility = Visibility.Visible;
             Grid.Visibility = Visibility.Hidden;
             plano.Visibility = Visibility.Visible;
-
             RunSim.Visibility = Visibility.Visible;
-
         }
 
         // Evento que oculta la pestaña con el plano físico de la simulación y muestra la del estudio avanzado
@@ -323,6 +321,7 @@ namespace Visual_App
         // Evento que carga la frontera y las divisiones verticales del plano físico
         private void LoadGrid(object sender, RoutedEventArgs e)
         {
+            // Si los parámetros de entrada son correctos
             try
             {
                 // Se limpia el plano 
@@ -352,8 +351,10 @@ namespace Visual_App
                 {
                     throw new Exception("Negative values or senseless format");
                 }
+                // Si los parámetros de entrada cumplen las restricciones
                 else
                 {
+                    // Generamos unas reglas y malla nuevas
                     r = new Rules(u, v, rho, p, T, Cy, gamma, R, E, theta * Math.PI / 180, j1, xmax, H, C);
                     mesh = new Class_Library.Grid(r);
                 }
@@ -419,8 +420,10 @@ namespace Visual_App
                 Error_Label.Visibility = Visibility.Hidden;
 
             }
+            // Si los parámetros de entrada no son correctos
             catch
             {
+                // Se cambia la visibilidad de las diferentes pestañas
                 Error_Label.Visibility = Visibility.Visible;
                 RunSim.Visibility = Visibility.Hidden;
                 Grids.Visibility = Visibility.Hidden;
@@ -494,7 +497,9 @@ namespace Visual_App
             }
             // Se activa el radio button "u" para poder ver el plano físico con los valores de la velocidad horizontal por defecto
             uRB.IsChecked = true;
+            // Cálculo del estudio avanzado
             computeEvolutionChange();
+            // Añadir valores a las gráficas del estudio avanzado
             setChartNumbers();
 
         }
@@ -1129,8 +1134,9 @@ namespace Visual_App
         }
 
         // Cargar simulación desde un archivo de texto.
-        private void ShowOnGM_Click(object sender, RoutedEventArgs e)
+        private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
+            // Si el archivo tiene el formato correcto
             try
             {
                 // Abrimos un formulario para cargar el archivo.
@@ -1144,13 +1150,20 @@ namespace Visual_App
                 // Si hay un archvo cargado.
                 if (dig.ShowDialog() == true)
                 {
+                    // Se crean una reglas nuevas
                     r = new Rules();
+                    // Se cargan las reglas con los datos del archivo para cargar
                     r.loadRules(dig.FileName);
+                    // Se crea un nuevo grid
                     mesh = new Class_Library.Grid(r);
+                    // Se llama al click que ejecuta la expansión de Prandtl-Meyer
                     Run_Click(null, null);
+                    // Se oculta la label que muestra que hay un error
                     Error_Label.Visibility = Visibility.Hidden;
+                    // Se muestra el botón que permite ejecutar la expansión de Prandtl-Meyer
                     RunSim.Visibility = Visibility.Visible;
 
+                    // Se escriben en las labels de parámetros la información del archivo
                     E1.Text = Convert.ToString(r.getE());
                     x11.Text = Convert.ToString(r.getxMax());
                     H1.Text = Convert.ToString(r.getH());
@@ -1167,13 +1180,15 @@ namespace Visual_App
                     v1.Text = Convert.ToString(r.getV());
                 }
             }
+            // Si el archivo no es válido
             catch
             {
-                // Si ha habido un error, ocultar el boton de simulacion y mostrar el error.
+                // Ocultamos el boton de simulacion y mostramos el error.
                 Error_Label.Visibility = Visibility.Visible;
                 RunSim.Visibility = Visibility.Hidden;
                 Grids.Visibility = Visibility.Hidden;
                 EstudioAvanzada.Visibility = Visibility.Hidden;
+                plano.Children.Clear();
             }
         }
 

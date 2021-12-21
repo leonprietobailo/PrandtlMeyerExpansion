@@ -237,7 +237,7 @@
 
                 <Button Content="Default" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="14,265,0,0" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="Default_Click_1"/>
                 <Button Content="Load Grid" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Width="204"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="LoadGrid" Grid.RowSpan="2" />
-                <Button Content="Load File" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="124,265,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="ShowOnGM_Click" />
+                <Button Content="Load File" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="32" HorizontalAlignment="Left" Margin="124,265,0,0" x:Name="ShowOnGM" VerticalAlignment="Top" Width="94"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" Click="LoadFile_Click" />
 
             </Grid>
             <Grid x:Name="Grids" Margin="329,0,0,0" >
