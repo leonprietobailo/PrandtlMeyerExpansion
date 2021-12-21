@@ -1354,7 +1354,7 @@ namespace Visual_App
         // Mostramos el video alojado en YouTube.
         private void OpenVideo_Click(object sender, RoutedEventArgs e)
         {
-            string url = "https://youtu.be/Qgto2vXkQaY";
+            string url = "https://youtu.be/bpdsORTWBEQ";
             var psi = new ProcessStartInfo();
             psi.UseShellExecute = true;
             psi.FileName = url;
