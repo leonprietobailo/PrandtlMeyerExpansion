@@ -6,43 +6,43 @@
         xmlns:local="clr-namespace:Visual_App"
         mc:Ignorable="d"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        Title="Prandtl Meyer Expansion Simulator" Height="803" Width="1496" Background="#FF232323" Icon="/Airfoil.png" ResizeMode="CanMinimize" >
+        Title="Prandtl Meyer Expansion Simulator" Height="803" Width="1496" Background="#FF232323" Icon="/Images/Airfoil.png" ResizeMode="CanMinimize" >
     <Grid Margin="0,0,0,-6">
         <Label HorizontalAlignment="Left" Content="   Prandtl Meyer&#x0a;Expansion Simulator" FontSize="20" FontFamily="Consolas" Foreground="White" FontWeight="Bold"  Width="231" Height="70" VerticalAlignment="Top" Background="#00000000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button Click="lntro_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="231,0,0,0" x:Name="topic" VerticalAlignment="Top" Width="253" Background="#00436C70" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25">
             <DockPanel Width="195">
-                <Image Source="/Home.png" Width="62" Visibility="Visible" Name="HomePIC" Height="35" Margin="30,0,0,0"/>
+                <Image Source="/Images/Home.png" Width="62" Visibility="Visible" Name="HomePIC" Height="35" Margin="30,0,0,0"/>
                 <Label Margin="-50,0,0,0" Content="Home" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="80"/>
             </DockPanel>
         </Button>
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="484,0,0,0" x:Name="simulation" VerticalAlignment="Top" Width="253" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Simualtion_Click">
             <DockPanel Width="216" Height="52">
-                <Image Width="69" Height="51" Margin="7,-3,0,0" Source="/Simulation.png"/>
+                <Image Width="69" Height="51" Margin="7,-3,0,0" Source="/Images/Simulation.png"/>
                 <Label Margin="0,-3,0,0" Content="Simulation" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="151"/>
             </DockPanel>
         </Button>
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="737,0,0,0" x:Name="ValidationButton" VerticalAlignment="Top" Width="253"  Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Validation_Click">
             <DockPanel Width="230" Height="64">
-                <Image Width="45" Source="/DataView.png" Height="40" Margin="25,0,2,2"/>
+                <Image Width="45" Source="/Images/DataView.png" Height="40" Margin="25,0,2,2"/>
                 <Label Content="Validation" Margin="-25,-4,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="159" Height="48"/>
             </DockPanel>
         </Button>
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="990,0,0,0" x:Name="vTutorial" VerticalAlignment="Top" Width="253" Background="Transparent" BorderBrush="Transparent" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="vTutorial_Click">
             <DockPanel Width="247" Height="65" >
-                <Image Width="58"  Height="51" Margin="10,0,2,2" Source="/VideoTutorial.png" />
+                <Image Width="58"  Height="51" Margin="10,0,2,2" Source="/Images/VideoTutorial.png" />
                 <Label Content="Video Tutorial" Margin="-25,-3,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="166" Height="48"/>
             </DockPanel>
         </Button>
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="70" HorizontalAlignment="Left" Margin="1243,0,0,0" x:Name="aboutUs" VerticalAlignment="Top" Width="253"  Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="aboutUs_Click">
             <DockPanel Width="247" Height="65">
-                <Image Width="65"  Height="40" Margin="15,3,2,2" Source="/AboutUs.png" />
+                <Image Width="65"  Height="40" Margin="15,3,2,2" Source="/Images/AboutUs.png" />
                 <Label Content="About us" Margin="-60,-3,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="138" Height="48"/>
             </DockPanel>
         </Button>
         <Grid x:Name="Introduction" Margin="0,70,0,0" Visibility="hidden">
             <TextBlock FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Text="The Prandtl-Meyer expansion is the process that occurs when a supersonic flow turns around a convex corner, forming a divergent fan consisting of an infinite number of Mach waves. Across the expansion fan, the flow accelerates so, the Mach number increases and the static pressure, temperature and density decreases. Since the flow turns in small angles and the changes across each expansion wave are small, the whole process is isentropic. Due to the fact that the whole process is isentropic, the stagnation pressure, temperature and density remain constant across the fan.&#x0a;&#x0a;This simulator calculates the different parameters evolve in the Prandtl-Meyer expansion and does the validation with the Anderson book for a concrete case used as default.&#x0a;&#x0a;Get started!" x:Name="text1" Margin="163,119,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" Width="454" Height="370" VerticalAlignment="Top" Background="#00000000"/>
             <Button Content="START" HorizontalAlignment="Left" Margin="313,494,0,0" VerticalAlignment="Top" FontFamily="Consolas" FontSize="40" Background="Transparent" Foreground="White" BorderBrush="White" FontWeight="Bold" BorderThickness="3,3,3,3" Height="87" Width="154" Click="Simualtion_Click"/>
-            <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/PMExpansion.png"/>
+            <Image HorizontalAlignment="Left" Height="460" Margin="714,75,0,0" VerticalAlignment="Top" Width="627" Source="/Images/PMExpansion.png"/>
         </Grid>
 
         <Grid x:Name="Simulation" Margin="0,70,0,-5" Visibility="Visible">
@@ -188,19 +188,19 @@
             </Grid>
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="210,507,0,0" x:Name="EstudioAvanzada" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="estudio_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
-                    <Image Width="54"  Height="63" Margin="7,-25,0,0" Source="/Research.png"  />
+                    <Image Width="54"  Height="63" Margin="7,-25,0,0" Source="/Images/Research.png"  />
                     <Label Content="Research" Margin="-100,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="67" Height="42"/>
                 </DockPanel>
             </Button>
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="210,507,0,0" x:Name="Grid" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Grid_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
-                    <Image Width="56"  Height="60" Margin="5,-30,0,0" Source="/Grid.png"   />
+                    <Image Width="56"  Height="60" Margin="5,-30,0,0" Source="/Images/Grid.png"   />
                     <Label Content="Physical&#x0a; Plane" Margin="-103,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="66" Height="42"/>
                 </DockPanel>
             </Button>
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="101" HorizontalAlignment="Left" Margin="110,507,0,0" Name="RunSim" VerticalAlignment="Top" Width="70"  Background="#FF3C3535" BorderBrush="#00000000" TabIndex="3" Foreground="Transparent" FontWeight="Bold" FontSize="25" Click="Run_Click">
                 <DockPanel Width="108" Height="95" Margin="0,0,0,0">
-                    <Image Width="58"  Height="59" Margin="4,-25,0,0" Source="/runSimulation.png"/>
+                    <Image Width="58"  Height="59" Margin="4,-25,0,0" Source="/Images/runSimulation.png"/>
                     <Label Content="Simulate" Margin="-103,57,0,0" FontFamily="Consolas" Background="#00DDDDDD" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Left" Width="66" Height="42"/>
                 </DockPanel>
             </Button>
@@ -265,12 +265,12 @@
                 </Grid>
                 <Button  x:Name="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="60" HorizontalAlignment="Left" Margin="1050,600,0,0" VerticalAlignment="Top" Width="60"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Save_Click">
                     <DockPanel Width="50" Height="60" Margin="0,0,0,0">
-                        <Image Width="49" Margin="0,0,0,0" Source="/CSV.png"  />
+                        <Image Width="49" Margin="0,0,0,0" Source="/Images/CSV.png"  />
                     </DockPanel>
                 </Button>
                 <Button  x:Name="Button" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="60" HorizontalAlignment="Left" Margin="980,600,0,0" VerticalAlignment="Top" Width="60"  Background="Transparent" BorderBrush="#00000000" TabIndex="3" Foreground="White" FontWeight="Bold" FontSize="25" Click="Button_Click">
                     <DockPanel Width="50" Height="60" Margin="0,0,0,0">
-                        <Image Width="49" Margin="0,0,0,0" Source="/SIM.png"  />
+                        <Image Width="49" Margin="0,0,0,0" Source="/Images/SIM.png"  />
                     </DockPanel>
                 </Button>
             </Grid>
@@ -280,7 +280,7 @@
 
         <Grid x:Name="VideoTutorial" Margin="0,70,0,0" Visibility="hidden">
             <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Consolas" Height="132" HorizontalAlignment="Center" Margin="0,288,0,0" x:Name="OpenVideo" VerticalAlignment="Top" Width="132"  Background="transparent" BorderBrush="#00000000" TabIndex="3" Foreground="#FF3C3535" FontWeight="Bold" FontSize="25" Click="OpenVideo_Click">
-                <Image Width="132"  Height="132" Source="/Videoo.png"/>
+                <Image Width="132"  Height="132" Source="/Images/Videoo.png"/>
             </Button>
             <TextBlock FontSize="20" TextAlignment="Center" TextWrapping="Wrap" Text="The video tutorial of the simulator can be found below." x:Name="videoText" Margin="0,204,0,0" FontFamily="Consolas" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Width="685" Height="63" VerticalAlignment="Top" Background="#00000000"/>
         </Grid>
