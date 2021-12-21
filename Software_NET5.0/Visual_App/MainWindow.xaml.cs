@@ -93,7 +93,7 @@ namespace Visual_App
             myHorizontalGradient.EndPoint = new Point(1, 0.3);
             myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(240, 255, 0), 1));
             myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(76, 175, 80), 0.5));
-            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(117, 95, 160), 0));
+            myHorizontalGradient.GradientStops.Add(new GradientStop(Color.FromRgb(164, 95, 160), 0));
             Gradient.Fill = myHorizontalGradient;
 
             // Creación tablas del Anderson y del simulador
